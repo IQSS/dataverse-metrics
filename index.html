@@ -1,0 +1,629 @@
+<!doctype html>
+<html>
+<head>
+    <title>metrics.dataverse.org</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+
+<!-- Boostrap CSS is used to make columns. -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3plus/1.9.8/d3plus.full.min.js"></script>
+
+<script>
+
+// FIXME: Support multiple Dataverse installations
+var dataverse_installation = "https://dev1.dataverse.org";
+
+  function get_metrics_viz_range(metric_array, mod_num){
+
+      var fig_y_min = metric_array[0].running_total;
+      var fig_y_max = metric_array[metric_array.length-1].running_total;
+
+      if (fig_y_min < mod_num){
+        return [0, fig_y_max + 10];
+      }
+
+      var y_range_start = fig_y_min - (fig_y_min % mod_num);
+      var y_range_end = fig_y_max - (fig_y_max % mod_num) + mod_num;
+
+      return [y_range_start, y_range_end];
+  }
+
+// https://codepen.io/KryptoniteDove/post/load-json-file-locally-using-pure-javascript
+function loadJSON(callback, jsonFile) {
+    console.log("loading JSON file: " + jsonFile);
+    var xobj = new XMLHttpRequest();
+    xobj.overrideMimeType("application/json");
+    xobj.open('GET', jsonFile, true);
+    xobj.onreadystatechange = function() {
+        if (xobj.readyState == 4 && xobj.status == "200") {
+            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+            callback(xobj.responseText);
+        }
+    };
+    xobj.send(null);
+}
+
+var dataverse_type_data = [];
+
+loadJSON(function(response) {
+  var apiresp = JSON.parse(response);
+  // The Dataverse API always wraps content in "data" object.
+  var categories = apiresp.data;
+  for (var i = 0; i < categories.length; ++i) {
+    dataverse_type_data.push(categories[i]);
+  }
+  },
+dataverse_installation + "/api/info/metrics/dataverses/byCategory");
+
+</script>
+
+<style type="text/css">
+  .viz {
+      height:500px; /* responsive? */
+      padding:0;
+      margin:3em;
+  }
+</style>
+</head>
+
+<body>
+
+<!-- START: container -->
+    <div class="container">
+
+<!-- START: Dataverses -->
+<!--
+    <div class="row">
+        <div class="col-xs-12 col-md-12">
+            <h3>Dataverses</h3>
+        </div>
+    </div>
+-->
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+        <!-- NOTES: remember to name the visualization div with viz plus a unique ID# -->
+
+
+<div id="sql-dataverses">
+    
+        
+
+    
+</div>
+
+<div id="viz-dataverses" class="viz"></div>
+
+<script>
+
+  // FIXME: Get dataverse_counts_by_month from Dataverse installation, once available.
+  var dataverse_counts_by_month = [
+    
+
+    {"Month": "April 2017", "monthNum": 4, "name":"Total Dataverses", "Number of Dataverses": 2124, "running_total" : 2124, "month_sort" : "2017-04", "display_name":"April 2017: 34 New Dataverses"}
+    ,
+    
+
+    {"Month": "May 2017", "monthNum": 5, "name":"Total Dataverses", "Number of Dataverses": 2182, "running_total" : 2182, "month_sort" : "2017-05", "display_name":"May 2017: 58 New Dataverses"}
+    ,
+    
+
+    {"Month": "June 2017", "monthNum": 6, "name":"Total Dataverses", "Number of Dataverses": 2224, "running_total" : 2224, "month_sort" : "2017-06", "display_name":"June 2017: 42 New Dataverses"}
+    ,
+    
+
+    {"Month": "July 2017", "monthNum": 7, "name":"Total Dataverses", "Number of Dataverses": 2277, "running_total" : 2277, "month_sort" : "2017-07", "display_name":"July 2017: 53 New Dataverses"}
+    ,
+    
+
+    {"Month": "August 2017", "monthNum": 8, "name":"Total Dataverses", "Number of Dataverses": 2335, "running_total" : 2335, "month_sort" : "2017-08", "display_name":"August 2017: 58 New Dataverses"}
+    ,
+    
+
+    {"Month": "September 2017", "monthNum": 9, "name":"Total Dataverses", "Number of Dataverses": 2348, "running_total" : 2348, "month_sort" : "2017-09", "display_name":"September 2017: 13 New Dataverses"}
+    ,
+    
+
+    {"Month": "October 2017", "monthNum": 10, "name":"Total Dataverses", "Number of Dataverses": 2384, "running_total" : 2384, "month_sort" : "2017-10", "display_name":"October 2017: 36 New Dataverses"}
+    ,
+    
+
+    {"Month": "November 2017", "monthNum": 11, "name":"Total Dataverses", "Number of Dataverses": 2427, "running_total" : 2427, "month_sort" : "2017-11", "display_name":"November 2017: 43 New Dataverses"}
+    ,
+    
+
+    {"Month": "December 2017", "monthNum": 12, "name":"Total Dataverses", "Number of Dataverses": 2459, "running_total" : 2459, "month_sort" : "2017-12", "display_name":"December 2017: 32 New Dataverses"}
+    ,
+    
+
+    {"Month": "January 2018", "monthNum": 1, "name":"Total Dataverses", "Number of Dataverses": 2493, "running_total" : 2493, "month_sort" : "2018-01", "display_name":"January 2018: 34 New Dataverses"}
+    ,
+    
+
+    {"Month": "February 2018", "monthNum": 2, "name":"Total Dataverses", "Number of Dataverses": 2522, "running_total" : 2522, "month_sort" : "2018-02", "display_name":"February 2018: 29 New Dataverses"}
+    
+    
+    ]
+
+// data for dataverses added in one month -- not a cumulative total   
+
+  // instantiate d3plus
+
+  var dv_attributes = [
+    {"name": "Total Dataverses", "hex": "#CF3636"},
+    {"name": "Number of Dataverses", "hex": "#ffcc00"},
+    {"name": "Monthly Dataverses", "hex": "#ffcc00"}
+  ]
+
+document.addEventListener("DOMContentLoaded", function(event) {
+
+      var visualization = d3plus.viz()
+        .container("#viz-dataverses")  // container DIV to hold the visualization
+        .data(dataverse_counts_by_month)  // data to use with the visualization
+        .type("bar")       // visualization type
+        .id("name")         // key for which our data is unique on
+        .text("display_name")       // key to use for display text
+        .y({ "value":"Number of Dataverses",
+            "range": get_metrics_viz_range(dataverse_counts_by_month, 500)
+            })         // key to use for y-axis
+        .x({ "value":"Month"})          // key to use for x-axis
+        .attrs(dv_attributes)
+        .color("hex")
+        .order({
+            "sort": "asc",
+            "value": "month_sort"
+         })
+        .legend({"labels":true})
+        .resize(true)
+        .title("Dataverses Added Over Time")
+        //.footer("We could have a footer here about Dataverses.")
+        .draw()             // finally, draw the visualization!
+});
+</script>
+
+        </div>
+
+        <div class="col-xs-12 col-md-6">
+        <!-- NOTES: remember to name the visualization div with viz plus a unique ID# -->
+
+<div id="sql-dataverses">
+    
+        
+
+    
+</div>
+
+<div id="viz-dv-categories" class="viz"></div>
+
+<script>
+
+  // instantiate d3plus
+  var visualization = d3plus.viz()
+    .container("#viz-dv-categories")  // container DIV to hold the visualization
+    .data(dataverse_type_data)  // data to use with the visualization
+    .type("tree_map")   // visualization type
+    .id("name")         // key for which our data is unique on
+    .size("dataverse count")      // sizing of blocks
+    .color("dataverse count")
+    .legend(false)
+    .resize(true)
+    .title("Dataverses by Category")
+    .draw()             // finally, draw the visualization!
+</script>
+        </div>
+    </div>
+<!-- END: Dataverses -->
+
+ <!-- START: Datasets -->
+ <!--
+ <hr>
+
+  <div class="row">
+        <div class="col-xs-12 col-md-12">
+            <h3>Datasets</h3>
+        </div>
+    </div>
+-->
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+        
+<div id="viz-dataset_counts_by_month" class="viz"></div>
+<script>
+
+  // FIXME: Get datasets_by_month from Dataverse installation, once available.
+  var datasets_by_month = [
+    
+
+    {"Month": "April 2017", "monthNum": 4, "name":"Total Datasets", "Number of Datasets": 47902, "running_total" : 47902, "month_sort" : "2017-04",  "display_name":"April 2017: 350 new Datasets; Total of 47,902 "}
+    
+    ,
+    
+
+    {"Month": "May 2017", "monthNum": 5, "name":"Total Datasets", "Number of Datasets": 48117, "running_total" : 48117, "month_sort" : "2017-05",  "display_name":"May 2017: 215 new Datasets; Total of 48,117 "}
+    
+    ,
+    
+
+    {"Month": "June 2017", "monthNum": 6, "name":"Total Datasets", "Number of Datasets": 48384, "running_total" : 48384, "month_sort" : "2017-06",  "display_name":"June 2017: 267 new Datasets; Total of 48,384 "}
+    
+    ,
+    
+
+    {"Month": "July 2017", "monthNum": 7, "name":"Total Datasets", "Number of Datasets": 48650, "running_total" : 48650, "month_sort" : "2017-07",  "display_name":"July 2017: 266 new Datasets; Total of 48,650 "}
+    
+    ,
+    
+
+    {"Month": "August 2017", "monthNum": 8, "name":"Total Datasets", "Number of Datasets": 48963, "running_total" : 48963, "month_sort" : "2017-08",  "display_name":"August 2017: 313 new Datasets; Total of 48,963 "}
+    
+    ,
+    
+
+    {"Month": "September 2017", "monthNum": 9, "name":"Total Datasets", "Number of Datasets": 49122, "running_total" : 49122, "month_sort" : "2017-09",  "display_name":"September 2017: 159 new Datasets; Total of 49,122 "}
+    
+    ,
+    
+
+    {"Month": "October 2017", "monthNum": 10, "name":"Total Datasets", "Number of Datasets": 49337, "running_total" : 49337, "month_sort" : "2017-10",  "display_name":"October 2017: 215 new Datasets; Total of 49,337 "}
+    
+    ,
+    
+
+    {"Month": "November 2017", "monthNum": 11, "name":"Total Datasets", "Number of Datasets": 49483, "running_total" : 49483, "month_sort" : "2017-11",  "display_name":"November 2017: 146 new Datasets; Total of 49,483 "}
+    
+    ,
+    
+
+    {"Month": "December 2017", "monthNum": 12, "name":"Total Datasets", "Number of Datasets": 49666, "running_total" : 49666, "month_sort" : "2017-12",  "display_name":"December 2017: 183 new Datasets; Total of 49,666 "}
+    
+    ,
+    
+
+    {"Month": "January 2018", "monthNum": 1, "name":"Total Datasets", "Number of Datasets": 49967, "running_total" : 49967, "month_sort" : "2018-01",  "display_name":"January 2018: 301 new Datasets; Total of 49,967 "}
+    
+    ,
+    
+
+    {"Month": "February 2018", "monthNum": 2, "name":"Total Datasets", "Number of Datasets": 50152, "running_total" : 50152, "month_sort" : "2018-02",  "display_name":"February 2018: 185 new Datasets; Total of 50,152 "}
+    
+    
+    
+  ]
+
+  var y_axis_vals = [47902,48117,48384,48650,48963,49122,49337,49483,49666,49967,50152]
+
+
+  // instantiate d3plus
+   var dataset_attributes = [
+    {"name": "Total Datasets", "hex": "#E58433"},
+    {"name": "Monthly Datasets", "hex": "#ffcc00"}
+  ]
+
+
+document.addEventListener("DOMContentLoaded", function(event) {
+
+      var visualization = d3plus.viz()
+        .container("#viz-dataset_counts_by_month")  // container DIV to hold the visualization
+        .data(datasets_by_month)  // data to use with the visualization
+        .type("bar")       // visualization type
+        .id("name")         // key for which our data is unique on
+        .text({"html":"true", "value":"display_name"})       // key to use for display text
+        .y({"value" : "Number of Datasets",
+            "range": get_metrics_viz_range(datasets_by_month, 1000) })         // key to use for y-axis
+        .x({"value":"Month"})          // key to use for x-axis
+        .attrs(dataset_attributes)
+        .color("hex")
+        .order({
+            "sort": "asc",
+            "value": "month_sort"
+         })
+        .resize(true)
+        .title("Datasets Added Over Time")
+        .draw()             // finally, draw the visualization!
+    });
+
+</script>
+
+        </div>
+
+        <div class="col-xs-12 col-md-6">
+        
+
+<div id="viz-datasets_by_subject" class="viz"></div>
+<script>
+
+  // FIXME: Get dataset_counts_by_subject from Dataverse installation, once available.
+  var dataset_counts_by_subject = [
+    
+        {"value":1896,  "weight": 0.596, "type": "Social Sciences", "label":"Social Sciences (59.6%)"}
+        ,
+    
+        {"value":373,  "weight": 0.117, "type": "Medicine, Health and Life Sciences", "label":"Medicine, Health and Life Sciences (11.7%)"}
+        ,
+    
+        {"value":265,  "weight": 0.083, "type": "Agricultural Sciences", "label":"Agricultural Sciences (8.3%)"}
+        ,
+    
+        {"value":168,  "weight": 0.053, "type": "Earth and Environmental Sciences", "label":"Earth and Environmental Sciences (5.3%)"}
+        ,
+    
+        {"value":130,  "weight": 0.041, "type": "Computer and Information Science", "label":"Computer and Information Science (4.1%)"}
+        ,
+    
+        {"value":69,  "weight": 0.022, "type": "Other", "label":"Other (2.2%)"}
+        ,
+    
+        {"value":46,  "weight": 0.014, "type": "Arts and Humanities", "label":"Arts and Humanities (1.4%)"}
+        ,
+    
+        {"value":46,  "weight": 0.014, "type": "Business and Management", "label":"Business and Management (1.4%)"}
+        ,
+    
+        {"value":44,  "weight": 0.014, "type": "Engineering", "label":"Engineering (1.4%)"}
+        ,
+    
+        {"value":40,  "weight": 0.013, "type": "Astronomy and Astrophysics", "label":"Astronomy and Astrophysics (1.3%)"}
+        ,
+    
+        {"value":32,  "weight": 0.01, "type": "Chemistry", "label":"Chemistry (1.0%)"}
+        ,
+    
+        {"value":30,  "weight": 0.009, "type": "Law", "label":"Law (0.9%)"}
+        ,
+    
+        {"value":21,  "weight": 0.007, "type": "Mathematical Sciences", "label":"Mathematical Sciences (0.7%)"}
+        ,
+    
+        {"value":20,  "weight": 0.006, "type": "Physics", "label":"Physics (0.6%)"}
+        
+    
+    ]
+
+      // instantiate d3plus
+      var visualization = d3plus.viz()
+        .container("#viz-datasets_by_subject")     // container DIV to hold the visualization
+        .data(dataset_counts_by_subject)     // data to use with the visualization
+        .type("tree_map")       // visualization type
+        .id("type")            // nesting keys
+        .text("label")
+        .size("value")      // sizing of blocks
+        .color("weight")
+        .legend(false)
+        .title("Datasets by Subject")         // key name to size bubbles
+        .draw()                // finally, draw the visualization
+
+</script>
+
+        
+        </div>
+    </div>
+<!-- END: Datasets -->
+
+
+<!-- START: Files -->
+<!--
+<hr>
+
+    <div class="row">
+        <div class="col-xs-12 col-md-12">
+            <h3>Data Files</h3>
+        </div>
+    </div>
+-->
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        
+<!-- NOTES: remember to name the visualization div with viz plus a unique ID# -->
+
+<div id="viz-file_counts_by_month" class="viz"></div>
+<script>
+
+  // FIXME: get file_counts_by_month from Dataverse installation, once available.
+  var file_counts_by_month = [
+    
+
+    {"Month": "April 2017", "monthNum": 4, "name":"Total Files Added", "Number of Files": 348473, "running_total": 348473, "month_sort" : "2017-04", "display_name":"April 2017: 2,368 added / total: 348,473"}
+    
+    ,
+    
+
+    {"Month": "May 2017", "monthNum": 5, "name":"Total Files Added", "Number of Files": 350721, "running_total": 350721, "month_sort" : "2017-05", "display_name":"May 2017: 2,248 added / total: 350,721"}
+    
+    ,
+    
+
+    {"Month": "June 2017", "monthNum": 6, "name":"Total Files Added", "Number of Files": 355421, "running_total": 355421, "month_sort" : "2017-06", "display_name":"June 2017: 4,700 added / total: 355,421"}
+    
+    ,
+    
+
+    {"Month": "July 2017", "monthNum": 7, "name":"Total Files Added", "Number of Files": 359198, "running_total": 359198, "month_sort" : "2017-07", "display_name":"July 2017: 3,777 added / total: 359,198"}
+    
+    ,
+    
+
+    {"Month": "August 2017", "monthNum": 8, "name":"Total Files Added", "Number of Files": 362545, "running_total": 362545, "month_sort" : "2017-08", "display_name":"August 2017: 3,347 added / total: 362,545"}
+    
+    ,
+    
+
+    {"Month": "September 2017", "monthNum": 9, "name":"Total Files Added", "Number of Files": 363949, "running_total": 363949, "month_sort" : "2017-09", "display_name":"September 2017: 1,404 added / total: 363,949"}
+    
+    ,
+    
+
+    {"Month": "October 2017", "monthNum": 10, "name":"Total Files Added", "Number of Files": 366552, "running_total": 366552, "month_sort" : "2017-10", "display_name":"October 2017: 2,603 added / total: 366,552"}
+    
+    ,
+    
+
+    {"Month": "November 2017", "monthNum": 11, "name":"Total Files Added", "Number of Files": 368646, "running_total": 368646, "month_sort" : "2017-11", "display_name":"November 2017: 2,094 added / total: 368,646"}
+    
+    ,
+    
+
+    {"Month": "December 2017", "monthNum": 12, "name":"Total Files Added", "Number of Files": 371563, "running_total": 371563, "month_sort" : "2017-12", "display_name":"December 2017: 2,917 added / total: 371,563"}
+    
+    ,
+    
+
+    {"Month": "January 2018", "monthNum": 1, "name":"Total Files Added", "Number of Files": 374058, "running_total": 374058, "month_sort" : "2018-01", "display_name":"January 2018: 2,495 added / total: 374,058"}
+    
+    ,
+    
+
+    {"Month": "February 2018", "monthNum": 2, "name":"Total Files Added", "Number of Files": 375476, "running_total": 375476, "month_sort" : "2018-02", "display_name":"February 2018: 1,418 added / total: 375,476"}
+    
+    
+    
+    ]
+
+
+  // instantiate d3plus
+  var files_added_attributes = [
+    {"name": "Total Files Added", "hex": "#006699"},
+    {"name": "Monthly Files Added", "hex": "#ffcc00"}
+  ]
+
+document.addEventListener("DOMContentLoaded", function(event) {
+
+      var visualization = d3plus.viz()
+        .container("#viz-file_counts_by_month")  // container DIV to hold the visualization
+        .data(file_counts_by_month)  // data to use with the visualization
+        .type("bar")       // visualization type
+        .id("name")         // key for which our data is unique on
+        .text({"value":"display_name"})       // key to use for display text
+        .y({"value":"Number of Files",
+            "range": get_metrics_viz_range(file_counts_by_month, 50000) })         // key to use for y-axis
+        //.x({"stacked": true, "value": "month"}))          // key to use for x-axis
+        .x({"value":"Month"})
+        .attrs(files_added_attributes)
+        .color("hex")
+        .order({
+            "sort": "asc",
+            "value": "month_sort"
+         })
+        .resize(true)
+        .title("Files Added Over Time")
+        .draw()             // finally, draw the visualization!
+    });
+
+</script>
+
+      </div>
+
+      <div class="col-xs-12 col-md-6">
+          
+<!-- NOTES: remember to name the visualization div with viz plus a unique ID# -->
+<div id="viz-file-downloads" class="viz"></div>
+<script>
+
+  // FIXME: Get file_downloads_by_month from Dataverse installation, once available.
+  var file_downloads_by_month = [
+    
+
+    {"Month": "April 2017", "monthNum": 4, "name":"Total File Downloads", "Number of File Downloads": 2373718, "running_total": 2373718, "month_sort" : "2017-04", "display_name":"April 2017: 60,048 downloads / total: 2,373,718"}
+    ,
+    
+
+    {"Month": "May 2017", "monthNum": 5, "name":"Total File Downloads", "Number of File Downloads": 2487947, "running_total": 2487947, "month_sort" : "2017-05", "display_name":"May 2017: 114,229 downloads / total: 2,487,947"}
+    ,
+    
+
+    {"Month": "June 2017", "monthNum": 6, "name":"Total File Downloads", "Number of File Downloads": 2538816, "running_total": 2538816, "month_sort" : "2017-06", "display_name":"June 2017: 50,869 downloads / total: 2,538,816"}
+    ,
+    
+
+    {"Month": "July 2017", "monthNum": 7, "name":"Total File Downloads", "Number of File Downloads": 2590233, "running_total": 2590233, "month_sort" : "2017-07", "display_name":"July 2017: 51,417 downloads / total: 2,590,233"}
+    ,
+    
+
+    {"Month": "August 2017", "monthNum": 8, "name":"Total File Downloads", "Number of File Downloads": 2638263, "running_total": 2638263, "month_sort" : "2017-08", "display_name":"August 2017: 48,030 downloads / total: 2,638,263"}
+    ,
+    
+
+    {"Month": "September 2017", "monthNum": 9, "name":"Total File Downloads", "Number of File Downloads": 2700282, "running_total": 2700282, "month_sort" : "2017-09", "display_name":"September 2017: 62,019 downloads / total: 2,700,282"}
+    ,
+    
+
+    {"Month": "October 2017", "monthNum": 10, "name":"Total File Downloads", "Number of File Downloads": 2771613, "running_total": 2771613, "month_sort" : "2017-10", "display_name":"October 2017: 71,331 downloads / total: 2,771,613"}
+    ,
+    
+
+    {"Month": "November 2017", "monthNum": 11, "name":"Total File Downloads", "Number of File Downloads": 2859451, "running_total": 2859451, "month_sort" : "2017-11", "display_name":"November 2017: 87,838 downloads / total: 2,859,451"}
+    ,
+    
+
+    {"Month": "December 2017", "monthNum": 12, "name":"Total File Downloads", "Number of File Downloads": 2909762, "running_total": 2909762, "month_sort" : "2017-12", "display_name":"December 2017: 50,311 downloads / total: 2,909,762"}
+    ,
+    
+
+    {"Month": "January 2018", "monthNum": 1, "name":"Total File Downloads", "Number of File Downloads": 2979960, "running_total": 2979960, "month_sort" : "2018-01", "display_name":"January 2018: 70,198 downloads / total: 2,979,960"}
+    ,
+    
+
+    {"Month": "February 2018", "monthNum": 2, "name":"Total File Downloads", "Number of File Downloads": 3056446, "running_total": 3056446, "month_sort" : "2018-02", "display_name":"February 2018: 76,486 downloads / total: 3,056,446"}
+    
+    
+  ]
+
+/*  Used for seconary chart, downloads for that month
+
+*/
+
+  // instantiate d3plus
+  var files_downloaded_attributes = [
+    {"name": "Total File Downloads", "hex": "#b94617"},
+    {"name": "Monthly File Downloads", "hex": "#ffcc00"}
+  ]
+
+document.addEventListener("DOMContentLoaded", function(event) {
+
+      var visualization = d3plus.viz()
+        .container("#viz-file-downloads")  // container DIV to hold the visualization
+        .data(file_downloads_by_month)  // data to use with the visualization
+        .type("bar")       // visualization type
+        .id("name")         // key for which our data is unique on
+        .text({"value":"display_name"})       // key to use for display text
+        .y({"value" : "Number of File Downloads",
+            "range": get_metrics_viz_range(file_downloads_by_month, 50000) })         // key to use for y-axis
+        //.x({"stacked": true, "value": "month"}))          // key to use for x-axis
+        .x({"value":"Month"})
+        .attrs(files_downloaded_attributes)
+        .color("hex")
+        .order({
+            "sort": "asc",
+            "value": "month_sort"
+         })
+        .resize(true)
+        .title("File Downloads Over Time")
+        .draw()             // finally, draw the visualization!
+    });
+
+</script>
+
+      </div>
+    </div>
+<!-- END: Files -->
+
+
+ <!-- START: Footer/Timestamp -->
+    <div class="row">
+      <div class="col-xs-12">
+          <p class="help-block small">
+              <!-- FIXME: Do we want this time stamp? -->
+              Data used is published and available through the Dataverse API. Stats generated: ??th ????? YYYY HH:MM EDT
+          </p>
+      </div>
+    </div>
+<!-- END: Footer/Timestamp -->
+
+  </div>
+<!-- END: container -->
+
+    
+
+</body>
+</html>
