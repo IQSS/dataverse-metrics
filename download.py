@@ -1,8 +1,8 @@
 import json
 import sys
 import os
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
+from datetime import datetime, date
+import calendar
 try:
     import urllib.request as urlrequest
 except ImportError:
@@ -50,11 +50,19 @@ def process_monthly_endpoint(installation, endpoint, api_response_cache_dir, num
 
 def get_months(num_months_to_process):
     months = []
+    today = datetime.today()
     for i in range(num_months_to_process):
-        one_month_ago = datetime.today() - relativedelta(months=i)
-        last_month = one_month_ago.strftime('%Y-%m')
-        months.append(last_month)
+        months.append(subtract_months(today, i).strftime('%Y-%m'))
     return months
+
+
+# variation of https://stackoverflow.com/questions/4130922/how-to-increment-datetime-by-custom-months-in-python-without-using-library/4131114#4131114
+def subtract_months(sourcedate, months):
+    month = sourcedate.month - 1 - months
+    year = sourcedate.year + month // 12
+    month = month % 12 + 1
+    day = min(sourcedate.day, calendar.monthrange(year, month)[1])
+    return date(year, month, day)
 
 
 def get_remote_json(response):
