@@ -6,7 +6,7 @@ https://dataverse.org/metrics only shows metrics for Harvard Dataverse but our g
 
 Dataverse 4.9 and higher exposes metrics via API as JSON using a Metrics API that is documented at http://guides.dataverse.org/en/4.9.2/api/metrics.html
 
-Now that some Dataverse installations have been upgraded 4.9 and higher, we can start to the code in this repo to host a service that aggregates metrics across various Dataverse installations.
+Now that some Dataverse installations have been upgraded 4.9 and higher, we can start to use the code in this repo to host a service that aggregates metrics across various Dataverse installations.
 
 ## Requirements
 
@@ -27,11 +27,8 @@ Copy `config.json.sample` to `config.json` and edit the following values:
 - `installations`: An array of Dataverse installation URLs.
 - `api_response_cache_dir`: Fully qualified directory where JSON files representing API responses will be stored.
 - `aggregate_output_dir`: Fully qualified directory where TSV output files of aggregated metrics will be stored.
-
-You can probably ignore the other values in `config.json` but here are the descriptions:
-
 - `num_months_to_process`: For monthly metrics, the number of months to go back in time to download metrics from each Dataverse installation.
-- `endpoints`: An array of Metrics API endpoints to process (i.e. `datasets/bySubject`).
+- `endpoints`: An array of Metrics API endpoints to process. Note that the two types are `single` (i.e. `datasets/bySubject`) and `monthly` (i.e. `downloads/toMonth`).
 
 Now that your `config.json` file is ready, download the JSON files to the `api_response_cache` directory:
 
@@ -51,8 +48,6 @@ We love contributors! Please see our [Contributing Guide][] for ways you can hel
 
 - Add license.
 - Drop support for Python 2. See https://python3statement.org
-
-## Contact
 
 [Contributing Guide]: CONTRIBUTING.md
 [PEP 373]: https://www.python.org/dev/peps/pep-0373/
