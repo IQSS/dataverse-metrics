@@ -17,11 +17,6 @@
       "datasets/toMonth",
       "files/toMonth",
       "downloads/toMonth"
-    ],
-    "future_monthly": [
-      "datasets/toMonth",
-      "files/toMonth",
-      "downloads/toMonth"
     ]
   }
 }
