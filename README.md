@@ -50,7 +50,6 @@ We love contributors! Please see our [Contributing Guide][] for ways you can hel
 ## To Do
 
 - Add license.
-- Write tests.
 - Drop support for Python 2. See https://python3statement.org
 
 ## Contact
