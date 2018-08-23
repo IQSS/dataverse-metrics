@@ -6,7 +6,7 @@ https://dataverse.org/metrics only shows metrics for Harvard Dataverse but our g
 
 Dataverse 4.9 and higher exposes metrics via API as JSON using a Metrics API that is documented at http://guides.dataverse.org/en/4.9.2/api/metrics.html
 
-Now that some Dataverse installations have been upgraded 4.9 and higher, we can start to use the code in this repo to host a service that aggregates metrics across various Dataverse installations.
+Now that some Dataverse installations have been upgraded to 4.9 and higher, we can start to use the code in this repo to host a service that aggregates metrics across various Dataverse installations.
 
 ## Requirements
 
