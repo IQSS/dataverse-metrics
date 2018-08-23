@@ -45,5 +45,7 @@ We love contributors! Please see our [Contributing Guide][] for ways you can hel
 - Add license.
 - Drop support for Python 2. See https://python3statement.org
 
+[![Build Status](https://travis-ci.org/IQSS/metrics.dataverse.org.svg?branch=master)](https://travis-ci.org/IQSS/metrics.dataverse.org)
+
 [Contributing Guide]: CONTRIBUTING.md
 [PEP 373]: https://www.python.org/dev/peps/pep-0373/
