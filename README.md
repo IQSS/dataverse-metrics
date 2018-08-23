@@ -30,7 +30,7 @@ Copy `config.json.sample` to `config.json` and edit the following values:
 - `num_months_to_process`: For monthly metrics, the number of months to go back in time to download metrics from each Dataverse installation.
 - `endpoints`: An array of Metrics API endpoints to process. Note that the two types are `single` (i.e. `datasets/bySubject`) and `monthly` (i.e. `downloads/toMonth`).
 
-Now that your `config.json` file is ready, run the `metrics.py` script to create a TSV file for each endpoint in the `aggregate_output_dir` directory:
+Now that your `config.json` file is ready, run the `metrics.py` script to create a TSV file for each of the `endpoints`, which will be placed in the `aggregate_output_dir` directory:
 
     python3 metrics.py
 
