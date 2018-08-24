@@ -1,0 +1,22 @@
+{
+  "installations": [
+    "https://data.qdr.syr.edu",
+    "https://dataverse.harvard.edu",
+    "https://dataverse.lib.unb.ca"
+  ],
+  "api_response_cache_dir": "/var/www/metrics.dataverse.org/cache",
+  "aggregate_output_dir": "/var/www/metrics.dataverse.org",
+  "num_months_to_process": 12,
+  "endpoints": {
+    "single": [
+      "dataverses/byCategory",
+      "datasets/bySubject"
+    ],
+    "monthly": [
+      "dataverses/toMonth",
+      "datasets/toMonth",
+      "files/toMonth",
+      "downloads/toMonth"
+    ]
+  }
+}
