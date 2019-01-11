@@ -15,9 +15,11 @@
     "monthly": [
       "dataverses/toMonth",
       "datasets/toMonth",
-      "datasets/bySubject/toMonth",
       "files/toMonth",
       "downloads/toMonth"
+    ],
+    "monthly_itemized": [
+      "datasets/bySubject/toMonth"
     ]
   }
 }
