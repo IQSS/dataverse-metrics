@@ -39,6 +39,9 @@ def process_monthly_endpoints(installation, monthly_endpoints, api_response_cach
 def process_monthly_endpoint(installation, endpoint, api_response_cache_dir, num_months_to_process):
     for month in get_months(num_months_to_process):
         url = installation + '/api/info/metrics/' + endpoint + '/' + month
+        path = api_response_cache_dir + '/' + endpoint + '/' + month
+        if not os.path.exists(path):
+            os.makedirs(path)
         try: 
             response = urlrequest.urlopen(url)
         except: 
@@ -47,9 +50,6 @@ def process_monthly_endpoint(installation, endpoint, api_response_cache_dir, num
         json_out = get_remote_json(response)
         o = urlparse(installation)
         hostname = o.hostname
-        path = api_response_cache_dir + '/' + endpoint + '/' + month
-        if not os.path.exists(path):
-            os.makedirs(path)
         filename = hostname + '.json'
         with open(path + '/' + filename, 'w') as outfile:
             json.dump(json_out, outfile, indent=4)
