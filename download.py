@@ -22,9 +22,12 @@ def main():
     num_months_to_process = config['num_months_to_process']
     monthly_endpoints = config['endpoints']['monthly']
     single_endpoints = config['endpoints']['single']
+    monthly_itemized_endpoints = config['endpoints']['monthly_itemized']
 
     for installation in installations:
         process_monthly_endpoints(installation, monthly_endpoints, api_response_cache_dir, num_months_to_process)
+        # "monthly itemized" metrics are downloaded the same way as regular montly metrics:
+        process_monthly_endpoints(installation, monthly_itemized_endpoints, api_response_cache_dir, num_months_to_process)
         process_single_endpoints(installation, single_endpoints, api_response_cache_dir)
 
 
@@ -36,13 +39,17 @@ def process_monthly_endpoints(installation, monthly_endpoints, api_response_cach
 def process_monthly_endpoint(installation, endpoint, api_response_cache_dir, num_months_to_process):
     for month in get_months(num_months_to_process):
         url = installation + '/api/info/metrics/' + endpoint + '/' + month
-        response = urlrequest.urlopen(url)
-        json_out = get_remote_json(response)
-        o = urlparse(installation)
-        hostname = o.hostname
         path = api_response_cache_dir + '/' + endpoint + '/' + month
         if not os.path.exists(path):
             os.makedirs(path)
+        try: 
+            response = urlrequest.urlopen(url)
+        except: 
+            # assume that this endpoint is not supported by this (older) Dataverse instance - skip quietly (?)
+            break
+        json_out = get_remote_json(response)
+        o = urlparse(installation)
+        hostname = o.hostname
         filename = hostname + '.json'
         with open(path + '/' + filename, 'w') as outfile:
             json.dump(json_out, outfile, indent=4)
