@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dataverse Metrics</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js">
+    </script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js">
+    </script>
+    <script src="https://d3plus.org/js/d3.js">
+    </script>
+    <script src="https://d3plus.org/js/d3plus.js">
+    </script>
+    <script src="plots.js">
+    </script>
+    <link href="styles.css" media="screen" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <div id="dataverses-to-month" class="viz"></div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <div id="dataverses-by-category" class="viz"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <div id="datasets-to-month" class="viz"></div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <div id="datasets-by-subject" class="viz"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <div id="files-to-month" class="viz"></div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <div id="downloads-to-month" class="viz"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <p class="help-block small">Data generated from Dataverse APIs using code at <a href="https://github.com/IQSS/metrics.dataverse.org">https://github.com/IQSS/metrics.dataverse.org</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

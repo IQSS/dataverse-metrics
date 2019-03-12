@@ -1,7 +1,17 @@
 {
   "installations": [
+    "https://data.inra.fr",
     "https://data.qdr.syr.edu",
     "https://dataverse.harvard.edu",
+    "https://dataverse.lib.unb.ca",
+    "https://dataverse.lib.virginia.edu",
+    "https://dataverse.no",
+    "https://dataverse.scholarsportal.info",
+    "https://dataverse.tdl.org",
+    "https://dataverse.unc.edu",
+    "https://edatos.consorciomadrono.es",
+    "https://heidata.uni-heidelberg.de",
+    "https://researchdata.ntu.edu.sg",
     "https://dataverse.lib.unb.ca"
   ],
   "api_response_cache_dir": "/var/www/metrics.dataverse.org/cache",
