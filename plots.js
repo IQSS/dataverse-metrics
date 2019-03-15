@@ -5,6 +5,7 @@ $(document).ready(function() {
     datasetsBySubject();
     filesToMonth();
     downloadsToMonth();
+    populateInstallations();
 });
 
 function dataversesToMonth() {
@@ -224,4 +225,39 @@ function yAxisTruncation(metricArray, modNum) {
     var rangeStart = min - (min % modNum);
     var rangeEnd = max - (max % modNum) + modNum;
     return [rangeStart, rangeEnd];
+}
+
+function populateInstallations() {
+    loadJSON(function(response) {
+            var config = JSON.parse(response);
+            document.getElementById("installations").innerHTML = createListOfInstallations(config);
+        },
+        "config.json");
+}
+
+function createListOfInstallations(config) {
+    data = config["installations"];
+    var list = "<ul>";
+    for (var i = 0; i < data.length; ++i) {
+        list += "<li>";
+        list += "<a href=\"" + data[i] + "\">" + data[i] + "</a>";
+        list += "</li>";
+    }
+    return list += "</ul>";
+    return list;
+}
+
+// https://codepen.io/KryptoniteDove/post/load-json-file-locally-using-pure-javascript
+function loadJSON(callback, jsonFile) {
+
+    var xobj = new XMLHttpRequest();
+    xobj.overrideMimeType("application/json");
+    xobj.open('GET', jsonFile, true);
+    xobj.onreadystatechange = function() {
+        if (xobj.readyState == 4 && xobj.status == "200") {
+            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+            callback(xobj.responseText);
+        }
+    };
+    xobj.send(null);
 }
