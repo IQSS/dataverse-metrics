@@ -12,6 +12,7 @@ function dataversesToMonth() {
     d3.tsv("dataverses-toMonth.tsv", function(error, data) {
         if (error) return console.error(error);
         coerceToNumeric(data);
+        var yLabel = "Number of Dataverses";
         var visualization = d3plus.viz()
             .data(data)
             .title("Total Dataverses")
@@ -25,10 +26,19 @@ function dataversesToMonth() {
             .y({
                 //"range": yAxisTruncation(data, 500),
                 "value": "count",
-                "label": "Number of Dataverses"
+                "label": yLabel
             })
             .color(function(d) {
                 return "#cf3636";
+            })
+            .format({
+                "text": function(text, params) {
+                    if (text === "count") {
+                        return yLabel;
+                    } else {
+                        return d3plus.string.title(text, params);
+                    }
+                }
             })
             .resize(true)
             .draw()
@@ -83,6 +93,7 @@ function datasetsToMonth() {
     d3.tsv("datasets-toMonth.tsv", function(error, data) {
         if (error) return console.error(error);
         coerceToNumeric(data);
+        var yLabel = "Number of Datasets";
         var visualization = d3plus.viz()
             .data(data)
             .title("Total Datasets")
@@ -96,10 +107,19 @@ function datasetsToMonth() {
             .y({
                 //"range": yAxisTruncation(data, 10000),
                 "value": "count",
-                "label": "Number of Datasets"
+                "label": yLabel
             })
             .color(function(d) {
                 return "#e58433";
+            })
+            .format({
+                "text": function(text, params) {
+                    if (text === "count") {
+                        return yLabel;
+                    } else {
+                        return d3plus.string.title(text, params);
+                    }
+                }
             })
             .resize(true)
             .draw()
@@ -155,6 +175,7 @@ function filesToMonth() {
     d3.tsv("files-toMonth.tsv", function(error, data) {
         if (error) return console.error(error);
         coerceToNumeric(data);
+        var yLabel = "Number of Files";
         var visualization = d3plus.viz()
             .data(data)
             .title("Total Files")
@@ -168,10 +189,19 @@ function filesToMonth() {
             .y({
                 //"range": yAxisTruncation(data, 20000),
                 "value": "count",
-                "label": "Number of Files"
+                "label": yLabel
             })
             .color(function(d) {
                 return "#006699";
+            })
+            .format({
+                "text": function(text, params) {
+                    if (text === "count") {
+                        return yLabel;
+                    } else {
+                        return d3plus.string.title(text, params);
+                    }
+                }
             })
             .resize(true)
             .draw()
@@ -182,6 +212,7 @@ function downloadsToMonth() {
     d3.tsv("downloads-toMonth.tsv", function(error, data) {
         if (error) return console.error(error);
         coerceToNumeric(data);
+        var yLabel = "Number of File Downloads";
         var visualization = d3plus.viz()
             .data(data)
             .title("Total File Downloads")
@@ -195,10 +226,19 @@ function downloadsToMonth() {
             .y({
                 //"range": yAxisTruncation(data, 1000000),
                 "value": "count",
-                "label": "Number of File Downloads"
+                "label": yLabel
             })
             .color(function(d) {
                 return "#b94617";
+            })
+            .format({
+                "text": function(text, params) {
+                    if (text === "count") {
+                        return yLabel;
+                    } else {
+                        return d3plus.string.title(text, params);
+                    }
+                }
             })
             .resize(true)
             .draw()
