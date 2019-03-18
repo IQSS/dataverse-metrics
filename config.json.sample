@@ -31,5 +31,11 @@
     "monthly_itemized": [
       "datasets/bySubject/toMonth"
     ]
+  },
+  "blacklists": {
+    "datasets/bySubject": [
+      "Not specified",
+      "Other"
+    ]
   }
 }

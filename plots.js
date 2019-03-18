@@ -1,11 +1,15 @@
 $(document).ready(function() {
-    dataversesToMonth();
-    dataversesByCategory();
-    datasetsToMonth();
-    datasetsBySubject();
-    filesToMonth();
-    downloadsToMonth();
-    populateInstallations();
+    loadJSON(function(response) {
+            var config = JSON.parse(response);
+            dataversesToMonth();
+            dataversesByCategory();
+            datasetsToMonth();
+            datasetsBySubject(config);
+            filesToMonth();
+            downloadsToMonth();
+            populateInstallations();
+        },
+        "config.json");
 });
 
 function dataversesToMonth() {
@@ -139,7 +143,8 @@ function datasetsToMonth() {
     });
 };
 
-function datasetsBySubject() {
+function datasetsBySubject(config) {
+    subjectBlacklist = config["blacklists"]["datasets/bySubject"];
     d3.tsv("datasets-bySubject.tsv", function(error, data) {
         if (error) return console.error(error);
         var tileLabel = "Number of Datasets";
@@ -180,7 +185,7 @@ function datasetsBySubject() {
             .type("tree_map")
             .id("name")
             .id({
-                "mute": ["Not specified", "Other"]
+                "mute": subjectBlacklist
             })
             .size("count")
             .attrs(attributes)
