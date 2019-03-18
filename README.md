@@ -1,26 +1,25 @@
-# metrics.dataverse.org
+# dataverse-metrics
 
 ## Introduction
 
-https://dataverse.org/metrics only shows metrics for Harvard Dataverse but our goal is to show metrics for all installations of Dataverse around the world that are interested in displaying them.
+dataverse-metrics aggregates metrics from multiple Dataverse installations and visualizes them on a web page.
 
-Dataverse 4.9 and higher exposes metrics via API as JSON using a Metrics API that is documented at http://guides.dataverse.org/en/4.9.2/api/metrics.html
-
-Now that some Dataverse installations have been upgraded to 4.9 and higher, we can start to use the code in this repo to host a service that aggregates metrics across various Dataverse installations.
+dataverse-metrics was designed to aggregate metrics across all installations of Dataverse around the world, but can also be configured for a single installation of Dataverse. It makes use of the Dataverse [Metrics API][] that was added in Dataverse 4.9.
 
 ## Requirements
 
 - Python 2 or Python 3
+- a web browser
 
 ## Getting Started
 
 Clone the repo:
 
-    git clone https://github.com/IQSS/metrics.dataverse.org.git
+    git clone https://github.com/IQSS/dataverse-metrics.git
 
 Change to the directory you just created:
 
-    cd metrics.dataverse.org
+    cd dataverse-metrics
 
 Copy `config.json.sample` to `config.json` and edit the following values:
 
@@ -50,8 +49,9 @@ We love contributors! Please see our [Contributing Guide][] for ways you can hel
 - Add license.
 - Drop support for Python 2. See https://python3statement.org
 
-[![Build Status](https://travis-ci.org/IQSS/metrics.dataverse.org.svg?branch=master)](https://travis-ci.org/IQSS/metrics.dataverse.org)
+[![Build Status](https://travis-ci.org/IQSS/dataverse-metrics.svg?branch=master)](https://travis-ci.org/IQSS/dataverse-metrics)
 
+[Metrics API]: http://guides.dataverse.org/en/latest/api/metrics.html
 [map]: https://dataverse.org
 [Contributing Guide]: CONTRIBUTING.md
 [PEP 373]: https://www.python.org/dev/peps/pep-0373/

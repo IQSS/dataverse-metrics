@@ -10,7 +10,7 @@ Running your Javascript through [js-beautify][] is appreciated:
 
 Running your Python through [flake8][] is appreciated. Some day it would be nice to use [Black][].
 
-Please run tests with both `python test.py` (Python 2) and `python3 test.py` (Python 3). Both versions of Python are tested at https://travis-ci.org/IQSS/metrics.dataverse.org
+Please run tests with both `python test.py` (Python 2) and `python3 test.py` (Python 3). Both versions of Python are tested at https://travis-ci.org/IQSS/dataverse-metrics
 
 [tidy]: http://www.html-tidy.org
 [js-beautify]: https://pypi.org/project/jsbeautifier/

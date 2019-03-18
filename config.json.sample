@@ -13,8 +13,8 @@
     "https://heidata.uni-heidelberg.de",
     "https://researchdata.ntu.edu.sg"
   ],
-  "api_response_cache_dir": "/var/www/metrics.dataverse.org/cache",
-  "aggregate_output_dir": "/var/www/metrics.dataverse.org",
+  "api_response_cache_dir": "/var/www/dataverse-metrics/cache",
+  "aggregate_output_dir": "/var/www/dataverse-metrics",
   "num_months_to_process": 12,
   "endpoints": {
     "single": [
