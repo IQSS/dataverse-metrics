@@ -7,7 +7,7 @@ $(document).ready(function() {
             datasetsBySubject(config);
             filesToMonth();
             downloadsToMonth();
-            populateInstallations();
+            populateInstallations(config);
         },
         "config.json");
 });
@@ -301,12 +301,8 @@ function yAxisTruncation(metricArray, modNum) {
     return [rangeStart, rangeEnd];
 }
 
-function populateInstallations() {
-    loadJSON(function(response) {
-            var config = JSON.parse(response);
-            document.getElementById("installations").innerHTML = createListOfInstallations(config);
-        },
-        "config.json");
+function populateInstallations(config) {
+    document.getElementById("installations").innerHTML = createListOfInstallations(config);
 }
 
 function createListOfInstallations(config) {
