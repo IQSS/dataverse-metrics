@@ -48,6 +48,7 @@ function dataversesToMonth() {
 function dataversesByCategory() {
     d3.tsv("dataverses-byCategory.tsv", function(error, data) {
         if (error) return console.error(error);
+        var tileLabel = "Number of Dataverses";
         var attributes = [{
             "name": "Research Project",
             "hex": "#b22200"
@@ -83,6 +84,15 @@ function dataversesByCategory() {
             .size("count")
             .attrs(attributes)
             .color("hex")
+            .format({
+                "text": function(text, params) {
+                    if (text === "count") {
+                        return tileLabel;
+                    } else {
+                        return d3plus.string.title(text, params);
+                    }
+                }
+            })
             .legend(false)
             .resize(true)
             .draw()
@@ -129,6 +139,7 @@ function datasetsToMonth() {
 function datasetsBySubject() {
     d3.tsv("datasets-bySubject.tsv", function(error, data) {
         if (error) return console.error(error);
+        var tileLabel = "Number of Datasets";
         var attributes = [{
             "name": "Social Sciences",
             "hex": "#b22200"
@@ -165,6 +176,15 @@ function datasetsBySubject() {
             .size("count")
             .attrs(attributes)
             .color("hex")
+            .format({
+                "text": function(text, params) {
+                    if (text === "count") {
+                        return tileLabel;
+                    } else {
+                        return d3plus.string.title(text, params);
+                    }
+                }
+            })
             .legend(false)
             .resize(true)
             .draw()
