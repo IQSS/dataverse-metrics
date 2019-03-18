@@ -78,6 +78,9 @@ function dataversesByCategory() {
         var visualization = d3plus.viz()
             .data(data)
             .title("Dataverses by Category")
+            .title({
+                "total": true
+            })
             .container("#dataverses-by-category")
             .type("tree_map")
             .id("name")
@@ -170,6 +173,9 @@ function datasetsBySubject() {
         var visualization = d3plus.viz()
             .data(data)
             .title("Datasets by Subject")
+            .title({
+                "total": true
+            })
             .container("#datasets-by-subject")
             .type("tree_map")
             .id("name")
