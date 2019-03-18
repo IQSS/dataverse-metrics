@@ -179,6 +179,9 @@ function datasetsBySubject() {
             .container("#datasets-by-subject")
             .type("tree_map")
             .id("name")
+            .id({
+                "mute": ["Not specified", "Other"]
+            })
             .size("count")
             .attrs(attributes)
             .color("hex")
