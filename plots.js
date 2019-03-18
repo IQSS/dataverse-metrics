@@ -172,7 +172,7 @@ function datasetsBySubject() {
         coerceToNumeric(data);
         var visualization = d3plus.viz()
             .data(data)
-            .title("Datasets by Subject")
+            .title("Datasets by Most Common Subject")
             .title({
                 "total": true
             })
