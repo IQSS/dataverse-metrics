@@ -37,6 +37,10 @@ Now that your `config.json` file is ready, run the `metrics.py` script to create
 
 (Please note that if you don't have Python 3 installed, Python 2 should work fine too but Python 3 is highly recommended because Python 2 will not be maintained past January 1, 2020 according to https://pythonclock.org and [PEP 373][].)
 
+The list of Dataverse installations depends on `all-dataverse-installations.json` which can be updated with the following script as new installations are added to the [map][]:
+
+    ./update-all-installations-list.sh
+
 ## Contributing
 
 We love contributors! Please see our [Contributing Guide][] for ways you can help and check out the to do list below.
@@ -48,5 +52,6 @@ We love contributors! Please see our [Contributing Guide][] for ways you can hel
 
 [![Build Status](https://travis-ci.org/IQSS/metrics.dataverse.org.svg?branch=master)](https://travis-ci.org/IQSS/metrics.dataverse.org)
 
+[map]: https://dataverse.org
 [Contributing Guide]: CONTRIBUTING.md
 [PEP 373]: https://www.python.org/dev/peps/pep-0373/

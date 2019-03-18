@@ -302,16 +302,26 @@ function yAxisTruncation(metricArray, modNum) {
 }
 
 function populateInstallations(config) {
-    document.getElementById("installations").innerHTML = createListOfInstallations(config);
+    loadJSON(function(response) {
+            var allInstallations = JSON.parse(response);
+            document.getElementById("installations").innerHTML = createListOfInstallations(config, allInstallations);
+        },
+        "all-dataverse-installations.json");
 }
 
-function createListOfInstallations(config) {
-    data = config["installations"];
+function createListOfInstallations(config, allInstallations) {
+    all = allInstallations["installations"];
+    polled = config["installations"];
     var list = "<ul>";
-    for (var i = 0; i < data.length; ++i) {
-        list += "<li>";
-        list += "<a href=\"" + data[i] + "\">" + data[i] + "</a>";
-        list += "</li>";
+    for (var i = 0; i < all.length; ++i) {
+        // Some installations in the "all" file have a trailing slash.
+        url = all[i]["url"].replace(/\/+$/, '');
+        name = all[i]["name"]
+        if (polled.includes(url)) {
+            list += "<li>";
+            list += "<a href=\"" + url + "\">" + name + "</a>";
+            list += "</li>";
+        }
     }
     list += "</ul>";
     return list;

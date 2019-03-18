@@ -11,8 +11,7 @@
     "https://dataverse.unc.edu",
     "https://edatos.consorciomadrono.es",
     "https://heidata.uni-heidelberg.de",
-    "https://researchdata.ntu.edu.sg",
-    "https://dataverse.lib.unb.ca"
+    "https://researchdata.ntu.edu.sg"
   ],
   "api_response_cache_dir": "/var/www/metrics.dataverse.org/cache",
   "aggregate_output_dir": "/var/www/metrics.dataverse.org",
