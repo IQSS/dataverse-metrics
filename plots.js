@@ -303,7 +303,7 @@ function createListOfInstallations(config) {
         list += "<a href=\"" + data[i] + "\">" + data[i] + "</a>";
         list += "</li>";
     }
-    return list += "</ul>";
+    list += "</ul>";
     return list;
 }
 
