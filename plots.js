@@ -29,6 +29,7 @@ function dataversesToMonth() {
             })
             .y({
                 //"range": yAxisTruncation(data, 500),
+                "range": [0, data[data.length - 1].count * 1.3],
                 "value": "count",
                 "label": yLabel
             })
@@ -123,6 +124,7 @@ function datasetsToMonth() {
             })
             .y({
                 //"range": yAxisTruncation(data, 10000),
+                "range": [0, data[data.length - 1].count * 1.3],
                 "value": "count",
                 "label": yLabel
             })
@@ -222,6 +224,7 @@ function filesToMonth() {
             })
             .y({
                 //"range": yAxisTruncation(data, 20000),
+                "range": [0, data[data.length - 1].count * 1.3],
                 "value": "count",
                 "label": yLabel
             })
@@ -259,6 +262,7 @@ function downloadsToMonth() {
             })
             .y({
                 //"range": yAxisTruncation(data, 1000000),
+                "range": [0, data[data.length - 1].count * 1.3],
                 "value": "count",
                 "label": yLabel
             })
