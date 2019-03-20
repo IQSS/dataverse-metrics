@@ -54,31 +54,6 @@ function dataversesByCategory() {
     d3.tsv("dataverses-byCategory.tsv", function(error, data) {
         if (error) return console.error(error);
         var tileLabel = "Number of Dataverses";
-        var attributes = [{
-            "name": "Research Project",
-            "hex": "#b22200"
-        }, {
-            "name": "Researcher",
-            "hex": "#b2390c"
-        }, {
-            "name": "Research Group",
-            "hex": "#3f8c8e"
-        }, {
-            "name": "Organization or Institution",
-            "hex": "#3b7c88"
-        }, {
-            "name": "Journal",
-            "hex": "#366881"
-        }, {
-            "name": "Laboratory",
-            "hex": "#32587b",
-        }, {
-            "name": "Department",
-            "hex": "#282f6b"
-        }, {
-            "name": "Teaching Course",
-            "hex": "#282f6b"
-        }];
         coerceToNumeric(data);
         var visualization = d3plus.viz()
             .data(data)
@@ -90,8 +65,19 @@ function dataversesByCategory() {
             .type("tree_map")
             .id("name")
             .size("count")
-            .attrs(attributes)
-            .color("hex")
+            .color({
+                value: "count",
+                heatmap: [
+                    "#282f6b",
+                    "#32587b",
+                    "#366881",
+                    "#3b7c88",
+                    "#3b7c88",
+                    "#3f8c8e",
+                    "#b2390c",
+                    "#b22200",
+                ]
+            })
             .format({
                 "text": function(text, params) {
                     if (text === "count") {
@@ -150,32 +136,6 @@ function datasetsBySubject(config) {
     d3.tsv("datasets-bySubject.tsv", function(error, data) {
         if (error) return console.error(error);
         var tileLabel = "Number of Datasets";
-        var attributes = [{
-            "name": "Social Sciences",
-            "hex": "#b22200"
-        }, {
-            "name": "#b2390c not used",
-            "hex": "#b2390c"
-        }, {
-            "name": "Medicine, Health and Life Sciences",
-            "hex": "#3f8c8e"
-        }, {
-            "name": "Agricultural Sciences",
-            "hex": "#3b7c88"
-        }, {
-            "name": "Physics",
-            "hex": "#3b7c88"
-        }, {
-            "name": "Arts and Humanities",
-            "hex": "#366881"
-
-        }, {
-            "name": "Earth and Environmental Sciences",
-            "hex": "#32587b",
-        }, {
-            "name": "Computer and Information Science",
-            "hex": "#282f6b"
-        }];
         coerceToNumeric(data);
         var visualization = d3plus.viz()
             .data(data)
@@ -190,8 +150,19 @@ function datasetsBySubject(config) {
                 "mute": subjectBlacklist
             })
             .size("count")
-            .attrs(attributes)
-            .color("hex")
+            .color({
+                value: "count",
+                heatmap: [
+                    "#282f6b",
+                    "#32587b",
+                    "#366881",
+                    "#3b7c88",
+                    "#3b7c88",
+                    "#3f8c8e",
+                    "#b2390c",
+                    "#b22200",
+                ]
+            })
             .format({
                 "text": function(text, params) {
                     if (text === "count") {
