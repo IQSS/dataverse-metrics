@@ -1,18 +1,19 @@
 $(document).ready(function() {
     loadJSON(function(response) {
             var config = JSON.parse(response);
-            dataversesToMonth();
-            dataversesByCategory();
-            datasetsToMonth();
+            dataversesToMonth(config);
+            dataversesByCategory(config);
+            datasetsToMonth(config);
             datasetsBySubject(config);
-            filesToMonth();
-            downloadsToMonth();
+            filesToMonth(config);
+            downloadsToMonth(config);
             populateInstallations(config);
         },
         "config.json");
 });
 
-function dataversesToMonth() {
+function dataversesToMonth(config) {
+    var color = config["colors"]["dataverses/toMonth"];
     d3.tsv("dataverses-toMonth.tsv", function(error, data) {
         if (error) return console.error(error);
         coerceToNumeric(data);
@@ -34,7 +35,7 @@ function dataversesToMonth() {
                 "label": yLabel
             })
             .color(function(d) {
-                return "#cf3636";
+                return color;
             })
             .format({
                 "text": function(text, params) {
@@ -50,7 +51,8 @@ function dataversesToMonth() {
     });
 };
 
-function dataversesByCategory() {
+function dataversesByCategory(config) {
+    var colors = config["colors"]["dataverses/byCategory"];
     d3.tsv("dataverses-byCategory.tsv", function(error, data) {
         if (error) return console.error(error);
         var tileLabel = "Number of Dataverses";
@@ -67,16 +69,7 @@ function dataversesByCategory() {
             .size("count")
             .color({
                 value: "count",
-                heatmap: [
-                    "#282f6b",
-                    "#32587b",
-                    "#366881",
-                    "#3b7c88",
-                    "#3b7c88",
-                    "#3f8c8e",
-                    "#b2390c",
-                    "#b22200",
-                ]
+                heatmap: colors.reverse()
             })
             .format({
                 "text": function(text, params) {
@@ -93,7 +86,8 @@ function dataversesByCategory() {
     });
 };
 
-function datasetsToMonth() {
+function datasetsToMonth(config) {
+    var color = config["colors"]["datasets/toMonth"];
     d3.tsv("datasets-toMonth.tsv", function(error, data) {
         if (error) return console.error(error);
         coerceToNumeric(data);
@@ -115,7 +109,7 @@ function datasetsToMonth() {
                 "label": yLabel
             })
             .color(function(d) {
-                return "#e58433";
+                return color;
             })
             .format({
                 "text": function(text, params) {
@@ -133,6 +127,7 @@ function datasetsToMonth() {
 
 function datasetsBySubject(config) {
     subjectBlacklist = config["blacklists"]["datasets/bySubject"];
+    var colors = config["colors"]["datasets/bySubject"];
     d3.tsv("datasets-bySubject.tsv", function(error, data) {
         if (error) return console.error(error);
         var tileLabel = "Number of Datasets";
@@ -152,16 +147,7 @@ function datasetsBySubject(config) {
             .size("count")
             .color({
                 value: "count",
-                heatmap: [
-                    "#282f6b",
-                    "#32587b",
-                    "#366881",
-                    "#3b7c88",
-                    "#3b7c88",
-                    "#3f8c8e",
-                    "#b2390c",
-                    "#b22200",
-                ]
+                heatmap: colors.reverse()
             })
             .format({
                 "text": function(text, params) {
@@ -178,7 +164,8 @@ function datasetsBySubject(config) {
     });
 };
 
-function filesToMonth() {
+function filesToMonth(config) {
+    var color = config["colors"]["files/toMonth"];
     d3.tsv("files-toMonth.tsv", function(error, data) {
         if (error) return console.error(error);
         coerceToNumeric(data);
@@ -200,7 +187,7 @@ function filesToMonth() {
                 "label": yLabel
             })
             .color(function(d) {
-                return "#006699";
+                return color;
             })
             .format({
                 "text": function(text, params) {
@@ -216,7 +203,8 @@ function filesToMonth() {
     });
 };
 
-function downloadsToMonth() {
+function downloadsToMonth(config) {
+    var color = config["colors"]["downloads/toMonth"];
     d3.tsv("downloads-toMonth.tsv", function(error, data) {
         if (error) return console.error(error);
         coerceToNumeric(data);
@@ -238,7 +226,7 @@ function downloadsToMonth() {
                 "label": yLabel
             })
             .color(function(d) {
-                return "#b94617";
+                return color;
             })
             .format({
                 "text": function(text, params) {

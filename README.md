@@ -29,6 +29,7 @@ Copy `config.json.sample` to `config.json` and edit the following values:
 - `num_months_to_process`: For monthly metrics, the number of months to go back in time to download metrics from each Dataverse installation.
 - `endpoints`: An array of Metrics API endpoints to process. Note that the three types are `single` (e.g. `datasets/bySubject`), `monthly` (e.g. `downloads/toMonth`) and `monthly_itemized` (at the time of the writing, the only supported endpoint of this type is `datasets/bySubject/toMonth` - this is a hybrid of the first two types, where the `datasets/bySubjects` metrics are broken down by month). 
 - `blacklists`: Arrays of terms to blacklist. Only the `datasets/bySubject` endpoint can have a blacklist.
+- `colors`: A single color for bar charts and a palette of colors for tree maps.
 
 Now that your `config.json` file is ready, run the `metrics.py` script to create a TSV file for each of the `endpoints`, which will be placed in the `aggregate_output_dir` directory:
 
