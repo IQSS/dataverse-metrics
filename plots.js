@@ -273,13 +273,13 @@ function populateInstallations(config) {
 }
 
 function createListOfInstallations(config, allInstallations) {
-    var all = allInstallations["installations"];
-    var polled = config["installations"];
+    var all = allInstallations.installations;
+    var polled = config.installations;
     var list = "<ul>";
     for (var i = 0; i < all.length; ++i) {
         // Some installations in the "all" file have a trailing slash.
-        var url = all[i]["url"].replace(/\/+$/, '');
-        var name = all[i]["name"];
+        var url = all[i].url.replace(/\/+$/, '');
+        var name = all[i].name;
         if (polled.includes(url)) {
             list += "<li>";
             list += "<a href=\"" + url + "\">" + name + "</a>";
