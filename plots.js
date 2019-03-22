@@ -47,9 +47,9 @@ function dataversesToMonth(config) {
                 }
             })
             .resize(true)
-            .draw()
+            .draw();
     });
-};
+}
 
 function dataversesByCategory(config) {
     var colors = config["colors"]["dataverses/byCategory"];
@@ -82,9 +82,9 @@ function dataversesByCategory(config) {
             })
             .legend(false)
             .resize(true)
-            .draw()
+            .draw();
     });
-};
+}
 
 function datasetsToMonth(config) {
     var color = config["colors"]["datasets/toMonth"];
@@ -121,12 +121,12 @@ function datasetsToMonth(config) {
                 }
             })
             .resize(true)
-            .draw()
+            .draw();
     });
-};
+}
 
 function datasetsBySubject(config) {
-    subjectBlacklist = config["blacklists"]["datasets/bySubject"];
+    var subjectBlacklist = config["blacklists"]["datasets/bySubject"];
     var colors = config["colors"]["datasets/bySubject"];
     d3.tsv("datasets-bySubject.tsv", function(error, data) {
         if (error) return console.error(error);
@@ -160,9 +160,9 @@ function datasetsBySubject(config) {
             })
             .legend(false)
             .resize(true)
-            .draw()
+            .draw();
     });
-};
+}
 
 function filesToMonth(config) {
     var color = config["colors"]["files/toMonth"];
@@ -199,9 +199,9 @@ function filesToMonth(config) {
                 }
             })
             .resize(true)
-            .draw()
+            .draw();
     });
-};
+}
 
 function downloadsToMonth(config) {
     var color = config["colors"]["downloads/toMonth"];
@@ -238,20 +238,20 @@ function downloadsToMonth(config) {
                 }
             })
             .resize(true)
-            .draw()
+            .draw();
     });
-};
+}
 
 function coerceToNumeric(data) {
     data.forEach(function(d) {
         d3.keys(d).forEach(function(k) {
             if (k == "count") {
-                d[k] = +d[k]
+                d[k] = +d[k];
             }
         });
     });
     return data;
-};
+}
 
 function yAxisTruncation(metricArray, modNum) {
     var min = metricArray[0].count;
@@ -273,13 +273,13 @@ function populateInstallations(config) {
 }
 
 function createListOfInstallations(config, allInstallations) {
-    all = allInstallations["installations"];
-    polled = config["installations"];
+    var all = allInstallations["installations"];
+    var polled = config["installations"];
     var list = "<ul>";
     for (var i = 0; i < all.length; ++i) {
         // Some installations in the "all" file have a trailing slash.
-        url = all[i]["url"].replace(/\/+$/, '');
-        name = all[i]["name"]
+        var url = all[i]["url"].replace(/\/+$/, '');
+        var name = all[i]["name"];
         if (polled.includes(url)) {
             list += "<li>";
             list += "<a href=\"" + url + "\">" + name + "</a>";
