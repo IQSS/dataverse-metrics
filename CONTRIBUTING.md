@@ -10,7 +10,7 @@ Running your Javascript through [js-beautify][] is appreciated:
 
 If you would like to run your code through jshint ([2.6.3][] for now), this command is suggested:
 
-    java -jar rhino-1.7.9.jar jshint-rhino.js plots.js undef=true,maxerr=999
+    java -jar rhino-1.7.9.jar jshint-rhino.js plots.js undef=true,devel=true,maxerr=999
 
 Running your Python through [flake8][] is appreciated. Some day it would be nice to use [Black][].
 
