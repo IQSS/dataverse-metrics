@@ -37,7 +37,7 @@ Now that your `config.json` file is ready, run the `metrics.py` script to create
 
 (Please note that if you don't have Python 3 installed, Python 2 should work fine too but Python 3 is highly recommended because Python 2 will not be maintained past January 1, 2020 according to https://pythonclock.org and [PEP 373][].)
 
-The list of Dataverse installations depends on `all-dataverse-installations.json` which can be updated with the following script as new installations are added to the [map][]:
+The list of Dataverse installations depends on `all-dataverse-installations.json` which can be updated with the following script as new installations are added to the [map][] produced by [miniverse][]:
 
     ./update-all-installations-list.sh
 
@@ -54,5 +54,6 @@ We love contributors! Please see our [Contributing Guide][] for ways you can hel
 
 [Metrics API]: http://guides.dataverse.org/en/latest/api/metrics.html
 [map]: https://dataverse.org
+[miniverse]: https://github.com/IQSS/miniverse
 [Contributing Guide]: CONTRIBUTING.md
 [PEP 373]: https://www.python.org/dev/peps/pep-0373/
