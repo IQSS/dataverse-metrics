@@ -41,21 +41,11 @@
     "dataverses/toMonth": "#CF3636",
     "dataverses/byCategory": [
       "#B22200",
-      "#B2390C",
-      "#3F8C8E",
-      "#3B7C88",
-      "#366881",
-      "#32587B",
       "#282F6B"
     ],
     "datasets/toMonth": "#E58433",
     "datasets/bySubject": [
       "#B22200",
-      "#B2390C",
-      "#3F8C8E",
-      "#3B7C88",
-      "#366881",
-      "#32587B",
       "#282F6B"
     ],
     "files/toMonth": "#006699",
