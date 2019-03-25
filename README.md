@@ -9,17 +9,26 @@ dataverse-metrics was designed to aggregate metrics across all installations of 
 ## Requirements
 
 - Python 2 or Python 3
+- Apache web server or similar
 - a web browser
 
-## Getting Started
+## Installation
+
+### Put code into place
+
+Change to the parent directory for where you will install dataverse-metrics. `/var/www/html` is the default "DocumentRoot" for Apache on CentOS (defined in `/etc/httpd/conf/httpd.conf`) and is suggested as a place to install dataverse-metrics, but you are welcome to install it wherever you want and use any server you want.
+
+    cd /var/www/html
 
 Clone the repo:
 
     git clone https://github.com/IQSS/dataverse-metrics.git
 
-Change to the directory you just created:
+Change to the directory you just created by cloning the repo:
 
     cd dataverse-metrics
+
+### Configuration
 
 Copy `config.json.sample` to `config.json` and edit the following values:
 
@@ -31,11 +40,19 @@ Copy `config.json.sample` to `config.json` and edit the following values:
 - `blacklists`: Arrays of terms to blacklist. Only the `datasets/bySubject` endpoint can have a blacklist.
 - `colors`: A single color for bar charts and a palette of colors for tree maps.
 
+### Aggregating metrics
+
 Now that your `config.json` file is ready, run the `metrics.py` script to create a TSV file for each of the `endpoints`, which will be placed in the `aggregate_output_dir` directory:
 
     python3 metrics.py
 
 (Please note that if you don't have Python 3 installed, Python 2 should work fine too but Python 3 is highly recommended because Python 2 will not be maintained past January 1, 2020 according to https://pythonclock.org and [PEP 373][].)
+
+### Viewing the visualizations
+
+Using the instructions above, index.html has been placed at /var/www/html/dataverse-metrics/index.html and should be available on your Apache server at http://example.com/dataverse-metrics/index.html
+
+### Adding additional installations
 
 The list of Dataverse installations depends on `all-dataverse-installations.json` which can be updated with the following script as new installations are added to the [map][] produced by [miniverse][]:
 
