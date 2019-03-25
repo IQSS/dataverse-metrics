@@ -28,7 +28,6 @@
       "downloads/toMonth"
     ],
     "monthly_itemized": [
-      "datasets/bySubject/toMonth"
     ]
   },
   "blacklists": {
