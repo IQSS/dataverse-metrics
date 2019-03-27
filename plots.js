@@ -267,6 +267,9 @@ function yAxisTruncation(metricArray, modNum) {
 function populateInstallations(config) {
     loadJSON(function(response) {
             var allInstallations = JSON.parse(response);
+            if (config.installations.length === 1) {
+                document.getElementById("discrepancies").hidden = true;
+            }
             document.getElementById("installations").innerHTML = createListOfInstallations(config, allInstallations);
         },
         "all-dataverse-installations.json");
