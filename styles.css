@@ -1,0 +1,12 @@
+.viz {
+    height: 500px;
+    margin: 3em;
+}
+
+/* http://guides.dataverse.org/en/4.11/style/foundations.html#link-colors */
+a {
+  color: #337AB7;
+}
+a:hover {
+  color: #23527C;
+}

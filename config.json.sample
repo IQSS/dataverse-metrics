@@ -1,11 +1,20 @@
 {
   "installations": [
+    "https://data.inra.fr",
     "https://data.qdr.syr.edu",
     "https://dataverse.harvard.edu",
-    "https://dataverse.lib.unb.ca"
+    "https://dataverse.lib.unb.ca",
+    "https://dataverse.lib.virginia.edu",
+    "https://dataverse.no",
+    "https://dataverse.scholarsportal.info",
+    "https://dataverse.tdl.org",
+    "https://dataverse.unc.edu",
+    "https://edatos.consorciomadrono.es",
+    "https://heidata.uni-heidelberg.de",
+    "https://researchdata.ntu.edu.sg"
   ],
-  "api_response_cache_dir": "/var/www/metrics.dataverse.org/cache",
-  "aggregate_output_dir": "/var/www/metrics.dataverse.org",
+  "api_response_cache_dir": "/var/www/html/dataverse-metrics/cache",
+  "aggregate_output_dir": "/var/www/html/dataverse-metrics",
   "num_months_to_process": 12,
   "endpoints": {
     "single": [
@@ -19,7 +28,26 @@
       "downloads/toMonth"
     ],
     "monthly_itemized": [
-      "datasets/bySubject/toMonth"
     ]
+  },
+  "blacklists": {
+    "datasets/bySubject": [
+      "Not specified",
+      "Other"
+    ]
+  },
+  "colors": {
+    "dataverses/toMonth": "#CF3636",
+    "dataverses/byCategory": [
+      "#B22200",
+      "#006699"
+    ],
+    "datasets/toMonth": "#E58433",
+    "datasets/bySubject": [
+      "#B22200",
+      "#006699"
+    ],
+    "files/toMonth": "#006699",
+    "downloads/toMonth": "#B94617"
   }
 }

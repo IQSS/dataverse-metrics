@@ -1,0 +1,9 @@
+indent: auto
+indent-spaces: 4
+wrap: 0
+tidy-mark: no
+# Support for "integrity" added in https://github.com/htacg/tidy-html5/pull/442
+drop-proprietary-attributes: yes
+# We know comments get moved:
+# - https://github.com/htacg/tidy-html5/issues/808
+# - https://stackoverflow.com/questions/537112/html-tidy-dont-move-those-comments
