@@ -40,12 +40,12 @@
     "dataverses/toMonth": "#CF3636",
     "dataverses/byCategory": [
       "#B22200",
-      "#282F6B"
+      "#32587B"
     ],
     "datasets/toMonth": "#E58433",
     "datasets/bySubject": [
       "#B22200",
-      "#282F6B"
+      "#32587B"
     ],
     "files/toMonth": "#006699",
     "downloads/toMonth": "#B94617"
