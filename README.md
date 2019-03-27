@@ -64,7 +64,6 @@ We love contributors! Please see our [Contributing Guide][] for ways you can hel
 
 ## To Do
 
-- Add license.
 - Drop support for Python 2. See https://python3statement.org
 
 [![Build Status](https://travis-ci.org/IQSS/dataverse-metrics.svg?branch=master)](https://travis-ci.org/IQSS/dataverse-metrics)
