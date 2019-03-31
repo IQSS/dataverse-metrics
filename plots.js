@@ -285,7 +285,7 @@ function createListOfInstallations(config, allInstallations) {
         var name = all[i].name;
         if (polled.includes(url)) {
             list += "<li>";
-            list += "<a href=\"" + url + "\">" + name + "</a>";
+            list += "<a href=\"" + url + "\" target=\"_blank\">" + name + "</a>";
             list += "</li>";
         }
     }
