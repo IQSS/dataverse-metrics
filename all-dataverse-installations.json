@@ -80,15 +80,15 @@
     },
     {
       "id": 1741,
-      "name": "CIMMYT",
-      "full_name": "CIMMYT Dataverse",
+      "name": "CIMMYT Research Data",
+      "full_name": "International Maize and Wheat Improvement Center",
       "is_active": true,
       "description": "Free, open access repository of research data and software produced and developed by CIMMYT scientists.",
       "lat": 19.531535,
       "lng": -98.846064,
       "logo": "https://dvn-h-prod.hz.lib.harvard.edu/media/logos/cimmyt-46x46.jpg",
       "url": "http://data.cimmyt.org/",
-      "slug": "cimmyt",
+      "slug": "cimmyt-research-data",
       "version": "3.0"
     },
     {
@@ -210,7 +210,7 @@
     },
     {
       "id": 1745,
-      "name": "Harvard University",
+      "name": "Harvard Dataverse",
       "full_name": "Harvard University",
       "is_active": true,
       "description": "Share, archive, and get credit for your data. Find and cite data across all research fields.",
@@ -218,7 +218,7 @@
       "lng": -71.116629,
       "logo": "https://dvn-h-prod.hz.lib.harvard.edu/media/logos/harvard-46x46.png",
       "url": "https://dataverse.harvard.edu",
-      "slug": "harvard-university",
+      "slug": "harvard-dataverse",
       "version": "4.8.4"
     },
     {
@@ -365,6 +365,19 @@
       "version": "3.5.1"
     },
     {
+      "id": 1786,
+      "name": "NIE Data Repository",
+      "full_name": "National Institute of Education",
+      "is_active": true,
+      "description": "NIE Data Repository is the institutional open access research data repository for National Institute of Education, Singapore. NIE researchers are encouraged to use NIE Data Repository to deposit, publish and archive their final research data in order to make their research data discoverable, accessible and reusable.",
+      "lat": 1.349115,
+      "lng": 103.678829,
+      "logo": "https://dvn-h-prod.hz.lib.harvard.edu/media/logos/nie-46x46.png",
+      "url": "https://researchdata.nie.edu.sg",
+      "slug": "nie-data-repository",
+      "version": "4.10.1"
+    },
+    {
       "id": 1752,
       "name": "Peking University",
       "full_name": "Peking University",
@@ -402,6 +415,19 @@
       "url": "http://dataverse.ufabc.edu.br",
       "slug": "repositorio-de-dados-de-pesquisa-da-ufabc",
       "version": "4.8.5"
+    },
+    {
+      "id": 1785,
+      "name": "Repositório de Dados de Pesquisa do ILEEL",
+      "full_name": "Institute of Linguistics and Literature (Federal University of Uberlândia)",
+      "is_active": true,
+      "description": "Research data repository of Institute of Linguistics and Literature / Federal University of Uberlandia",
+      "lat": -18.908702,
+      "lng": -48.291944,
+      "logo": "https://dvn-h-prod.hz.lib.harvard.edu/media/logos/ileel-46x46_JPxxGBm.png",
+      "url": "http://dataverse.ileel.ufu.br",
+      "slug": "repositorio-de-dados-de-pesquisa-do-ileel",
+      "version": "4.11"
     },
     {
       "id": 1758,
