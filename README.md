@@ -79,5 +79,6 @@ We love contributors! Please see our [Contributing Guide][] for ways you can hel
 [Metrics API]: http://guides.dataverse.org/en/latest/api/metrics.html
 [map]: https://dataverse.org
 [miniverse]: https://github.com/IQSS/miniverse
+[cron]: https://en.wikipedia.org/wiki/Cron
 [Contributing Guide]: CONTRIBUTING.md
 [PEP 373]: https://www.python.org/dev/peps/pep-0373/
