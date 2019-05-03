@@ -1,0 +1,2 @@
+# min	hour	daymo	month	daywk	user	cmd
+9	6	*	*	1	user	/opt/update_metrics.sh

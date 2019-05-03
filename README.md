@@ -58,6 +58,14 @@ The list of Dataverse installations depends on `all-dataverse-installations.json
 
     ./update-all-installations-list.sh
 
+### Updating Metrics
+
+To update your metrics periodically, you'll want to queue up a shell script in some flavor of [cron][].
+
+Here's an [example shell script](update_metrics.sh) to get you started.
+
+On a Red Hat or CentOS system, you might drop a file like [update_metrics.cron](update_metrics.cron) into /etc/cron.d/ to update on a specified schedule.
+
 ## Contributing
 
 We love contributors! Please see our [Contributing Guide][] for ways you can help and check out the to do list below.
@@ -71,5 +79,6 @@ We love contributors! Please see our [Contributing Guide][] for ways you can hel
 [Metrics API]: http://guides.dataverse.org/en/latest/api/metrics.html
 [map]: https://dataverse.org
 [miniverse]: https://github.com/IQSS/miniverse
+[cron]: https://en.wikipedia.org/wiki/Cron
 [Contributing Guide]: CONTRIBUTING.md
 [PEP 373]: https://www.python.org/dev/peps/pep-0373/
