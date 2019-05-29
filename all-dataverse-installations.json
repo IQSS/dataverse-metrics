@@ -219,7 +219,7 @@
       "logo": "https://dvn-h-prod.hz.lib.harvard.edu/media/logos/harvard-46x46.png",
       "url": "https://dataverse.harvard.edu",
       "slug": "harvard-dataverse",
-      "version": "4.8.4"
+      "version": "4.12"
     },
     {
       "id": 1746,
@@ -347,7 +347,7 @@
       "lat": -6.228771,
       "lng": 106.818082,
       "logo": "https://dvn-h-prod.hz.lib.harvard.edu/media/logos/LIPI-46x46.png",
-      "url": "https://rin.lipi.go.id",
+      "url": "https://data.lipi.go.id",
       "slug": "lipi-dataverse",
       "version": "4.6.2"
     },
@@ -363,6 +363,19 @@
       "url": "http://dataverse.acg.maine.edu/dvn/",
       "slug": "maine-dataverse-network",
       "version": "3.5.1"
+    },
+    {
+      "id": 1787,
+      "name": "MELDATA",
+      "full_name": "International Center for Agriculture Research in the Dry Areas",
+      "is_active": true,
+      "description": "The Dataverse portal of the International Center for Agricultural Research in Dry Ares.",
+      "lat": 33.88863,
+      "lng": 35.49548,
+      "logo": "https://dvn-h-prod.hz.lib.harvard.edu/media/logos/meldata-46x46.png",
+      "url": "http://data.mel.cgiar.org",
+      "slug": "meldata",
+      "version": "4.8.5"
     },
     {
       "id": 1786,
@@ -430,6 +443,19 @@
       "version": "4.11"
     },
     {
+      "id": 1789,
+      "name": "Repositorio de datos de invesigacion",
+      "full_name": "Universidad del Rosario",
+      "is_active": true,
+      "description": "",
+      "lat": 4.600598,
+      "lng": -74.073352,
+      "logo": "https://dvn-h-prod.hz.lib.harvard.edu/media/logos/dir-46x46.png",
+      "url": "http://research-data.urosario.edu.co/",
+      "slug": "repositorio-de-datos-de-invesigacion",
+      "version": "4.9.4"
+    },
+    {
       "id": 1758,
       "name": "Scholars Portal",
       "full_name": "Scholars Portal Dataverse",
@@ -467,6 +493,19 @@
       "url": "https://dataverse.library.ualberta.ca/dvn/",
       "slug": "ual-dataverse",
       "version": "4.5.1"
+    },
+    {
+      "id": 1788,
+      "name": "UCLA Dataverse",
+      "full_name": "UCLA Data Science Center",
+      "is_active": true,
+      "description": "",
+      "lat": 34.0689,
+      "lng": -118.4452,
+      "logo": "https://dvn-h-prod.hz.lib.harvard.edu/media/logos/ucla-46x46.png",
+      "url": "https://dataverse.ucla.edu/dataverse/dataverse",
+      "slug": "ucla-dataverse",
+      "version": "4.13"
     },
     {
       "id": 1772,
