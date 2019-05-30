@@ -16,6 +16,8 @@ def main():
     process_monthly_endpoints(monthly_endpoints, api_response_cache_dir, aggregate_output_dir)
     process_single_endpoints(single_endpoints, api_response_cache_dir, aggregate_output_dir)
     process_monthly_itemized_endpoints(monthly_itemized_endpoints, api_response_cache_dir, aggregate_output_dir)
+    process_github_contributors(api_response_cache_dir, aggregate_output_dir)
+
 
 def process_monthly_endpoints(monthly_endpoints, api_response_cache_dir, aggregate_output_dir):
     for endpoint in monthly_endpoints:
@@ -103,6 +105,42 @@ def process_monthly_itemized_endpoints(monthly_itemized_endpoints, api_response_
                             totals[name] = count + last_count
                 for name in sorted(totals):
                     writer.writerow([month, name, totals[name]])
+
+
+def process_github_contributors(api_response_cache_dir, aggregate_output_dir):
+    github_dir = api_response_cache_dir + '/' + 'contributors' + '/' + 'github.com'
+    contributors_by_repo = []
+    for owner in os.listdir(github_dir):
+        owner_dir = github_dir + '/' + owner
+        for repo in os.listdir(owner_dir):
+            ids, usernames, urls, avatars = [], [], [], []
+            repo_url = 'https://github.com/' + owner + '/' + repo
+            repo_dir = owner_dir + '/' + repo
+            path_and_json_file = repo_dir + '/' + 'contributors.json'
+            try:
+                with open(path_and_json_file) as f:
+                    json_data = json.load(f)
+                    for contributor in json_data:
+                        github_id = contributor['author']['id']
+                        github_username = contributor['author']['login']
+                        github_url = contributor['author']['html_url']
+                        github_avatar = contributor['author']['avatar_url']
+                        ids.append(github_id)
+                        usernames.append(github_username)
+                        urls.append(github_url)
+                        avatars.append(github_avatar)
+
+                contributors = [{"username": u, "url": url, "avatar": avatar, "id": gid} for u, url, avatar, gid in zip(usernames, urls, avatars, ids)]
+                repo_info = {}
+                repo_info['url'] = repo_url
+                repo_info['contributors'] = contributors
+                contributors_by_repo.append(repo_info)
+            except FileNotFoundError:
+                pass
+
+    contributors_filename = 'contributors.json'
+    with open(contributors_filename, 'w') as f:
+        json.dump(contributors_by_repo, f, indent=4, ensure_ascii=True)
 
 
 if __name__ == '__main__':

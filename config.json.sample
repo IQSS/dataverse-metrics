@@ -51,5 +51,8 @@
     ],
     "files/toMonth": "#006699",
     "downloads/toMonth": "#B94617"
-  }
+  },
+  "github_repos": [
+    "https://github.com/IQSS/dataverse"
+  ]
 }
