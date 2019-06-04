@@ -40,10 +40,11 @@ Copy `config.json.sample` to `config.json` and edit the following values:
 - `endpoints`: An array of Metrics API endpoints to process. Note that the two types are `single` (i.e. `datasets/bySubject`) and `monthly` (i.e. `downloads/toMonth`). (You will notice a third type called `monthly_itemized` in `config.json.sample` but it is not yet supported.)
 - `blacklists`: Arrays of terms to blacklist. Only the `datasets/bySubject` endpoint can have a blacklist.
 - `colors`: A single color for bar charts and a palette of colors for tree maps.
+- `github_repos`: An array of GitHub repos such as `https://github.com/IQSS/dataverse`. A line will be added per repo about the number of contributors.
 
 ### Aggregating metrics
 
-Now that your `config.json` file is ready, run the `metrics.py` script to create a TSV file for each of the `endpoints`, which will be placed in the `aggregate_output_dir` directory:
+Now that your `config.json` file is ready, run the `metrics.py` script to create a TSV file for each of the `endpoints` and a `contributors.json` file for the `github_repos`, all of which will be placed in the `aggregate_output_dir` directory:
 
     python3 metrics.py
 
