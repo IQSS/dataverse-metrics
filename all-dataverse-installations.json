@@ -444,15 +444,15 @@
     },
     {
       "id": 1789,
-      "name": "Repositorio de datos de invesigacion",
+      "name": "Repositorio de Datos de Investigación Universidad del Rosario",
       "full_name": "Universidad del Rosario",
       "is_active": true,
-      "description": "",
+      "description": "Explore research data from Universidad del Rosario affiliated researchers.",
       "lat": 4.600598,
       "lng": -74.073352,
-      "logo": "https://dvn-h-prod.hz.lib.harvard.edu/media/logos/dir-46x46.png",
+      "logo": "https://dvn-h-prod.hz.lib.harvard.edu/media/logos/ur-46x46_ohTqcfg.png",
       "url": "http://research-data.urosario.edu.co/",
-      "slug": "repositorio-de-datos-de-invesigacion",
+      "slug": "repositorio-de-datos-de-investigacion-universidad-del-rosario",
       "version": "4.9.4"
     },
     {
