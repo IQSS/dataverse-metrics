@@ -209,6 +209,19 @@
       "version": "4.x"
     },
     {
+      "id": 1791,
+      "name": "Göttingen Research Online",
+      "full_name": "Göttingen eResearch Alliance",
+      "is_active": true,
+      "description": "Göttingen Research Online is an institutional repository for the publication of research data at the Göttingen Campus. It is managed by the Göttingen eResearch Alliance, a joint group of the Göttingen State and University Library and Gesellschaft für wissenschaftliche Datenverarbeitung mbH Göttingen.",
+      "lat": 51.533713,
+      "lng": 9.932198,
+      "logo": "https://dvn-h-prod.hz.lib.harvard.edu/media/logos/gottingen-46x46_ZryDdtE.jpg",
+      "url": "https://data.gro.uni-goettingen.de/",
+      "slug": "gottingen-research-online",
+      "version": "4.14"
+    },
+    {
       "id": 1745,
       "name": "Harvard Dataverse",
       "full_name": "Harvard University",
@@ -532,6 +545,19 @@
       "url": "https://dataverse.unc.edu/",
       "slug": "unc-dataverse",
       "version": "4.7.1"
+    },
+    {
+      "id": 1790,
+      "name": "Università degli Studi di Milano",
+      "full_name": "University of Milan",
+      "is_active": true,
+      "description": "The University of Milan is home to important research teams operating in the university's extremely rich variety of scientific-disciplinary sectors. Besides taking part in the most relevant national and international research programs, the University is also very active in the field of technology transfer and developing applications for scientific research results. dataverse.unimi.it is the repository for research data offered to all researchers in disciplines from health sciences to laws, from economics to hard sciences, from humanities to mathematics.",
+      "lat": 45.4601,
+      "lng": 9.1946,
+      "logo": "https://dvn-h-prod.hz.lib.harvard.edu/media/logos/milan-46x46.png",
+      "url": "https://dataverse.unimi.it/",
+      "slug": "universita-degli-studi-di-milano",
+      "version": null
     },
     {
       "id": 1765,
