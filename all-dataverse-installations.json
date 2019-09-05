@@ -516,7 +516,7 @@
       "lat": 34.0689,
       "lng": -118.4452,
       "logo": "https://dvn-h-prod.hz.lib.harvard.edu/media/logos/ucla-46x46.png",
-      "url": "https://dataverse.ucla.edu/dataverse/dataverse",
+      "url": "https://dataverse.ucla.edu",
       "slug": "ucla-dataverse",
       "version": "4.13"
     },
