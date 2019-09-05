@@ -144,6 +144,19 @@
       "version": "4.2"
     },
     {
+      "id": 1792,
+      "name": "Data Suds",
+      "full_name": "French Research Institute for Development",
+      "is_active": true,
+      "description": "Hosted by IRD, a french public research institution, who defends an original model of equitable scientific partnership with the countries of the South and an interdisciplinary and citizen science, committed to the achievement of the Sustainable Development Goals.",
+      "lat": 43.309873,
+      "lng": 5.368818,
+      "logo": "https://dvn-h-prod.hz.lib.harvard.edu/media/logos/ird-46x46.png",
+      "url": "https://dataverse.ird.fr",
+      "slug": "data-suds",
+      "version": "4.14"
+    },
+    {
       "id": 1762,
       "name": "Dataverse e-cienciaDatos",
       "full_name": "Dataverse e-cienciaDatos",
