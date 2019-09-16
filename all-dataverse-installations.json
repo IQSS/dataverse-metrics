@@ -430,6 +430,19 @@
       "version": "4.0"
     },
     {
+      "id": 1793,
+      "name": "Pontificia Universidad Católica del Perú",
+      "full_name": "Pontificia Universidad Católica del Perú",
+      "is_active": true,
+      "description": "El Instituto de Opinión Pública de la Pontificia Universidad Católica del Perú (IOP) se creó a finales del 2005 con la finalidad de generar un mayor conocimiento acerca de los fenómenos que interesan, preocupan y afectan a la sociedad peruana. Teniendo como eje metodológico el estudio de la opinión pública, el IOP investiga las creencias, actitudes y sentimientos que configuran las dinámicas sociales en el Perú.",
+      "lat": -12.068924,
+      "lng": -77.079338,
+      "logo": "https://dvn-h-prod.hz.lib.harvard.edu/media/logos/pucp-46x46.png",
+      "url": "http://datos.pucp.edu.pe",
+      "slug": "pontificia-universidad-catolica-del-peru",
+      "version": "4.13"
+    },
+    {
       "id": 1781,
       "name": "QDR Main Collection",
       "full_name": "Qualitative Data Repository",
