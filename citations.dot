@@ -1,0 +1,43 @@
+digraph {
+  graph [ dpi = 300 ]; 
+  rankdir="TB";
+  node [fontsize=10]
+  num_citations [label="1000 Citations"]
+  by_installation [label="48 Installations"]
+  by_date [label="30 years"]
+  by_subject [label="126 Subjects"]
+
+  inst_na [label="381 in North America"]
+  inst_eu [label="294 in Europe"]
+
+  2019 [label="367 in 2019"]
+  2018 [label="284 in 2018"]
+
+  subj_ag [label=" 132 in Agricultural Sciences"]
+  subj_ah [label=" 82 in Arts and Humanities"]
+
+  num_citations -> by_installation
+  num_citations -> by_date
+  num_citations -> by_subject
+
+  by_installation -> inst_na
+  by_installation -> inst_eu
+
+  by_date -> 2019
+  by_date -> 2018
+
+  by_subject -> subj_ag
+  by_subject -> subj_ah
+
+  subgraph first {
+    rank="same"
+    by_date
+    by_subject
+  }
+
+  subgraph second {
+    rank="same"
+    inst_na
+    inst_eu
+  }
+}
