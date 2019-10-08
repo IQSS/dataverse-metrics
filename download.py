@@ -1,7 +1,8 @@
 import json
 import sys
 import os
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
+import datetime as DT
 import calendar
 try:
     import urllib.request as urlrequest
@@ -20,20 +21,57 @@ def main():
     installations = config['installations']
     api_response_cache_dir = config['api_response_cache_dir']
     num_months_to_process = config['num_months_to_process']
+    num_days_to_process = config['num_days_to_process']
     monthly_endpoints = config['endpoints']['monthly']
+    daily_endpoints = config['endpoints']['daily']
     single_endpoints = config['endpoints']['single']
     monthly_itemized_endpoints = config['endpoints']['monthly_itemized']
     github_repos = config.get('github_repos')
 
     for installation in installations:
-        process_monthly_endpoints(installation, monthly_endpoints, api_response_cache_dir, num_months_to_process)
+        process_daily_endpoints(installation, daily_endpoints, api_response_cache_dir, num_days_to_process)
+        pass
+#        process_monthly_endpoints(installation, monthly_endpoints, api_response_cache_dir, num_months_to_process)
         # "monthly itemized" metrics are downloaded the same way as regular montly metrics:
-        process_monthly_endpoints(installation, monthly_itemized_endpoints, api_response_cache_dir, num_months_to_process)
-        process_single_endpoints(installation, single_endpoints, api_response_cache_dir)
+#        process_monthly_endpoints(installation, monthly_itemized_endpoints, api_response_cache_dir, num_months_to_process)
+#        process_single_endpoints(installation, single_endpoints, api_response_cache_dir)
 
     if github_repos:
         for repo in github_repos:
-          process_github_repo(repo, api_response_cache_dir)
+          pass
+#          process_github_repo(repo, api_response_cache_dir)
+
+
+def process_daily_endpoints(installation, daily_endpoints, api_response_cache_dir, num_days_to_process):
+    for endpoint in daily_endpoints:
+        process_daily_endpoint(installation, endpoint, api_response_cache_dir, num_days_to_process)
+
+def process_daily_endpoint(installation, endpoint, api_response_cache_dir, num_days_to_process):
+    dvtype = endpoint.split('/')[0]
+    todayobj = datetime.today()
+    today = todayobj.strftime('%Y-%m-%d')
+    start_date = '2019-09-30'
+    earlier_date = todayobj - DT.timedelta(days= num_days_to_process + 1)
+    start_date = earlier_date.strftime('%Y-%m-%d')
+    # 1000 is the max! Iterate in the future if need be.
+    per_page = str(1000)
+    optionalHarvestedString = ''
+    if (dvtype == 'dataset'):
+        # the minus sign ("-") means NOT, not harvested
+        optionalHarvestedString = '&fq=-metadataSource%3A"Harvested"'
+    # fq=dateSort:[2015-05-01T00\:00\:00Z+TO+2015-05-10T00\:00\:00Z]
+    url = installation + '/api/search?q=*&per_page=' + per_page + '&type=' + dvtype + optionalHarvestedString + '&fq=dateSort:[' + start_date + 'T00\:00\:00Z+TO+' + today + 'T00\:00\:00Z]'
+    print(url)
+    path = api_response_cache_dir + '/daily/'  + dvtype
+    if not os.path.exists(path):
+        os.makedirs(path)
+    response = urlrequest.urlopen(url)
+    json_out = get_remote_json(response)
+    o = urlparse(installation)
+    hostname = o.hostname
+    filename = hostname + '.json'
+    with open(path + '/' + filename, 'w') as outfile:
+        json.dump(json_out, outfile, indent=4)
 
 
 def process_monthly_endpoints(installation, monthly_endpoints, api_response_cache_dir, num_months_to_process):

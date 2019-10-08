@@ -1,0 +1,52 @@
+{
+  "installations": [
+    "https://data.inra.fr",
+    "https://data.qdr.syr.edu",
+    "https://dataverse.harvard.edu"
+  ],
+  "api_response_cache_dir": "/Users/pdurbin/github/iqss/dataverse-metrics/cache",
+  "aggregate_output_dir": "/Users/pdurbin/github/iqss/dataverse-metrics",
+  "num_months_to_process": 12,
+  "num_days_to_process": 7,
+  "endpoints": {
+    "single": [
+      "dataverses/byCategory",
+      "datasets/bySubject"
+    ],
+    "daily": [
+      "dataverse/published",
+      "dataset/published"
+    ],
+    "monthly": [
+      "dataverses/toMonth",
+      "datasets/toMonth",
+      "files/toMonth",
+      "downloads/toMonth"
+    ],
+    "monthly_itemized": [
+    ]
+  },
+  "blacklists": {
+    "datasets/bySubject": [
+      "Not specified",
+      "Other"
+    ]
+  },
+  "colors": {
+    "dataverses/toMonth": "#CF3636",
+    "dataverses/byCategory": [
+      "#B22200",
+      "#006699"
+    ],
+    "datasets/toMonth": "#E58433",
+    "datasets/bySubject": [
+      "#B22200",
+      "#006699"
+    ],
+    "files/toMonth": "#006699",
+    "downloads/toMonth": "#B94617"
+  },
+    "github_repos": [
+    "https://github.com/IQSS/dataverse"
+  ]
+}
