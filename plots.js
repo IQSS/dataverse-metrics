@@ -14,8 +14,14 @@ $(document).ready(function() {
 
 function dataversesToMonth(config) {
     var color = config["colors"]["dataverses/toMonth"];
+    var month_filter_enabled = config["month_filter_enabled"];
     d3.tsv("dataverses-toMonth.tsv", function(error, data) {
         if (error) return console.error(error);
+        if (month_filter_enabled) {
+            data = data.filter(function(d) {
+                return parseInt(d.month.split('-')[1]) % 2 == 0;
+            })
+        }
         coerceToNumeric(data);
         var yLabel = "Number of Dataverses";
         var visualization = d3plus.viz()
@@ -88,8 +94,14 @@ function dataversesByCategory(config) {
 
 function datasetsToMonth(config) {
     var color = config["colors"]["datasets/toMonth"];
+    var month_filter_enabled = config["month_filter_enabled"];
     d3.tsv("datasets-toMonth.tsv", function(error, data) {
         if (error) return console.error(error);
+        if (month_filter_enabled) {
+            data = data.filter(function(d) {
+                return parseInt(d.month.split('-')[1]) % 2 == 0;
+            })
+        }
         coerceToNumeric(data);
         var yLabel = "Number of Datasets";
         var visualization = d3plus.viz()
@@ -166,8 +178,14 @@ function datasetsBySubject(config) {
 
 function filesToMonth(config) {
     var color = config["colors"]["files/toMonth"];
+    var month_filter_enabled = config["month_filter_enabled"];
     d3.tsv("files-toMonth.tsv", function(error, data) {
         if (error) return console.error(error);
+        if (month_filter_enabled) {
+            data = data.filter(function(d) {
+                return parseInt(d.month.split('-')[1]) % 2 == 0;
+            })
+        }
         coerceToNumeric(data);
         var yLabel = "Number of Files";
         var visualization = d3plus.viz()
@@ -205,8 +223,14 @@ function filesToMonth(config) {
 
 function downloadsToMonth(config) {
     var color = config["colors"]["downloads/toMonth"];
+    var month_filter_enabled = config["month_filter_enabled"];
     d3.tsv("downloads-toMonth.tsv", function(error, data) {
         if (error) return console.error(error);
+        if (month_filter_enabled) {
+            data = data.filter(function(d) {
+                return parseInt(d.month.split('-')[1]) % 2 == 0;
+            })
+        }
         coerceToNumeric(data);
         var yLabel = "Number of File Downloads";
         var visualization = d3plus.viz()
@@ -285,7 +309,7 @@ function createListOfInstallations(config, allInstallations) {
         var name = all[i].name;
         if (polled.includes(url)) {
             list += "<li>";
-            list += "<a href=\"" + url + "\">" + name + "</a>";
+            list += "<a href=\"" + url + "\" target=\"_blank\">" + name + "</a>";
             list += "</li>";
         }
     }

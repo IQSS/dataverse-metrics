@@ -23,12 +23,17 @@ def main():
     monthly_endpoints = config['endpoints']['monthly']
     single_endpoints = config['endpoints']['single']
     monthly_itemized_endpoints = config['endpoints']['monthly_itemized']
+    github_repos = config.get('github_repos')
 
     for installation in installations:
         process_monthly_endpoints(installation, monthly_endpoints, api_response_cache_dir, num_months_to_process)
         # "monthly itemized" metrics are downloaded the same way as regular montly metrics:
         process_monthly_endpoints(installation, monthly_itemized_endpoints, api_response_cache_dir, num_months_to_process)
         process_single_endpoints(installation, single_endpoints, api_response_cache_dir)
+
+    if github_repos:
+        for repo in github_repos:
+          process_github_repo(repo, api_response_cache_dir)
 
 
 def process_monthly_endpoints(installation, monthly_endpoints, api_response_cache_dir, num_months_to_process):
@@ -94,6 +99,29 @@ def process_single_endpoint(installation, endpoint, api_response_cache_dir):
     if not os.path.exists(path):
         os.makedirs(path)
     filename = hostname + '.json'
+    with open(path + '/' + filename, 'w') as outfile:
+        json.dump(json_out, outfile, indent=4)
+
+def process_github_repo(repo, api_response_cache_dir):
+    o = urlparse(repo)
+    path = o.path
+    owner = path.split('/')[1]
+    repo = path.split('/')[2]
+    url = 'https://api.github.com/repos/' + owner + '/' + repo + '/stats/contributors'
+    try:
+        response = urlrequest.urlopen(url)
+    except Exception as e:
+        # For Python 2 compatibility, handle errors later when calling get_remote_json
+        pass
+    try:
+        json_out = get_remote_json(response)
+    except Exception as e:
+        sys.stderr.write('Unable to retrieve JSON from ' + url + '\n')
+        return
+    path = api_response_cache_dir + '/' + "contributors" + '/' + "github.com" + '/' + owner + '/' + repo
+    if not os.path.exists(path):
+        os.makedirs(path)
+    filename = 'contributors.json'
     with open(path + '/' + filename, 'w') as outfile:
         json.dump(json_out, outfile, indent=4)
 

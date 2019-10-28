@@ -18,6 +18,7 @@
   "api_response_cache_dir": "/var/www/html/dataverse-metrics/cache",
   "aggregate_output_dir": "/var/www/html/dataverse-metrics",
   "num_months_to_process": 12,
+  "month_filter_enabled": false,
   "endpoints": {
     "single": [
       "dataverses/byCategory",
@@ -51,5 +52,8 @@
     ],
     "files/toMonth": "#006699",
     "downloads/toMonth": "#B94617"
-  }
+  },
+  "github_repos": [
+    "https://github.com/IQSS/dataverse"
+  ]
 }
