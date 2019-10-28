@@ -1,4 +1,5 @@
 import json
+import ssl
 import sys
 import os
 from datetime import datetime, date
@@ -24,6 +25,9 @@ def main():
     single_endpoints = config['endpoints']['single']
     monthly_itemized_endpoints = config['endpoints']['monthly_itemized']
     github_repos = config.get('github_repos')
+
+    # trust SSL certificates
+    ssl._create_default_https_context = ssl._create_unverified_context
 
     for installation in installations:
         process_monthly_endpoints(installation, monthly_endpoints, api_response_cache_dir, num_months_to_process)
@@ -91,7 +95,10 @@ def process_single_endpoints(installation, single_endpoints, api_response_cache_
 
 def process_single_endpoint(installation, endpoint, api_response_cache_dir):
     url = installation + '/api/info/metrics/' + endpoint
-    response = urlrequest.urlopen(url)
+    try:
+        response = urlrequest.urlopen(url)
+    except Exception as e:
+        print(installation + " had an oops: " + str(e))
     json_out = get_remote_json(response)
     o = urlparse(installation)
     hostname = o.hostname
