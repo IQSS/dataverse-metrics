@@ -56,7 +56,7 @@ Using the instructions above, index.html has been placed at /var/www/html/datave
 
 ### Adding additional installations
 
-The list of Dataverse installations depends on `all-dataverse-installations.json` which can be updated with the following script as new installations are added to the [map][] produced by [miniverse][]:
+The list of Dataverse installations depends on `all-dataverse-installations.json` which can be updated with the following script as new installations are added to the [map][] produced by [dataverse-installations][]:
 
     ./update-all-installations-list.sh
 
@@ -79,8 +79,8 @@ We love contributors! Please see our [Contributing Guide][] for ways you can hel
 [![Build Status](https://travis-ci.org/IQSS/dataverse-metrics.svg?branch=master)](https://travis-ci.org/IQSS/dataverse-metrics)
 
 [Metrics API]: http://guides.dataverse.org/en/latest/api/metrics.html
-[map]: https://dataverse.org
-[miniverse]: https://github.com/IQSS/miniverse
+[map]: https://dataverse.org/installations
+[dataverse-installations]: https://github.com/IQSS/dataverse-installations
 [cron]: https://en.wikipedia.org/wiki/Cron
 [Contributing Guide]: CONTRIBUTING.md
 [PEP 373]: https://www.python.org/dev/peps/pep-0373/
