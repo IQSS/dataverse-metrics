@@ -302,14 +302,19 @@ function populateInstallations(config) {
 function createListOfInstallations(config, allInstallations) {
     var all = allInstallations.installations;
     var polled = config.installations;
+    var polledHostnames = [];
+    for (var i = 0; i < polled.length; ++i) {
+        var url = new URL(polled[i]);
+        var hostname = url.hostname;
+        polledHostnames.push(hostname);
+    }
     var list = "<ul>";
     for (var i = 0; i < all.length; ++i) {
-        // Some installations in the "all" file have a trailing slash.
-        var url = all[i].url.replace(/\/+$/, '');
+        var hostname = all[i].hostname;
         var name = all[i].name;
-        if (polled.includes(url)) {
+        if (polledHostnames.includes(hostname)) {
             list += "<li>";
-            list += "<a href=\"" + url + "\" target=\"_blank\">" + name + "</a>";
+            list += "<a href=\"http://" + hostname + "\" target=\"_blank\">" + name + "</a>";
             list += "</li>";
         }
     }
