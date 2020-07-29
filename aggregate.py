@@ -45,6 +45,8 @@ def process_monthly_endpoints(monthly_endpoints, api_response_cache_dir, aggrega
 
 def process_single_endpoints(single_endpoints, api_response_cache_dir, aggregate_output_dir):
     for endpoint in single_endpoints:
+        if endpoint == '../version':
+            endpoint = 'version'
         jsondir = api_response_cache_dir + '/' + endpoint + '/'
         totals = {}
         for item in os.listdir(jsondir):
@@ -56,10 +58,18 @@ def process_single_endpoints(single_endpoints, api_response_cache_dir, aggregate
                     for name_and_count in json_data['data']:
                         if endpoint == 'dataverses/byCategory':
                             metric_type = 'category'
+                        elif endpoint == 'version':
+                            metric_type= 'version'
                         else:
                             metric_type = 'subject'
                         name = name_and_count[metric_type]
-                        count = name_and_count['count']
+                        if endpoint== 'version':
+                            if name[0] == 'V':
+                                name=name[1:]
+                            name = name.split('-')[0]    
+                            count=1
+                        else: 
+                            count = name_and_count['count']
                         last_count = totals.get(name, 0)
                         totals[name] = count + last_count
         metric_filename = endpoint.replace('/', '-') + '.tsv'

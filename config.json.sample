@@ -42,7 +42,8 @@
   "endpoints": {
     "single": [
       "dataverses/byCategory",
-      "datasets/bySubject"
+      "datasets/bySubject",
+      "../version"
     ],
     "monthly": [
       "dataverses/toMonth",
