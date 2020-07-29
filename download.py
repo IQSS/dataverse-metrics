@@ -97,17 +97,17 @@ def process_single_endpoint(installation, endpoint, api_response_cache_dir):
     url = installation + '/api/info/metrics/' + endpoint
     try:
         response = urlrequest.urlopen(url)
+        json_out = get_remote_json(response)
+        o = urlparse(installation)
+        hostname = o.hostname
+        path = api_response_cache_dir + '/' + endpoint
+        if not os.path.exists(path):
+            os.makedirs(path)
+        filename = hostname + '.json'
+        with open(path + '/' + filename, 'w') as outfile:
+            json.dump(json_out, outfile, indent=4)
     except Exception as e:
         print(installation + " had an oops: " + str(e))
-    json_out = get_remote_json(response)
-    o = urlparse(installation)
-    hostname = o.hostname
-    path = api_response_cache_dir + '/' + endpoint
-    if not os.path.exists(path):
-        os.makedirs(path)
-    filename = hostname + '.json'
-    with open(path + '/' + filename, 'w') as outfile:
-        json.dump(json_out, outfile, indent=4)
 
 def process_github_repo(repo, api_response_cache_dir):
     o = urlparse(repo)
