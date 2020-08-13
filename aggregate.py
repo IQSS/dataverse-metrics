@@ -73,7 +73,6 @@ def process_single_endpoints(single_endpoints, api_response_cache_dir, aggregate
                             name = name.split('-')[0]
                             totals[name]= totals.get(name,0) + 1
 
-
         metric_filename = endpoint.replace('/', '-') + '.tsv'
         path_and_metric_file = aggregate_output_dir + '/' + metric_filename
         with open(path_and_metric_file, 'w') as tsvfile:

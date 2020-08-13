@@ -1,4 +1,20 @@
 $(document).ready(function() {
+
+	$.getJSON(
+    '/api/info/metrics/tree',
+    function(data) {
+	    var nodes = data.data;
+	    nodes.children.forEach((node)=> {
+		    node.name= "<a href='" + window.location + "?parentAlias=" + node.name + "'>" + node.name + "</a>";
+	    });
+	
+	    alert(JSON.stringify(nodes));
+        $('#dvtree').tree({
+            data: [nodes],
+		autoEscape:false
+        });
+    }
+);
     loadJSON(function(response) {
             var config = JSON.parse(response);
             dataversesToMonth(config);
@@ -329,7 +345,7 @@ function versionsBar(config) {
 			    name = name.substring(1);
 		    }
 
-    return 16-["4.8.5", "4.9.2", "4.9.4", "4.10.1","4.13", "4.14", "4.15.1", "4.16","4.17","4.17-tdl", "4.18.1", "4.19", "v4.19.3-SP", "4.20", "4.20-qdr-6","4.20-IRD1"].indexOf(name);
+    return 15-["4.6", "4.6.1", "4.8.5", "4.9.2", "4.9.4", "4.10.1","4.13", "4.14", "4.15.1", "4.16","4.17", "4.18.1", "4.19", "4.19.3", "4.20"].indexOf(name);
 })
 	   .y({
                 "range": yAxisTruncation(data, 10),
