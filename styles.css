@@ -10,3 +10,14 @@ a {
 a:hover {
   color: #23527C;
 }
+.button {
+    float: right;
+    background-color: aliceblue;
+    border-radius: 5px;
+    padding: 0px 3px 0px 3px;
+    border-color: blue;
+    border-width: 3px;
+    border-style: outset;
+    margin-right: 10px;
+    z-index: 25;
+    position: relative;}

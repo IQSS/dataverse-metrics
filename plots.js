@@ -1,34 +1,146 @@
+var alias;
 $(document).ready(function() {
-
+var urlParams = new URLSearchParams(window.location.search);
+        alias=(urlParams.get('parentAlias'));
 	$.getJSON(
-    '/api/info/metrics/tree',
+    '/api/info/metrics/tree' + addAlias(),
     function(data) {
 	    var nodes = data.data;
+	if(typeof nodes.children !== 'undefined') {
 	    nodes.children.forEach((node)=> {
-		    node.name= "<a href='" + window.location + "?parentAlias=" + node.name + "'>" + node.name + "</a>";
+		    updateNames(node);
 	    });
+	}
 	
-	    alert(JSON.stringify(nodes));
         $('#dvtree').tree({
             data: [nodes],
 		autoEscape:false
         });
     }
 );
+
     loadJSON(function(response) {
-            var config = JSON.parse(response);
+	    var config = JSON.parse(response);
+            dataverses(config);
+            datasets(config);
             dataversesToMonth(config);
             dataversesByCategory(config);
             datasetsToMonth(config);
             datasetsBySubject(config);
             filesToMonth(config);
             downloadsToMonth(config);
-	    versions(config);
-	    versionsBar(config);
+	        versions(config);
+	        versionsBar(config);
             populateInstallations(config);
         },
         "config.json");
+
 });
+
+function updateNames(node) {
+	 node.name= "<a href='" + window.location + "?parentAlias=" + node.alias + "'>" + node.alias + "</a>";
+	if(typeof node.children !== 'undefined') {
+	 node.children.forEach((childnode)=> {
+		 updateNames(childnode);
+	 });
+	}
+}
+
+function dataverses(config) {
+    var color = config["colors"]["dataverses/toMonth"];
+    var month_filter_enabled = config["month_filter_enabled"];
+    myloadJSON(function(data) {
+	    alert(data);
+
+	    data = JSON.parse(data).data;
+//	    data = expandAndAggregateTimeSeries(JSON.parse(data).data);
+//        if (month_filter_enabled) {
+//            data = data.filter(function(d) {
+//                return parseInt(d.month.split('-')[1]) % 2 == 0;
+//            })
+//        }
+//        coerceToNumeric(data);
+        var yLabel = "Number of Dataverses";
+        var visualization = d3plus.viz()
+            .data(data)
+            .title("Dataverses")
+            .container("#dataverses")
+            .type("bar")
+            .id("date")
+            .x({
+                "value": "date",
+                "label": "Month"
+            })
+            .y({
+                //"range": yAxisTruncation(data, 500),
+                "range": [0, data[data.length - 1].count * 1.3],
+                "value": "count",
+                "label": yLabel
+            })
+            .color(function(d) {
+                return color;
+            })
+            .format({
+                "text": function(text, params) {
+                    if (text === "count") {
+                        return yLabel;
+                    } else {
+                        return d3plus.string.title(text, params);
+                    }
+                }
+            })
+            .resize(true)
+            .draw();
+    }, "/api/info/metrics/dataverses/monthly" + addAlias());
+	$("#dataverses").append($("<a/>").addClass("button").attr("href", "/api/info/metrics/dataverses/monthly").attr("type", "text/csv").attr("download","dataverses.timeseries.csv").text("CSV"));
+}
+
+function datasets(config) {
+    var color = config["colors"]["datasets/toMonth"];
+    var month_filter_enabled = config["month_filter_enabled"];
+    myloadJSON(function(data) {
+data = JSON.parse(data).data;
+//data = expandAndAggregateTimeSeries(JSON.parse(data).data);
+//        if (month_filter_enabled) {
+//            data = data.filter(function(d) {
+//                return parseInt(d.month.split('-')[1]) % 2 == 0;
+//            })
+//        }
+//        coerceToNumeric(data);
+        var yLabel = "Number of Datasets";
+        var visualization = d3plus.viz()
+            .data(data)
+            .title("Datasets")
+            .container("#datasets")
+            .type("bar")
+            .id("date")
+            .x({
+                "value": "date",
+                "label": "Month"
+            })
+            .y({
+                //"range": yAxisTruncation(data, 500),
+                "range": [0, data[data.length - 1].count * 1.3],
+                "value": "count",
+                "label": yLabel
+            })
+            .color(function(d) {
+                return color;
+            })
+            .format({
+                "text": function(text, params) {
+                    if (text === "count") {
+                        return yLabel;
+                    } else {
+                        return d3plus.string.title(text, params);
+                    }
+                }
+            })
+            .resize(true)
+            .draw();
+    }, "/api/info/metrics/datasets/monthly" + addAlias());
+	        $("#datasets").append($("<a/>").addClass("button").attr("href", "/api/info/metrics/datasets/monthly").attr("type", "text/csv").attr("download","datasets.timeseries.csv").text("CSV"));
+}
 
 function dataversesToMonth(config) {
     var color = config["colors"]["dataverses/toMonth"];
@@ -370,6 +482,10 @@ function versionsBar(config) {
     });
 }
 
+function addAlias() {
+	return ((alias === null) ? '' : '?parentAlias=' + alias);
+}
+
 function coerceToNumeric(data) {
     data.forEach(function(d) {
         d3.keys(d).forEach(function(k) {
@@ -380,6 +496,42 @@ function coerceToNumeric(data) {
     });
     return data;
 }
+
+function expandAndAggregateTimeSeries(data) {
+var startDate = data[0].date;
+console.log(startDate);
+var now  = new Date().toISOString().slice(0,7);
+console.log(now);
+var timeseries = [];
+
+var curDate = new Date(startDate + '-02');
+var i=0;
+var totalCount=data[0].count;
+	var curDateString= curDate.toISOString().slice(0,7);
+timeseries[i]={"date":curDateString,"count":totalCount};
+do{
+curDate=nextMonth(curDate);
+curDateString=curDate.toISOString().slice(0,7);
+i+=1;
+const entry = data.find(obj => obj.date == curDateString);
+if( typeof entry !== 'undefined' ) {
+  totalCount = totalCount + entry.count;
+}
+
+timeseries[i]={"date":curDateString,"count":totalCount};
+} while(curDateString != now);
+    return timeseries;
+}
+
+function nextMonth(date) {
+  if (date.getMonth() == 11) {
+    var current = new Date(date.getFullYear() + 1, 0, 1);
+  } else {
+    var current = new Date(date.getFullYear(), date.getMonth() + 1, 1);
+  }
+  return current;
+}
+
 
 function yAxisTruncation(metricArray, modNum) {
     var min = metricArray[0].count;
@@ -394,7 +546,7 @@ function yAxisTruncation(metricArray, modNum) {
 
 function populateInstallations(config) {
     loadJSON(function(response) {
-            var allInstallations = JSON.parse(response);
+	    var allInstallations= JSON.parse(response);
             if (config.installations.length === 1) {
                 document.getElementById("discrepancies").hidden = true;
             }
@@ -427,10 +579,9 @@ function createListOfInstallations(config, allInstallations) {
 }
 
 // https://codepen.io/KryptoniteDove/post/load-json-file-locally-using-pure-javascript
-function loadJSON(callback, jsonFile) {
-
+function myloadJSON(callback, jsonFile) {
     var xobj = new XMLHttpRequest();
-    xobj.overrideMimeType("application/json");
+//    xobj.overrideMimeType("application/json");
     xobj.open('GET', jsonFile, true);
     xobj.onreadystatechange = function() {
         if (xobj.readyState == 4 && xobj.status == "200") {
@@ -438,5 +589,6 @@ function loadJSON(callback, jsonFile) {
             callback(xobj.responseText);
         }
     };
-    xobj.send(null);
+    xobj.setRequestHeader('accept','application/json');
+    xobj.send();
 }
