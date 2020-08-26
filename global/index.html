@@ -4,7 +4,7 @@
     <title>Dataverse Metrics</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js">
     </script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js">
@@ -13,34 +13,26 @@
     </script>
     <script src="https://d3plus.org/js/d3plus.js">
     </script>
-    <script src="tree.jquery.js">
-    </script>
-    <script src="installationplots.js">
+    <script src="plots.js">
     </script>
     <script src="contributors.js">
     </script>
     <link href="styles.css" media="screen" rel="stylesheet" type="text/css">
-    <link href="jqtree.css" media="screen" rel="stylesheet" type="text/css">
 </head>
 <body>
-	<div><div id="title"></div>
-		<div id="subtitle"> </div> 
-	</div>
-	<div id='dvselect'><div id="selectString"></div>
-	<div id="dvtree"></div>
-	</div>
+  <div id="dvtree"></div>
     <div class="container">
-	<div class="row">
+  <div class="row">
             <div class="col-xs-12 col-md-6">
         <div id="dataverses" class="viz"></div>
-	    </div>
+      </div>
             <div class="col-xs-12 col-md-6">
         <div id="datasets" class="viz"></div>
-	    </div>
-	</div>
-	<div class="row">
+      </div>
+  </div>
+  <div class="row">
             <div class="col-xs-12 col-md-6">
-                <div id="dataverses-by-subject" class="viz"></div>
+                <div id="dataverses-to-month" class="viz"></div>
             </div>
             <div class="col-xs-12 col-md-6">
                 <div id="dataverses-by-category" class="viz"></div>
@@ -48,52 +40,34 @@
         </div>
         <div class="row">
             <div class="col-xs-12 col-md-6">
+                <div id="datasets-to-month" class="viz"></div>
+            </div>
+            <div class="col-xs-12 col-md-6">
                 <div id="datasets-by-subject" class="viz"></div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-xs-12 col-md-6">
-                <div id="files" class="viz"></div>
+                <div id="files-to-month" class="viz"></div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <div id="downloads-to-month" class="viz"></div>
             </div>
         </div>
         <div class="row">
             <div class="col-xs-12 col-md-6">
-                <div id="files-by-type-count" class="viz"></div>
+                <div id="versions" class="viz"></div>
             </div>
             <div class="col-xs-12 col-md-6">
-                <div id="files-by-type-size" class="viz"></div>
+                <div id="versionsBar" class="viz"></div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 col-md-6">
-                <div id="downloads" class="viz"></div>
-            </div>
-            <div class="col-xs-12 col-md-6">
-                <div id="uniquedownloads" class="viz"></div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 col-md-12">
-                <div id="uniquedownloads-by-pid" class="viz"></div>
-            </div>
-	</div>
-        <div class="row">
-            <div class="col-xs-12 col-md-6">
-                <div id="makedatacount-viewsTotal" class="viz"></div>
-            </div>
-            <div class="col-xs-12 col-md-6">
-                <div id="makedatacount-downloadsTotal" class="viz"></div>
-            </div>
-	</div>
-        <div class="row">
-            <div class="col-xs-12 col-md-6">
-                <div id="makedatacount-viewsUnique" class="viz"></div>
-            </div>
-            <div class="col-xs-12 col-md-6">
-                <div id="makedatacount-downloadsUnique" class="viz"></div>
-            </div>
-	</div>
-	 <div class="row">
+  </div>
+   <div class="row">
             <div class="col-xs-12 col-md-6">
                 <p class="help-block small">Data retrieved via <a href="http://guides.dataverse.org/en/latest/api" target="_blank">API</a> from the following Dataverse installations:</p>
+                <div id="installations" class="help-block small"></div>
+                <p id="discrepancies" class="help-block small">Metrics are aggregated from multiple Dataverse installations running different versions (4.9 and newer), with different caching schedules, and with some metrics endpoints enabled and others disabled. Minor discrepancies in these metrics can be expected.</p>
+                <div id="contributors" class="help-block small"></div>
                 <p class="help-block small">Feedback is welcome via <a href="https://github.com/IQSS/dataverse-metrics" target="_blank">https://github.com/IQSS/dataverse-metrics</a> or <a href="https://dataverse.org/contact" target="_blank">any other channel</a>.</p>
             </div>
         </div>

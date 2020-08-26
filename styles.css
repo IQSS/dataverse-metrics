@@ -4,6 +4,7 @@
 }
 
 /* http://guides.dataverse.org/en/4.11/style/foundations.html#link-colors */
+
 a {
   color: #337AB7;
 }
@@ -21,3 +22,19 @@ a:hover {
     margin-right: 10px;
     z-index: 25;
     position: relative;}
+
+#title, #subtitle {
+	text-align: center;
+}
+#dvtree {
+	background: cornsilk;
+    max-height: 250px;
+    overflow-y: auto;
+}
+#dvselect {
+	background: aliceblue;
+	margin: 50px 50px 0px 50px;
+}
+body {
+	font-family: AntoniaH2;
+}

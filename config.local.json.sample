@@ -1,0 +1,29 @@
+{
+  "dataverseTerm": "Collection",
+  "installationName":"Qualitative Data Repository",
+  "month_filter_enabled": false,
+  "maxBars": 100,
+  "colors": {
+    "dataverses/monthly": "#CF3636",
+    "dataverses/byCategory": [
+      "#B22200",
+      "#006699"
+    ],
+    "dataverses/bySubject": [
+      "#B22200",
+      "#006699"
+    ],
+    "datasets/monthly": "#E58433",
+    "datasets/bySubject": [
+      "#B22200",
+      "#006699"
+    ],
+    "files/monthly": "#006699",
+    "downloads/monthly": "#B94617",
+    "uniquedownloads/monthly": "#B94617",
+    "makeDataCount/viewsTotal/monthly": "#6c757d",
+    "makeDataCount/downloadsTotal/monthly": "#006699",
+    "makeDataCount/viewsUnique/monthly": "#224F20",
+    "makeDataCount/downloadsUnique/monthly": "#b22200"
+  }
+}
