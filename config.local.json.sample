@@ -1,7 +1,7 @@
 {
-  "dataverseTerm": "Collection",
-  "installationName":"Qualitative Data Repository",
-  "month_filter_enabled": false,
+  "installationURL": "",
+  "installationName":"Daverse Repository",
+  "dataverseTerm": "Dataverse",
   "maxBars": 100,
   "colors": {
     "dataverses/monthly": "#CF3636",

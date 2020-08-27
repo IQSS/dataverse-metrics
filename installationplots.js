@@ -1,38 +1,42 @@
+//The alias of the published dataverse to show statistics for (stats are for this dataverse and all published children)
 var alias;
+//The Dataverse server address - can be "" if this app is deployed on the same server.
 var dvserver = "";
 
 $(document).ready(function() {
-  //Determine which dataverse/sub-dataverse is the focus for the metrics
-  // (Metrics are for the specified public/published dataverse and all it's public/published children) 
-  var urlParams = new URLSearchParams(window.location.search);
-  alias   (urlParams.get('parentAlias'));
 
-  //Retrieve the tree of child dataverses and add them to the tree we use as a selector
-  $.getJSON(
-    '/api/info/metrics/tree' + addAlias(),
-    function(data) {
-      var nodes = data.data;
-      if (typeof nodes.children !== 'undefined') {
-        nodes.children.forEach((node) => {
-          //Make each element in the tree (below the root) a link to get the metrics for that sub-dataverse
-          updateNames(node);
-        });
-      }
-      //Populate the tree widget
-      $('#dvtree').tree({
-        data: [nodes],
-        autoEscape: false
-      });
-    }
-  );
+  //Determine which dataverse/sub-dataverse is the focus for the metrics
+  // (Metrics are for the specified public/published dataverse and all it's public/published children)
+  var urlParams = new URLSearchParams(window.location.search);
+  alias = (urlParams.get('parentAlias'));
 
   //Retrieve the configuration,  complete the header, and start creating graphs
   $.getJSON('config.local.json', function(config) {
 
     // Set the Dataverse server to use
-    if(config.hasOwnProperty("installationURL")) {
+    if (config.hasOwnProperty("installationURL")) {
       dvserver = config.installationURL;
     }
+
+    // Retrieve the tree of child dataverses and add them to the tree we use as a selector
+    // getJSON could be used throughout (it wasn't previously due to bugs in the API endpoints in determining when to send json versus text/csv)
+    $.getJSON(
+      dvserver + '/api/info/metrics/tree' + addAlias(),
+      function(data) {
+        var nodes = data.data;
+        if (typeof nodes.children !== 'undefined') {
+          nodes.children.forEach((node) => {
+            //Make each element in the tree (below the root) a link to get the metrics for that sub-dataverse
+            updateNames(node);
+          });
+        }
+        //Populate the tree widget
+        $('#dvtree').tree({
+          data: [nodes],
+          autoEscape: false
+        });
+      }
+    );
 
     //Header Information
     $('#title').html("<H1>Metrics from the " + config.installationName + "</H1>");
@@ -57,7 +61,7 @@ $(document).ready(function() {
     //Row 4
     timeseries("Downloads", config);
     uniqueDownloads(config);
-    //Row 5 - 
+    //Row 5 -
     multitimeseries("UniqueDownloads", config, "pid");
     //Row 6 - by Count and by Size graphs
     filesByType(config);
@@ -75,172 +79,192 @@ $(document).ready(function() {
 function timeseries(name, config) {
   var lcname = name.toLowerCase();
   var color = config["colors"][lcname + "/monthly"];
-  $getJSON(dvserver + '/api/info/metrics/' + lcname + '/monthly' + addAlias(), function(data) {
+  $.ajax({
+    url: dvserver + '/api/info/metrics/' + lcname + '/monthly' + addAlias(),
+    headers: { Accept: "application/json" },
+    success: function(data) {
 
-    data = data.data;
-    var yLabel = "Number of " + name;
-    var visualization = d3plus.viz()
-      .data(data)
-      .title(name)
-      .container("#" + lcname)
-      .type("bar")
-      .id("date")
-      .x({
-        "value": "date",
-        "label": "Month"
-      })
-      .y({
-        "range": [0, data[data.length - 1].count * 1.3],
-        "value": "count",
-        "label": yLabel
-      })
-      .color(function(d) {
-        return color;
-      })
-      .resize(true)
-      .draw()
+      data = data.data;
+      var yLabel = "Number of " + name;
+      var visualization = d3plus.viz()
+        .data(data)
+        .title(name)
+        .container("#" + lcname)
+        .type("bar")
+        .id("date")
+        .x({
+          "value": "date",
+          "label": "Month"
+        })
+        .y({
+          "range": [0, data[data.length - 1].count * 1.3],
+          "value": "count",
+          "label": yLabel
+        })
+        .color(function(d) {
+          return color;
+        })
+        .resize(true)
+        .draw()
+    }
   });
-  $("#" + lcname).append($("<a/>").addClass("button").attr("href", "/api/info/metrics/" + lcname + "/monthly" + addAlias()).attr("type", "text/csv").attr("download", lcname + ".timeseries.csv").text("CSV"));
+  $("#" + lcname).append($("<a/>").addClass("button").attr("href", "/api/info/metrics/ + lcname + "/monthly" + addAlias()).attr("type", "text/csv").text("CSV"));
 }
 
 
 function dataversesByCategory(config) {
   var colors = config["colors"]["dataverses/byCategory"];
-  $.getJSON(dvserver + '/api/info/metrics/dataverses/byCategory' + addAlias(), function(data) {
-    data = data.data;
-    var tileLabel = "Number of Dataverses";
-    var visualization = d3plus.viz()
-      .data(data)
-      .title("Dataverses by Category")
-      .title({
-        "total": true
-      })
-      .container("#dataverses-by-category")
-      .type("tree_map")
-      .id("category")
-      .size("count")
-      .color({
-        value: "count",
-        heatmap: colors.reverse()
-      })
-      .format({
-        "text": function(text, params) {
-          if (text === "count") {
-            return tileLabel;
-          } else {
-            return d3plus.string.title(text, params);
+  $.ajax({
+    url: dvserver + '/api/info/metrics/dataverses/byCategory' + addAlias(),
+    headers: { Accept: "application/json" },
+    success: function(data) {
+      data = data.data;
+      var tileLabel = "Number of Dataverses";
+      var visualization = d3plus.viz()
+        .data(data)
+        .title("Dataverses by Category")
+        .title({
+          "total": true
+        })
+        .container("#dataverses-by-category")
+        .type("tree_map")
+        .id("category")
+        .size("count")
+        .color({
+          value: "count",
+          heatmap: colors.reverse()
+        })
+        .format({
+          "text": function(text, params) {
+            if (text === "count") {
+              return tileLabel;
+            } else {
+              return d3plus.string.title(text, params);
+            }
           }
-        }
-      })
-      .legend(false)
-      .resize(true)
-      .draw();
+        })
+        .legend(false)
+        .resize(true)
+        .draw();
+    }
   });
-  $("#dataverses-by-category").append($("<a/>").addClass("button").attr("href", "/api/info/metrics/dataverses/byCategory" + addAlias()).attr("type", "text/csv").attr("download", "dataverses.byCategory.csv").text("CSV"));
+  $("#dataverses-by-category").append($("<a/>").addClass("button").attr("href", "/api/info/metrics/dataverses/byCategory" + addAlias()).attr("type", "text/csv").text("CSV"));
 }
 
 function dataversesBySubject(config) {
   var colors = config["colors"]["dataverses/bySubject"];
-  $.getJSON('dvserver + /api/info/metrics/dataverses/bySubject' + addAlias(), function(data) {
-    data = data.data;
+  $.ajax({
+    url: dvserver + '/api/info/metrics/dataverses/bySubject' + addAlias(),
+    headers: { Accept: "application/json" },
+    success: function(data) {
+      data = data.data;
 
-    var tileLabel = "Number of Dataverses";
-    var visualization = d3plus.viz()
-      .data(data)
-      .title("Dataverses by Subject")
-      .title({
-        "total": true
-      })
-      .container("#dataverses-by-subject")
-      .type("tree_map")
-      .id("subject")
-      .size("count")
-      .color({
-        value: "count",
-        heatmap: colors.reverse()
-      })
-      .format({
-        "text": function(text, params) {
-          if (text === "count") {
-            return tileLabel;
-          } else {
-            return d3plus.string.title(text, params);
+      var tileLabel = "Number of Dataverses";
+      var visualization = d3plus.viz()
+        .data(data)
+        .title("Dataverses by Subject")
+        .title({
+          "total": true
+        })
+        .container("#dataverses-by-subject")
+        .type("tree_map")
+        .id("subject")
+        .size("count")
+        .color({
+          value: "count",
+          heatmap: colors.reverse()
+        })
+        .format({
+          "text": function(text, params) {
+            if (text === "count") {
+              return tileLabel;
+            } else {
+              return d3plus.string.title(text, params);
+            }
           }
-        }
-      })
-      .legend(false)
-      .resize(true)
-      .draw();
+        })
+        .legend(false)
+        .resize(true)
+        .draw();
+    }
   });
-  $("#dataverses-by-subject").append($("<a/>").addClass("button").attr("href", "/api/info/metrics/dataverses/bySubject" + addAlias()).attr("type", "text/csv").attr("download", "dataverses.bySubject.csv").text("CSV"));
+  $("#dataverses-by-subject").append($("<a/>").addClass("button").attr("href", "/api/info/metrics/dataverses/bySubject" + addAlias()).attr("type", "text/csv").text("CSV"));
 }
 
 function datasetsBySubject(config) {
   var colors = config["colors"]["datasets/bySubject"];
-  $getJSON('dvserver + /api/info/metrics/datasets/bySubject' + addAlias(), function(data) {
-    data = data.data;
+  $.ajax({
+    url: dvserver + '/api/info/metrics/datasets/bySubject' + addAlias(),
+    headers: { Accept: "application/json" },
+    success: function(data) {
+      data = data.data;
 
-    var tileLabel = "Number of Datasets";
-    var visualization = d3plus.viz()
-      .data(data)
-      .title("Datasets by Subject")
-      .title({
-        "total": true
-      })
-      .container("#datasets-by-subject")
-      .type("tree_map")
-      .id("subject")
-      .size("count")
-      .color({
-        value: "count",
-        heatmap: colors.reverse()
-      })
-      .format({
-        "text": function(text, params) {
-          if (text === "count") {
-            return tileLabel;
-          } else {
-            return d3plus.string.title(text, params);
+      var tileLabel = "Number of Datasets";
+      var visualization = d3plus.viz()
+        .data(data)
+        .title("Datasets by Subject")
+        .title({
+          "total": true
+        })
+        .container("#datasets-by-subject")
+        .type("tree_map")
+        .id("subject")
+        .size("count")
+        .color({
+          value: "count",
+          heatmap: colors.reverse()
+        })
+        .format({
+          "text": function(text, params) {
+            if (text === "count") {
+              return tileLabel;
+            } else {
+              return d3plus.string.title(text, params);
+            }
           }
-        }
-      })
-      .legend(false)
-      .resize(true)
-      .draw();
+        })
+        .legend(false)
+        .resize(true)
+        .draw();
+    }
   });
-  $("#datasets-by-subject").append($("<a/>").addClass("button").attr("href", "/api/info/metrics/datasets/bySubject" + addAlias()).attr("type", "text/csv").attr("download", "datasets.bySubject.csv").text("CSV"));
+  $("#datasets-by-subject").append($("<a/>").addClass("button").attr("href", "/api/info/metrics/datasets/bySubject" + addAlias()).attr("type", "text/csv").text("CSV"));
 }
 
 //Retrieves any of the defined Make Data Count metrics
 // (the graph itself is the same as other timeseries())
 function makeDataCount(metric, config) {
   var color = config["colors"]["makeDataCount/" + metric + "/monthly"];
-  $.getJSON('dvserver + /api/info/metrics/makeDataCount/' + metric + '/monthly' + addAlias(), function(data) {
+  $.ajax({
+    url: dvserver + '/api/info/metrics/makeDataCount/' + metric + '/monthly' + addAlias(),
+    headers: { Accept: "application/json" },
+    success: function(data) {
 
-    data = data.data;
-    var yLabel = "Number of " + metric;
-    var visualization = d3plus.viz()
-      .data(data)
-      .title("Make Data Count Metrics-" + metric)
-      .container("#makedatacount-" + metric)
-      .type("bar")
-      .id("date")
-      .x({
-        "value": "date",
-        "label": "Month"
-      })
-      .y({
-        "range": [0, data[data.length - 1].count * 1.3],
-        "value": "count",
-        "label": yLabel
-      })
-      .color(function(d) {
-        return color;
-      })
-      .resize(true)
-      .draw();
+      data = data.data;
+      var yLabel = "Number of " + metric;
+      var visualization = d3plus.viz()
+        .data(data)
+        .title("Make Data Count Metrics-" + metric)
+        .container("#makedatacount-" + metric)
+        .type("bar")
+        .id("date")
+        .x({
+          "value": "date",
+          "label": "Month"
+        })
+        .y({
+          "range": [0, data[data.length - 1].count * 1.3],
+          "value": "count",
+          "label": yLabel
+        })
+        .color(function(d) {
+          return color;
+        })
+        .resize(true)
+        .draw();
+    }
   });
-  $("#makedatacount-" + metric).append($("<a/>").addClass("button").attr("href", "/api/info/metrics/makeDataCount/" + metric + "/monthly" + addAlias()).attr("type", "text/csv").attr("download", "makedatacount." + metric + ".timeseries.csv").text("CSV"));
+  $("#makedatacount-" + metric).append($("<a/>").addClass("button").attr("href", "/api/info/metrics/makeDataCount/" + metric + "/monthly" + addAlias()).attr("type", "text/csv").text("CSV"));
 }
 
 //Multitimeseries - an array of objects with an additional key that we groupby
@@ -248,122 +272,134 @@ function makeDataCount(metric, config) {
 function multitimeseries(name, config, groupby) {
   var lcname = name.toLowerCase();
   var color = config["colors"][lcname + "/monthly"];
-  $.getJSON(dvserver + '/api/info/metrics/' + lcname + '/monthly' + addAlias(), function(data) {
+  $.ajax({
+    url: dvserver + '/api/info/metrics/' + lcname + '/monthly' + addAlias(),
+    headers: { Accept: "application/json" },
+    success: function(data) {
 
-    data = data.data;
-    var yLabel = "Number of " + name;
-    var visualization = d3plus.viz()
-      .data(data)
-      .title(name)
-      .container("#" + lcname)
-      .type("stacked")
-      .id(groupby)
-      .x({
-        "value": "date",
-        "label": "Month"
-      })
-      .y({
-        "value": "count",
-        "label": yLabel
-      })
-      .format({
-        "text": function(text, params) {
-          if (text === "count") {
-            return yLabel;
-          } else {
-            return d3plus.string.title(text, params);
+      data = data.data;
+      var yLabel = "Number of " + name;
+      var visualization = d3plus.viz()
+        .data(data)
+        .title(name)
+        .container("#" + lcname)
+        .type("stacked")
+        .id(groupby)
+        .x({
+          "value": "date",
+          "label": "Month"
+        })
+        .y({
+          "value": "count",
+          "label": yLabel
+        })
+        .format({
+          "text": function(text, params) {
+            if (text === "count") {
+              return yLabel;
+            } else {
+              return d3plus.string.title(text, params);
+            }
           }
-        }
-      })
-      .resize(true)
-      .draw();
+        })
+        .resize(true)
+        .draw();
+    }
   });
-  $("#" + lcname).append($("<a/>").addClass("button").attr("href", "/api/info/metrics/" + lcname + "/monthly" + addAlias()).attr("type", "text/csv").attr("download", lcname + ".timeseries.csv").text("CSV"));
+  $("#" + lcname).append($("<a/>").addClass("button").attr("href", "/api/info/metrics/" + lcname + "/monthly" + addAlias()).attr("type", "text/csv").text("CSV"));
 }
 
 
 function filesByType(config) {
   var color = config["colors"]["files/byType"];
-  $.getJSON(dvserver + '/api/info/metrics/files/byType' + addAlias(), function(data) {
-    data = data.data;
-    var countVisualization = d3plus.viz()
-      .data(data).dev(true)
-      .title("File Count By Type")
-      .container("#files-by-type-count")
-      .type("bar")
-      .id("contenttype")
+  $.ajax({
+    url: dvserver + '/api/info/metrics/files/byType' + addAlias(),
+    headers: { Accept: "application/json" },
+    success: function(data) {
+      data = data.data;
+      var countVisualization = d3plus.viz()
+        .data(data).dev(true)
+        .title("File Count By Type")
+        .container("#files-by-type-count")
+        .type("bar")
+        .id("contenttype")
 
-      .x({
-        "value": "contenttype",
-        "label": "Content Type"
-      })
-      .y({
-        "value": "count",
-        "label": "File Count",
-        "scale":  "linear"
-      })
-      .order("count")
-      .text("contenttype")
-      .resize(true)
-      .draw();
-    var sizeVisualization = d3plus.viz()
-      .data(data).dev(true)
-      .title("File Size By Type")
-      .container("#files-by-type-size")
-      .type("bar")
-      .id("contenttype")
-      .x({
-        "value": "contenttype",
-        "label": "Content Type"
-      })
-      .y({
-        "value": "size",
-        "label": "Aggregate File Size",
-        "scale": "log"
-      })
-      .order("size")
-      .text("contenttype")
-      .resize(true)
-      .draw();
+        .x({
+          "value": "contenttype",
+          "label": "Content Type"
+        })
+        .y({
+          "value": "count",
+          "label": "File Count",
+          "scale": "linear"
+        })
+        .order("count")
+        .text("contenttype")
+        .resize(true)
+        .draw();
+      var sizeVisualization = d3plus.viz()
+        .data(data).dev(true)
+        .title("File Size By Type")
+        .container("#files-by-type-size")
+        .type("bar")
+        .id("contenttype")
+        .x({
+          "value": "contenttype",
+          "label": "Content Type"
+        })
+        .y({
+          "value": "size",
+          "label": "Aggregate File Size",
+          "scale": "log"
+        })
+        .order("size")
+        .text("contenttype")
+        .resize(true)
+        .draw();
+    }
   });
-  $("#files-by-type-count").append($("<a/>").addClass("button").attr("href", "/api/info/metrics/files/byType" + addAlias()).attr("type", "text/csv").attr("download", "files.byType.csv").text("CSV"));
+  $("#files-by-type-count").append($("<a/>").addClass("button").attr("href", "/api/info/metrics/files/byType" + addAlias()).attr("type", "text/csv").text("CSV"));
   $("#files-by-type-size").append($("<span/>").addClass("button").attr("title", "These metrics are included in the CSV for the 'File Count By Type'").text("CSV"));
 }
 
 //Shows the unique download count per PID
-//The max number of elements (e.g. PIDs) to include can be controlled with the config.maxBars parameter 
+//The max number of elements (e.g. PIDs) to include can be controlled with the config.maxBars parameter
 function uniqueDownloads(config) {
   var color = config["colors"]["downloads/unique"];
-  $.getJSON(dvserver + '/api/info/metrics/uniquedownloads' + addAlias(), function(data) {
-    data = data.data;
-    var title = "Unique Downloads per Dataset";
-    var maxBars = config["maxBars"];
-    if (typeof maxBars !== "undefined") {
-      data = data.slice(0, maxBars);
-      title = title + " (top " + maxBars + ")";
+  $.ajax({
+    url: dvserver + '/api/info/metrics/uniquedownloads' + addAlias(),
+    headers: { Accept: "application/json" },
+    success: function(data) {
+      data = data.data;
+      var title = "Unique Downloads per Dataset";
+      var maxBars = config["maxBars"];
+      if (typeof maxBars !== "undefined") {
+        data = data.slice(0, maxBars);
+        title = title + " (top " + maxBars + ")";
+      }
+      var visualization = d3plus.viz()
+        .data(data)
+        .title(title)
+        .container("#uniquedownloads-by-pid")
+        .type("bar")
+        .id("pid")
+        .x({
+          "value": "pid",
+          "label": " Dataset Identifier"
+        })
+        .y({
+          "value": "count",
+          "label": "Unique Download Count",
+          "scale": "linear"
+        })
+        //the API orders the results (so the slice gets the ones with the most counts), but the graph will reorder the without this
+        .order("count")
+        .text("pid")
+        .resize(true)
+        .draw();
     }
-    var visualization = d3plus.viz()
-      .data(data)
-      .title(title)
-      .container("#uniquedownloads-by-pid")
-      .type("bar")
-      .id("pid")
-      .x({
-        "value": "pid",
-        "label": " Dataset Identifier"
-      })
-      .y({
-        "value": "count",
-        "label": "Unique Download Count",
-        "scale": "linear"
-      })
-      //the API orders the results      
-      //     .order("count")
-      .text("pid")
-      .resize(true)
-      .draw();
   });
-  $("#uniquedownloads-by-pid").append($("<a/>").addClass("button").attr("href", "/api/info/metrics/uniquedownloads" + addAlias()).attr("type", "text/csv").attr("download", "uniquedownloads.byPID.csv").text("CSV"));
+  $("#uniquedownloads-by-pid").append($("<a/>").addClass("button").attr("href", "/api/info/metrics/uniquedownloads" + addAlias()).attr("type", "text/csv").text("CSV"));
 }
 
 //Add the parentAlias param at the end of URLs if alias is set
