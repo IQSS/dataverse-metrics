@@ -35,8 +35,8 @@
     "https://research-data.ifsttar.fr",
     "https://researchdata.nie.edu.sg"
   ],
-  "api_response_cache_dir": "/var/www/html/dataverse-metrics/cache",
-  "aggregate_output_dir": "/var/www/html/dataverse-metrics",
+  "api_response_cache_dir": "/var/www/html/metrics/global/cache",
+  "aggregate_output_dir": "/var/www/html/metrics/global",
   "num_months_to_process": 12,
   "month_filter_enabled": false,
   "endpoints": {
