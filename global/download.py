@@ -31,7 +31,7 @@ def main():
 
     for installation in installations:
         process_monthly_endpoints(installation, monthly_endpoints, api_response_cache_dir, num_months_to_process)
-        # "monthly itemized" metrics are downloaded the same way as regular montly metrics:
+        # "monthly itemized" metrics are downloaded the same way as regular monthly metrics:
         process_monthly_endpoints(installation, monthly_itemized_endpoints, api_response_cache_dir, num_months_to_process)
         process_single_endpoints(installation, single_endpoints, api_response_cache_dir)
 
@@ -100,6 +100,8 @@ def process_single_endpoint(installation, endpoint, api_response_cache_dir):
         json_out = get_remote_json(response)
         o = urlparse(installation)
         hostname = o.hostname
+        if endpoint == '../version':
+            endpoint = 'version'
         path = api_response_cache_dir + '/' + endpoint
         if not os.path.exists(path):
             os.makedirs(path)

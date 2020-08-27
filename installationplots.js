@@ -115,7 +115,7 @@ function timeseries(name, config) {
         .draw()
     }
   });
-  $("#" + lcname).append($("<a/>").addClass("button").attr("href", "/api/info/metrics/ + lcname + "/monthly" + addAlias()).attr("type", "text/csv").text("CSV"));
+  $("#" + lcname).append($("<a/>").addClass("button").attr("href", "/api/info/metrics/" + lcname + "/monthly" + addAlias()).attr("type", "text/csv").text("CSV"));
 }
 
 

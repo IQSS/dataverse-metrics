@@ -72,7 +72,12 @@
       "#006699"
     ],
     "files/toMonth": "#006699",
-    "downloads/toMonth": "#B94617"
+    "downloads/toMonth": "#B94617",
+    "versions": [
+      "#B22200",
+      "#006699"
+    ],
+    "versionsBar" : "#006699"
   },
   "github_repos": [
     "https://github.com/IQSS/dataverse"
