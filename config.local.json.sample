@@ -3,6 +3,7 @@
   "installationName":"Daverse Repository",
   "dataverseTerm": "Dataverse",
   "maxBars": 100,
+  "globalConfigured":"false",
   "colors": {
     "dataverses/monthly": "#CF3636",
     "dataverses/byCategory": [
