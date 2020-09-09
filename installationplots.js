@@ -68,14 +68,16 @@ $(document).ready(function() {
     //Row 4
     timeseries("Downloads", config);
     uniqueDownloads(config);
-    //Row 5 -
+    //Row 5
+    fileDownloads(config);
+    //Row 6
     multitimeseries("UniqueDownloads", config, "pid");
-    //Row 6 - by Count and by Size graphs
+    //Row 7 - by Count and by Size graphs
     filesByType(config);
-    //Row 7
+    //Row 8
     makeDataCount("viewsTotal", config);
     makeDataCount("downloadsTotal", config);
-    //Row 8
+    //Row 9
     makeDataCount("viewsUnique", config);
     makeDataCount("downloadsUnique", config);
 
@@ -402,12 +404,58 @@ function uniqueDownloads(config) {
         //the API orders the results (so the slice gets the ones with the most counts), but the graph will reorder the without this
         .order("count")
         .text("pid")
+        .format(function(text){if((typeof text) == 'string') {text = text.replace(/["]+/g,'');} return text;})
         .resize(true)
         .draw();
     }
   });
   $("#uniquedownloads-by-pid").append($("<a/>").addClass("button").attr("href", "/api/info/metrics/uniquedownloads" + addAlias()).attr("type", "text/csv").text("CSV"));
 }
+
+//The max number of elements (e.g. PIDs) to include can be controlled with the config.maxBars parameter
+function fileDownloads(config) {
+  var color = config["colors"]["filedownloads/unique"];
+  $.ajax({
+    url: dvserver + '/api/info/metrics/filedownloads' + addAlias(),
+    headers: { Accept: "application/json" },
+    success: function(data) {
+      data = data.data;
+            var xName = "pid";
+            if(data[0].pid.length==0) {
+                    xName="id";
+            }
+      var title = "Downloads per DataFile";
+      var maxBars = config["maxBars"];
+      if (typeof maxBars !== "undefined") {
+        data = data.slice(0, maxBars);
+        title = title + " (top " + maxBars + ")";
+      }
+      var visualization = d3plus.viz()
+        .data(data)
+        .title(title)
+        .container("#filedownloads-by-id")
+        .type("bar")
+        .id("id")
+        .x({
+          "value": xName,
+          "label": " Dataset Identifier"
+        })
+        .y({
+          "value": "count",
+          "label": "Download Count",
+          "scale": "linear"
+        })
+        //the API orders the results (so the slice gets the ones with the most counts), but the graph will reorder the without this
+        .order("count")
+        .format(function(text){if((typeof text) == 'string') {text = text.replace(/["]+/g,'');} return text;})
+        .text(xName)
+        .resize(true)
+        .draw();
+    }
+  });
+  $("#filedownloads-by-id").append($("<a/>").addClass("button").attr("href", "/api/info/metrics/filedownloads" + addAlias()).attr("type", "text/csv").text("CSV"));
+}
+
 
 //Add the parentAlias param at the end of URLs if alias is set
 function addAlias() {
