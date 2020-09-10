@@ -363,7 +363,7 @@ function filesByType(config) {
         })
         .y({
           "value": "size",
-          "label": "Aggregate File Size",
+          "label": "Total Size By File Type",
           "scale": "log"
         })
         .order("size")
