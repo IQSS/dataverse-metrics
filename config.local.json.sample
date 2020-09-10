@@ -3,6 +3,9 @@
   "installationName":"Dataverse Repository",
   "dataverseTerm": "Dataverse",
   "datasetTerm": "Dataset",
+  "downloadsHeader": "Downloads",
+  "makeDataCountHeader": "Make Data Count",
+  "holdingsHeader": "Holdings",
   "maxBars": 100,
   "globalConfigured":"false",
   "colors": {

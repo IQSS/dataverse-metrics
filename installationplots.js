@@ -48,6 +48,17 @@ $(document).ready(function() {
       $('#selectString').html('<div><a href="/metrics">Show Metrics for the whole repository</a></div><div>Click a sub-' + config.dataverseTerm + ' name to see its metrics</div>');
     }
     
+    //Panels
+    if(config.hasOwnProperty("downloadsHeader")) {
+      $("#downloadSection").find("a").text(config.downloadsHeader);
+    }
+    if(config.hasOwnProperty("makeDataCountHeader")) {
+      $("#mdcSection").find("a").text(config.makeDataCountHeader);
+    }
+    if(config.hasOwnProperty("holdingsHeader")) {
+      $("#holdingsSection").find("a").text(config.holdingsHeader);
+    }
+    
     //Footer
     if (config.hasOwnProperty("globalConfigured")) {
       if(config.globalConfigured === "true") {
