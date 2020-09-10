@@ -1,6 +1,6 @@
 {
   "installationURL": "",
-  "installationName":"Daverse Repository",
+  "installationName":"Dataverse Repository",
   "dataverseTerm": "Dataverse",
   "datasetTerm": "Dataset",
   "maxBars": 100,
