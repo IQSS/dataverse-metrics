@@ -208,8 +208,8 @@ function dataversesBySubject(config) {
 function datasetsBySubject(config) {
   var colors = config["colors"]["datasets/bySubject"];
   $.ajax({
-    url: dvser    url: dvserver + '/api/info/metrics/datasets/bySubject' + addAlias(),
- Accept: "application/json" },
+    url: dvserver + '/api/info/metrics/datasets/bySubject' + addAlias(),
+    headers: { Accept: "application/json" },
     success: function(data) {
       data = data.data;
 
@@ -220,8 +220,8 @@ function datasetsBySubject(config) {
         .title({
           "total": true
         })
-        .container("#        .container("#datasets-by-subject")
-ap")
+        .container("#datasets-by-subject")
+        .type("tree_map")
         .id("subject")
         .size("count")
         .color({
