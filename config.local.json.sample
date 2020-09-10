@@ -2,6 +2,7 @@
   "installationURL": "",
   "installationName":"Daverse Repository",
   "dataverseTerm": "Dataverse",
+  "datasetTerm": "Dataset",
   "maxBars": 100,
   "globalConfigured":"false",
   "colors": {

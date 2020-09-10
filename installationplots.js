@@ -87,6 +87,11 @@ $(document).ready(function() {
 //Generic graph of time series - date versus count
 function timeseries(name, config) {
   var lcname = name.toLowerCase();
+  var nameLabel = name;
+  var singular = lcname.substring(0, lcname.length -1);
+  if(config.hasOwnProperty(singular + "Term")) {
+    nameLabel = config[singular + "Term"] + "s";
+  }
   var color = config["colors"][lcname + "/monthly"];
   $.ajax({
     url: dvserver + '/api/info/metrics/' + lcname + '/monthly' + addAlias(),
@@ -94,10 +99,10 @@ function timeseries(name, config) {
     success: function(data) {
 
       data = data.data;
-      var yLabel = "Number of " + name;
+      var yLabel = "Number of " + nameLabel;
       var visualization = d3plus.viz()
         .data(data)
-        .title(name)
+        .title(nameLabel)
         .container("#" + lcname)
         .type("bar")
         .id("date")
@@ -128,10 +133,10 @@ function dataversesByCategory(config) {
     headers: { Accept: "application/json" },
     success: function(data) {
       data = data.data;
-      var tileLabel = "Number of Dataverses";
+      var tileLabel = "Number of " + config.dataverseTerm + "s";
       var visualization = d3plus.viz()
         .data(data)
-        .title("Dataverses by Category")
+        .title(config.dataverseTerm + "s by Category")
         .title({
           "total": true
         })
@@ -168,10 +173,10 @@ function dataversesBySubject(config) {
     success: function(data) {
       data = data.data;
 
-      var tileLabel = "Number of Dataverses";
+      var tileLabel = "Number of " + config.dataverseTerm + "s";
       var visualization = d3plus.viz()
         .data(data)
-        .title("Dataverses by Subject")
+        .title(config.dataverseTerm + "s by Subject")
         .title({
           "total": true
         })
@@ -203,20 +208,20 @@ function dataversesBySubject(config) {
 function datasetsBySubject(config) {
   var colors = config["colors"]["datasets/bySubject"];
   $.ajax({
-    url: dvserver + '/api/info/metrics/datasets/bySubject' + addAlias(),
-    headers: { Accept: "application/json" },
+    url: dvser    url: dvserver + '/api/info/metrics/datasets/bySubject' + addAlias(),
+ Accept: "application/json" },
     success: function(data) {
       data = data.data;
 
-      var tileLabel = "Number of Datasets";
+      var tileLabel = "Number of " + config.Term;
       var visualization = d3plus.viz()
         .data(data)
-        .title("Datasets by Subject")
+        .title(config.Term + " by Subject")
         .title({
           "total": true
         })
-        .container("#datasets-by-subject")
-        .type("tree_map")
+        .container("#        .container("#datasets-by-subject")
+ap")
         .id("subject")
         .size("count")
         .color({
@@ -380,7 +385,7 @@ function uniqueDownloads(config) {
     headers: { Accept: "application/json" },
     success: function(data) {
       data = data.data;
-      var title = "Unique Downloads per Dataset";
+      var title = "Unique Downloads per " + config.datasetTerm;
       var maxBars = config["maxBars"];
       if (typeof maxBars !== "undefined") {
         data = data.slice(0, maxBars);
@@ -394,7 +399,7 @@ function uniqueDownloads(config) {
         .id("pid")
         .x({
           "value": "pid",
-          "label": " Dataset Identifier"
+          "label": config.datasetTerm + " Identifier"
         })
         .y({
           "value": "count",
@@ -438,7 +443,7 @@ function fileDownloads(config) {
         .id("id")
         .x({
           "value": xName,
-          "label": " Dataset Identifier"
+          "label": config.datasetTerm + " Identifier"
         })
         .y({
           "value": "count",
