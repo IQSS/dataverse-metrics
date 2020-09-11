@@ -1,6 +1,6 @@
 .viz {
-    height: 500px;
-    margin: 3em;
+  height: 500px;
+  margin: 3em;
 }
 
 /* http://guides.dataverse.org/en/4.11/style/foundations.html#link-colors */
@@ -12,29 +12,37 @@ a:hover {
   color: #23527C;
 }
 .button {
-    float: right;
-    background-color: aliceblue;
-    border-radius: 5px;
-    padding: 0px 3px 0px 3px;
-    border-color: blue;
-    border-width: 3px;
-    border-style: outset;
-    margin-right: 10px;
-    z-index: 25;
-    position: relative;}
+  float: right;
+  background-color: aliceblue;
+  border-radius: 5px;
+  padding: 0px 3px 0px 3px;
+  border-color: blue;
+  border-width: 3px;
+  border-style: outset;
+  margin-right: 10px;
+  z-index: 25;
+  position: relative;}
 
 #title, #subtitle {
-	text-align: center;
+  text-align: center;
 }
 #dvtree {
-	background: cornsilk;
-    max-height: 250px;
-    overflow-y: auto;
+  background: cornsilk;
+  max-height: 250px;
+  overflow-y: auto;
 }
 #dvselect {
-	background: aliceblue;
-	margin: 50px 50px 0px 50px;
+  background: aliceblue;
+  margin: 50px 50px 0px 50px;
 }
 body {
-	font-family: AntoniaH2;
+  font-family: AntoniaH2;
+}
+
+.panel-default>.panel-heading>.row {
+  display:flex;
+}
+.panel-default>.panel-heading .toggle {
+  margin-left:5px;
+  margin-right: 10px;
 }
