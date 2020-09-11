@@ -318,15 +318,7 @@ function multitimeseries(name, config, groupby) {
           "value": "count",
           "label": yLabel
         })
-        .format({
-          "text": function(text, params) {
-            if (text === "count") {
-              return yLabel;
-            } else {
-              return d3plus.string.title(text, params);
-            }
-          }
-        })
+        .format(function(text){if((typeof text) == 'string') {text = text.replace(/["]+/g,'');} return text;})
         .resize(true)
         .draw();
     }
