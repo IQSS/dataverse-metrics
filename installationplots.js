@@ -319,6 +319,11 @@ function multitimeseries(name, config, groupby) {
           "label": yLabel
         })
         .format(function(text){if((typeof text) == 'string') {text = text.replace(/["]+/g,'');} return text;})
+        .mouse({
+          "click": function(d) {
+            window.open(dvserver + "/dataset.xhtml?persistentId=" + JSON.stringify(d.d3plus_data[groupby]).replace(/["]+/g,''), target="_blank");
+          }
+        })
         .resize(true)
         .draw();
     }
@@ -413,6 +418,11 @@ function uniqueDownloads(config) {
         .order("count")
         .text("pid")
         .format(function(text){if((typeof text) == 'string') {text = text.replace(/["]+/g,'');} return text;})
+        .mouse({
+          "click": function(d) {
+            window.open(dvserver + "/dataset.xhtml?persistentId=" + JSON.stringify(d.pid).replace(/["]+/g,''), target="_blank");
+          }
+        })
         .resize(true)
         .draw();
     }
@@ -457,6 +467,15 @@ function fileDownloads(config) {
         .order("count")
         .format(function(text){if((typeof text) == 'string') {text = text.replace(/["]+/g,'');} return text;})
         .text(xName)
+        .mouse({
+          "click": function(d) {
+            if(!d.hasOwnProperty("pid") || d.pid.length==0) {
+              window.open(dvserver + "/file.xhtml?fileId=" + JSON.stringify(d.id).replace(/["]+/g,''), target="_blank");
+            } else {
+              window.open(dvserver + "/file.xhtml?persistentId=" + JSON.stringify(d.pid).replace(/["]+/g,''), target="_blank");
+            }
+          }
+        })
         .resize(true)
         .draw();
     }
