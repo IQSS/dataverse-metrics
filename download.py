@@ -93,7 +93,10 @@ def get_remote_json(response):
 
 def process_single_endpoints(installation, single_endpoints, api_response_cache_dir):
     for endpoint in single_endpoints:
-        process_single_endpoint(installation, endpoint, api_response_cache_dir)
+        try:
+           process_single_endpoint(installation, endpoint, api_response_cache_dir)
+        except Exception as e:
+           print(installation + '/api/info/metrics/' + endpoint + ' failed: ' + str(e))
 
 
 def process_single_endpoint(installation, endpoint, api_response_cache_dir):
