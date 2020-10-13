@@ -52,7 +52,9 @@ def process_monthly_endpoint(installation, endpoint, api_response_cache_dir, num
         if not os.path.exists(path):
             os.makedirs(path)
         try: 
-            response = urlrequest.urlopen(url)
+            req = urlrequest.Request(url)
+            req.add_header('Accept', 'application/json')
+            response = urlrequest.urlopen(req)
         except: 
             # assume that this endpoint is not supported by this (older) Dataverse instance - skip quietly (?)
             break
@@ -96,7 +98,9 @@ def process_single_endpoints(installation, single_endpoints, api_response_cache_
 def process_single_endpoint(installation, endpoint, api_response_cache_dir):
     url = installation + '/api/info/metrics/' + endpoint
     try:
-        response = urlrequest.urlopen(url)
+        req = urlrequest.Request(url)
+        req.add_header('Accept', 'application/json')
+        response = urlrequest.urlopen(req)
         json_out = get_remote_json(response)
         o = urlparse(installation)
         hostname = o.hostname
