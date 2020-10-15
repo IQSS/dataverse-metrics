@@ -30,14 +30,17 @@ def main():
     ssl._create_default_https_context = ssl._create_unverified_context
 
     for installation in installations:
-        process_monthly_endpoints(installation, monthly_endpoints, api_response_cache_dir, num_months_to_process)
-        # "monthly itemized" metrics are downloaded the same way as regular montly metrics:
-        process_monthly_endpoints(installation, monthly_itemized_endpoints, api_response_cache_dir, num_months_to_process)
-        process_single_endpoints(installation, single_endpoints, api_response_cache_dir)
+        try:
+            process_monthly_endpoints(installation, monthly_endpoints, api_response_cache_dir, num_months_to_process)
+            # "monthly itemized" metrics are downloaded the same way as regular montly metrics:
+            process_monthly_endpoints(installation, monthly_itemized_endpoints, api_response_cache_dir, num_months_to_process)
+            process_single_endpoints(installation, single_endpoints, api_response_cache_dir)
+        except Exception as e:
+            print("processing " + installation + " failed: " + str(e))
 
-    if github_repos:
-        for repo in github_repos:
-          process_github_repo(repo, api_response_cache_dir)
+        if github_repos:
+            for repo in github_repos:
+                process_github_repo(repo, api_response_cache_dir)
 
 
 def process_monthly_endpoints(installation, monthly_endpoints, api_response_cache_dir, num_months_to_process):
@@ -90,7 +93,10 @@ def get_remote_json(response):
 
 def process_single_endpoints(installation, single_endpoints, api_response_cache_dir):
     for endpoint in single_endpoints:
-        process_single_endpoint(installation, endpoint, api_response_cache_dir)
+        try:
+           process_single_endpoint(installation, endpoint, api_response_cache_dir)
+        except Exception as e:
+           print(installation + '/api/info/metrics/' + endpoint + ' failed: ' + str(e))
 
 
 def process_single_endpoint(installation, endpoint, api_response_cache_dir):
