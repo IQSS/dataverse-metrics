@@ -62,8 +62,8 @@
 "https://dataverse.yale-nus.edu.sg"
 
   ],
-  "api_response_cache_dir": "/var/www/html/metrics/global/cache",
-  "aggregate_output_dir": "/var/www/html/metrics/global",
+  "api_response_cache_dir": "/var/www/html/dataverse-metrics/global/cache",
+  "aggregate_output_dir": "/var/www/html/dataverse-metrics/global",
   "num_months_to_process": 26,
   "month_filter_enabled": false,
   "endpoints": {

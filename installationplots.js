@@ -45,7 +45,7 @@ $(document).ready(function() {
       $('#selectString').html('<div>Click a sub-' + config.dataverseTerm + ' name to see its metrics</div>');
     } else {
       $('#subtitle').html("<h2>Showing Metrics from the " + alias + " " + config.dataverseTerm + "</h2>");
-      $('#selectString').html('<div><a href="/metrics">Show Metrics for the whole repository</a></div><div>Click a sub-' + config.dataverseTerm + ' name to see its metrics</div>');
+      $('#selectString').html('<div><a href="/dataverse-metrics">Show Metrics for the whole repository</a></div><div>Click a sub-' + config.dataverseTerm + ' name to see its metrics</div>');
     }
     
     //Panels
@@ -62,7 +62,7 @@ $(document).ready(function() {
     //Footer
     if (config.hasOwnProperty("globalConfigured")) {
       if(config.globalConfigured === "true") {
-        $("#global").html('<a href="/metrics/global">View Aggregate Metrics from the Dataverse Community</a>'); 
+        $("#global").html('<a href="/dataverse-metrics/global">View Aggregate Metrics from the Dataverse Community</a>'); 
       }
     }
 
