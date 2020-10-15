@@ -30,14 +30,17 @@ def main():
     ssl._create_default_https_context = ssl._create_unverified_context
 
     for installation in installations:
-        process_monthly_endpoints(installation, monthly_endpoints, api_response_cache_dir, num_months_to_process)
-        # "monthly itemized" metrics are downloaded the same way as regular monthly metrics:
-        process_monthly_endpoints(installation, monthly_itemized_endpoints, api_response_cache_dir, num_months_to_process)
-        process_single_endpoints(installation, single_endpoints, api_response_cache_dir)
+        try:
+            process_monthly_endpoints(installation, monthly_endpoints, api_response_cache_dir, num_months_to_process)
+            # "monthly itemized" metrics are downloaded the same way as regular montly metrics:
+            process_monthly_endpoints(installation, monthly_itemized_endpoints, api_response_cache_dir, num_months_to_process)
+            process_single_endpoints(installation, single_endpoints, api_response_cache_dir)
+        except Exception as e:
+            print("processing " + installation + " failed: " + str(e))
 
-    if github_repos:
-        for repo in github_repos:
-          process_github_repo(repo, api_response_cache_dir)
+        if github_repos:
+            for repo in github_repos:
+                process_github_repo(repo, api_response_cache_dir)
 
 
 def process_monthly_endpoints(installation, monthly_endpoints, api_response_cache_dir, num_months_to_process):
@@ -92,7 +95,10 @@ def get_remote_json(response):
 
 def process_single_endpoints(installation, single_endpoints, api_response_cache_dir):
     for endpoint in single_endpoints:
-        process_single_endpoint(installation, endpoint, api_response_cache_dir)
+        try:
+           process_single_endpoint(installation, endpoint, api_response_cache_dir)
+        except Exception as e:
+           print(installation + '/api/info/metrics/' + endpoint + ' failed: ' + str(e))
 
 
 def process_single_endpoint(installation, endpoint, api_response_cache_dir):
@@ -101,19 +107,19 @@ def process_single_endpoint(installation, endpoint, api_response_cache_dir):
         req = urlrequest.Request(url)
         req.add_header('Accept', 'application/json')
         response = urlrequest.urlopen(req)
-        json_out = get_remote_json(response)
-        o = urlparse(installation)
-        hostname = o.hostname
-        if endpoint == '../version':
-            endpoint = 'version'
-        path = api_response_cache_dir + '/' + endpoint
-        if not os.path.exists(path):
-            os.makedirs(path)
-        filename = hostname + '.json'
-        with open(path + '/' + filename, 'w') as outfile:
-            json.dump(json_out, outfile, indent=4)
     except Exception as e:
         print(installation + " had an oops: " + str(e))
+    json_out = get_remote_json(response)
+    o = urlparse(installation)
+    hostname = o.hostname
+    if endpoint == '../version':
+        endpoint = 'version'
+    path = api_response_cache_dir + '/' + endpoint
+    if not os.path.exists(path):
+        os.makedirs(path)
+    filename = hostname + '.json'
+    with open(path + '/' + filename, 'w') as outfile:
+        json.dump(json_out, outfile, indent=4)
 
 def process_github_repo(repo, api_response_cache_dir):
     o = urlparse(repo)
