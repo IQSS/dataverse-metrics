@@ -227,7 +227,7 @@ function datasetsBySubject(config) {
       var tileLabel = "Number of " + config.Term;
       var visualization = d3plus.viz()
         .data(data)
-        .title(config.Term + " by Subject")
+        .title(config.datasetTerm + " by Subject")
         .title({
           "total": true
         })
