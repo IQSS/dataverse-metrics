@@ -129,8 +129,12 @@ function timeseries(name, config) {
         .color(function(d) {
           return color;
         })
-        .resize(true)
-        .draw()
+        .resize(true);
+      if(config.hasOwnProperty("timeseries." + lcname + ".definition")) {
+        var explain = config["timeseries." + lcname + ".definition"];
+        visualization.footer(config["timeseries." + lcname + ".definition"]);
+      }
+      visualization.draw();
     }
   });
   $("#" + lcname).append($("<a/>").addClass("button").attr("href", "/api/info/metrics/" + lcname + "/monthly" + addAlias()).attr("type", "text/csv").text("CSV"));
@@ -169,8 +173,12 @@ function dataversesByCategory(config) {
           }
         })
         .legend(false)
-        .resize(true)
-        .draw();
+        .resize(true);
+      if(config.hasOwnProperty("dataversesbycategory.definition")) {
+        var explain = config["dataversesbycategory.definition"];
+        visualization.footer(config["dataversesbycategory.definition"]);
+      }
+      visualization.draw();
     }
   });
   $("#dataverses-by-category").append($("<a/>").addClass("button").attr("href", "/api/info/metrics/dataverses/byCategory" + addAlias()).attr("type", "text/csv").text("CSV"));
@@ -209,8 +217,12 @@ function dataversesBySubject(config) {
           }
         })
         .legend(false)
-        .resize(true)
-        .draw();
+        .resize(true);
+      if(config.hasOwnProperty("dataversesbysubject.definition")) {
+        var explain = config["dataversesbysubject.definition"];
+        visualization.footer(config["dataversesbysubject.definition"]);
+      }
+      visualization.draw();
     }
   });
   $("#dataverses-by-subject").append($("<a/>").addClass("button").attr("href", "/api/info/metrics/dataverses/bySubject" + addAlias()).attr("type", "text/csv").text("CSV"));
@@ -249,8 +261,12 @@ function datasetsBySubject(config) {
           }
         })
         .legend(false)
-        .resize(true)
-        .draw();
+        .resize(true);
+      if(config.hasOwnProperty("datasetsbysubject.definition")) {
+        var explain = config["datasetsbysubject.definition"];
+        visualization.footer(config["datasetsbysubject.definition"]);
+      }
+      visualization.draw();
     }
   });
   $("#datasets-by-subject").append($("<a/>").addClass("button").attr("href", "/api/info/metrics/datasets/bySubject" + addAlias()).attr("type", "text/csv").text("CSV"));
@@ -285,8 +301,12 @@ function makeDataCount(metric, config) {
         .color(function(d) {
           return color;
         })
-        .resize(true)
-        .draw();
+        .resize(true);
+      if(config.hasOwnProperty("makedatacount." + metric + ".definition")) {
+        var explain = config["makedatacount." + metric + ".definition"];
+        visualization.footer(config["makedatacount." + metric + ".definition"]);
+      }
+      visualization.draw();
     }
   });
   $("#makedatacount-" + metric).append($("<a/>").addClass("button").attr("href", "/api/info/metrics/makeDataCount/" + metric + "/monthly" + addAlias()).attr("type", "text/csv").text("CSV"));
@@ -324,8 +344,12 @@ function multitimeseries(name, config, groupby) {
             window.open(dvserver + "/dataset.xhtml?persistentId=" + JSON.stringify(d.d3plus_data[groupby]).replace(/["]+/g,''), target="_blank");
           }
         })
-        .resize(true)
-        .draw();
+        .resize(true);
+      if(config.hasOwnProperty("multitimeseries." + lcname + ".definition")) {
+        var explain = config["multitimeseries." + lcname + ".definition"];
+        visualization.footer(config["multitimeseries." + lcname + ".definition"]);
+      }
+      visualization.draw();
     }
   });
   $("#" + lcname).append($("<a/>").addClass("button").attr("href", "/api/info/metrics/" + lcname + "/monthly" + addAlias()).attr("type", "text/csv").text("CSV"));
@@ -357,8 +381,13 @@ function filesByType(config) {
         })
         .order("count")
         .text("contenttype")
-        .resize(true)
-        .draw();
+        .resize(true);
+      if(config.hasOwnProperty("filesbytype.definition")) {
+        var explain = config["filesbytype.definition"];
+        countVisualization.footer(config["filesbytype.definition"]);
+      }
+      countVisualization.draw();
+
       var sizeVisualization = d3plus.viz()
         .data(data).dev(true)
         .title("File Size By Type")
@@ -376,8 +405,12 @@ function filesByType(config) {
         })
         .order("size")
         .text("contenttype")
-        .resize(true)
-        .draw();
+        .resize(true);
+      if(config.hasOwnProperty("filesbytype.definition")) {
+        var explain = config["filesbytype.definition"];
+        sizeVisualization.footer(config["filesbytype.definition"]);
+      }
+      sizeVisualization.draw();
     }
   });
   $("#files-by-type-count").append($("<a/>").addClass("button").attr("href", "/api/info/metrics/files/byType" + addAlias()).attr("type", "text/csv").text("CSV"));
@@ -423,8 +456,12 @@ function uniqueDownloads(config) {
             window.open(dvserver + "/dataset.xhtml?persistentId=" + JSON.stringify(d.pid).replace(/["]+/g,''), target="_blank");
           }
         })
-        .resize(true)
-        .draw();
+        .resize(true);
+      if(config.hasOwnProperty("uniquedownloads.definition")) {
+        var explain = config["uniquedownloads.definition"];
+        visualization.footer(config["uniquedownloads.definition"]);
+      }
+      visualization.draw();
     }
   });
   $("#uniquedownloads-by-pid").append($("<a/>").addClass("button").attr("href", "/api/info/metrics/uniquedownloads" + addAlias()).attr("type", "text/csv").text("CSV"));
@@ -476,8 +513,12 @@ function fileDownloads(config) {
             }
           }
         })
-        .resize(true)
-        .draw();
+        .resize(true);
+      if(config.hasOwnProperty("filedownloads.definition")) {
+        var explain = config["filedownloads.definition"];
+        visualization.footer(config["filedownloads.definition"]);
+      }
+       visualization.draw();
     }
   });
   $("#filedownloads-by-id").append($("<a/>").addClass("button").attr("href", "/api/info/metrics/filedownloads" + addAlias()).attr("type", "text/csv").text("CSV"));
