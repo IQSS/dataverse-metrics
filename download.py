@@ -110,6 +110,7 @@ def process_single_endpoint(installation, endpoint, api_response_cache_dir):
         response = urlrequest.urlopen(req)
     except Exception as e:
         print(installation + " had an oops: " + str(e))
+        return
     json_out = get_remote_json(response)
     o = urlparse(installation)
     hostname = o.hostname
