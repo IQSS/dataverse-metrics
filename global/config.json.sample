@@ -1,19 +1,16 @@
 {
   "installations": [
-    "http://data.mel.cgiar.org",
     "http://datos.pucp.edu.pe",
-    "http://opendata.pku.edu.cn",
-    "http://research-data.urosario.edu.co",
     "https://archive.data.jhu.edu",
     "https://data.aussda.at",
     "https://data.cifor.org",
     "https://data.gro.uni-goettingen.de",
     "https://data.inrae.fr",
     "https://data.lipi.go.id",
+    "https://data.mel.cgiar.org",
     "https://data.qdr.syr.edu",
     "https://datarepositorium.uminho.pt",
     "https://dataverse.asu.edu",
-    "https://dataverse.bhp.org.bw",
     "https://dataverse.harvard.edu",
     "https://dataverse.ird.fr",
     "https://dataverse.library.dal.ca",
@@ -32,8 +29,10 @@
     "https://dataverse.vtti.vt.edu",
     "https://edatos.consorciomadrono.es",
     "https://heidata.uni-heidelberg.de",
+    "https://opendata.pku.edu.cn",
     "https://researchdata.ntu.edu.sg",
     "https://research-data.ifsttar.fr",
+    "https://research-data.urosario.edu.co",
     "https://researchdata.nie.edu.sg"
   ],
   "api_response_cache_dir": "/var/www/html/dataverse-metrics/global/cache",
@@ -52,8 +51,7 @@
       "files/toMonth",
       "downloads/toMonth"
     ],
-    "monthly_itemized": [
-    ]
+    "monthly_itemized": []
   },
   "blacklists": {
     "datasets/bySubject": [
