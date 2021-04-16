@@ -58,9 +58,10 @@ def process_monthly_endpoint(installation, endpoint, api_response_cache_dir, num
             req = urlrequest.Request(url)
             req.add_header('Accept', 'application/json')
             response = urlrequest.urlopen(req)
-        except: 
+        except Exception as e: 
             # assume that this endpoint is not supported by this (older) Dataverse instance - skip quietly (?)
-            break
+            print(str(e))
+            return
         json_out = get_remote_json(response)
         o = urlparse(installation)
         hostname = o.hostname
@@ -129,7 +130,8 @@ def process_github_repo(repo, api_response_cache_dir):
         response = urlrequest.urlopen(url)
     except Exception as e:
         # For Python 2 compatibility, handle errors later when calling get_remote_json
-        pass
+        print(str(e))
+        return
     try:
         json_out = get_remote_json(response)
     except Exception as e:
