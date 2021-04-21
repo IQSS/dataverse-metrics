@@ -107,7 +107,9 @@ function datasetsToMonth(config) {
         var visualization = d3plus.viz()
             .data(data)
             .title("Total Datasets")
-            .title("Due to an aggregation issue, current count does not include ~82,000 datasets from https://data.inrae.fr")
+            .title({
+               "sub": "Due to an aggregation issue, current count does not include ~82,000 datasets from https://data.inrae.fr",
+               "total": true
             .container("#datasets-to-month")
             .type("bar")
             .id("month")
