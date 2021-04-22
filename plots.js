@@ -108,8 +108,7 @@ function datasetsToMonth(config) {
             .data(data)
             .title("Total Datasets")
             .title({
-               "sub": "Due to an aggregation issue, current count does not include ~82,000 datasets from https://data.inrae.fr",
-               "total": true
+               "sub": "Due to an aggregation issue, current count does not include ~82,000 datasets from https://data.inrae.fr"
             })
             .container("#datasets-to-month")
             .type("bar")
