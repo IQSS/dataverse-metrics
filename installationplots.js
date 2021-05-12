@@ -389,7 +389,7 @@ function filesByType(config) {
       countVisualization.draw();
 
       var sizeVisualization = d3plus.viz()
-        .data(data).dev(true)
+        .data(data.filter(d=>d.size > 0)).dev(true)
         .title("File Size By Type")
         .container("#files-by-type-size")
         .type("bar")
