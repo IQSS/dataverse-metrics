@@ -23,6 +23,20 @@ a:hover {
   z-index: 25;
   position: relative;}
 
+.redundant {
+  float: right;
+  color: #337AB7;
+  background-color: aliceblue;
+  border-radius: 5px;
+  height:26px;
+  padding: 0px 3px 0px 3px;
+  border-color: antiquewhite;
+  border-width: 2px;
+  border-style: inset;
+  margin-right: 10px;
+  z-index: 25;
+  position: relative;}
+
 #title, #subtitle {
   text-align: center;
 }

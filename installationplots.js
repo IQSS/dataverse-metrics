@@ -414,7 +414,7 @@ function filesByType(config) {
     }
   });
   $("#files-by-type-count").append($("<a/>").addClass("button").attr("href", "/api/info/metrics/files/byType" + addAlias()).attr("type", "text/csv").text("CSV"));
-  $("#files-by-type-size").append($("<span/>").addClass("button").attr("title", "These metrics are included in the CSV for the 'File Count By Type'").text("CSV"));
+  $("#files-by-type-size").append($("<span/>").addClass("redundant").attr("title", "These metrics are included in the CSV for the 'File Count By Type'").text("CSV").append($("<span/>").addClass("glyphicon glyphicon-question-sign")));
 }
 
 //Shows the unique download count per PID
