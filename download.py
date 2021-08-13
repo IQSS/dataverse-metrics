@@ -55,7 +55,7 @@ def process_monthly_endpoint(installation, endpoint, api_response_cache_dir, num
         if not os.path.exists(path):
             os.makedirs(path)
         try: 
-            req = urlrequest.Request(url)
+            req = urlrequest.Request(url, headers={'User-Agent': 'DataverseMetrics'})
             req.add_header('Accept', 'application/json')
             response = urlrequest.urlopen(req)
         except: 
@@ -104,7 +104,7 @@ def process_single_endpoints(installation, single_endpoints, api_response_cache_
 def process_single_endpoint(installation, endpoint, api_response_cache_dir):
     url = installation + '/api/info/metrics/' + endpoint
     try:
-        req = urlrequest.Request(url)
+        req = urlrequest.Request(url, headers={'User-Agent': 'DataverseMetrics'})
         req.add_header('Accept', 'application/json')
         response = urlrequest.urlopen(req)
     except Exception as e:
