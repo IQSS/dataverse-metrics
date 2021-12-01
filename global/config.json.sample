@@ -1,5 +1,6 @@
 {
   "installations": [
+    "http://dataverse.icrisat.org",
     "http://datos.pucp.edu.pe",
     "https://abacus.library.ubc.ca",
     "https://archive.data.jhu.edu",
@@ -30,7 +31,6 @@
     "https://dataverse.dartmouth.edu",
     "https://dataverse.fiu.edu",
     "https://dataverse.harvard.edu",
-    "https://dataverse.icrisat.org",
     "https://dataverse.ifdc.org",
     "https://dataverse.iit.it",
     "https://dataverse.ird.fr",
