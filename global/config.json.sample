@@ -107,5 +107,6 @@
   },
   "github_repos": [
     "https://github.com/IQSS/dataverse"
-  ]
+  ],
+  "user_agent": "DataverseMetrics"
 }
