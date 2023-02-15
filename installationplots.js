@@ -532,7 +532,7 @@ function addAlias() {
 
 //Turn dataverse names into links to the metrics page using that dataverse as the parent
 function updateNames(node) {
-  node.name = "<a href='" + window.location + "?parentAlias=" + node.alias + "'>" + node.alias + "</a>";
+  node.name = "<a href='" + window.location.href.split("?")[0] + "?parentAlias=" + node.alias + "'>" + node.alias + "</a>";
   if (typeof node.children !== 'undefined') {
     node.children.forEach((childnode) => {
       updateNames(childnode);
