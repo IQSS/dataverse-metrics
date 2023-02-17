@@ -45,6 +45,8 @@ def process_monthly_endpoints(monthly_endpoints, api_response_cache_dir, aggrega
 
 def process_single_endpoints(single_endpoints, api_response_cache_dir, aggregate_output_dir):
     for endpoint in single_endpoints:
+        if endpoint == '../version':
+            endpoint = 'version'
         jsondir = api_response_cache_dir + '/' + endpoint + '/'
         totals = {}
         for item in os.listdir(jsondir):
@@ -53,15 +55,24 @@ def process_single_endpoints(single_endpoints, api_response_cache_dir, aggregate
                 path_and_json_file = jsondir + '/' + json_file
                 with open(path_and_json_file) as f:
                     json_data = json.load(f)
-                    for name_and_count in json_data['data']:
-                        if endpoint == 'dataverses/byCategory':
-                            metric_type = 'category'
-                        else:
-                            metric_type = 'subject'
-                        name = name_and_count[metric_type]
-                        count = name_and_count['count']
-                        last_count = totals.get(name, 0)
-                        totals[name] = count + last_count
+                    if isinstance(json_data['data'], list):
+                        for name_and_count in json_data['data']:
+                            if endpoint == 'dataverses/byCategory':
+                                metric_type = 'category'
+                            else:
+                                metric_type = 'subject'
+                            name = name_and_count[metric_type]
+                            count = name_and_count['count']
+                            last_count = totals.get(name, 0)
+                            totals[name] = count + last_count
+                    else:
+                        if endpoint== 'version':
+                            name=json_data['data'][endpoint]
+                            if name[0] == 'v':
+                                name=name[1:]
+                            name = name.split('-')[0]
+                            totals[name]= totals.get(name,0) + 1
+
         metric_filename = endpoint.replace('/', '-') + '.tsv'
         path_and_metric_file = aggregate_output_dir + '/' + metric_filename
         with open(path_and_metric_file, 'w') as tsvfile:

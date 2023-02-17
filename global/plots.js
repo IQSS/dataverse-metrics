@@ -8,6 +8,8 @@ $(document).ready(function() {
             filesToMonth(config);
             downloadsToMonth(config);
             populateInstallations(config);
+            versions(config);
+            versionsBar(config);
         },
         "config.json");
 });
@@ -107,6 +109,9 @@ function datasetsToMonth(config) {
         var visualization = d3plus.viz()
             .data(data)
             .title("Total Datasets")
+            .title({
+               "sub": "Due to an aggregation issue, current count does not include ~82,000 datasets from https://data.inrae.fr"
+            })
             .container("#datasets-to-month")
             .type("bar")
             .id("month")
@@ -246,6 +251,92 @@ function downloadsToMonth(config) {
             .y({
                 //"range": yAxisTruncation(data, 1000000),
                 "range": [0, data[data.length - 1].count * 1.3],
+                "value": "count",
+                "label": yLabel
+            })
+            .color(function(d) {
+                return color;
+            })
+            .format({
+                "text": function(text, params) {
+                    if (text === "count") {
+                        return yLabel;
+                    } else {
+                        return d3plus.string.title(text, params);
+                    }
+                }
+            })
+            .resize(true)
+            .draw();
+    });
+}
+
+function versions(config) {
+    var colors = config["colors"]["versions"];
+    d3.tsv("version.tsv", function(error, data) {
+        if (error) return console.error(error);
+        var tileLabel = "Number of Instances";
+        coerceToNumeric(data);
+        var visualization = d3plus.viz()
+            .data(data)
+            .title("Instances by Version")
+            .title({
+                "total": true
+            })
+            .container("#versions")
+            .type("tree_map")
+            .id("name")
+            .size("count")
+            .color({
+                value: "count",
+                heatmap: colors.reverse()
+            })
+            .format({
+                "text": function(text, params) {
+                    if (text === "count") {
+                        return tileLabel;
+                    } else {
+                        return d3plus.string.title(text, params);
+                    }
+                }
+            })
+            .legend(false)
+            .resize(true)
+            .draw();
+    });
+}
+
+function versionsBar(config) {
+    var color = config["colors"]["versionsBar"];
+    d3.tsv("version.tsv", function(error, data) {
+        if (error) return console.error(error);
+        var yLabel = "Number of Instances";
+        coerceToNumeric(data);
+        var visualization = d3plus.viz()
+            .data(data)
+            .title("Instances by Version")
+            .container("#versionsBar")
+            .type("bar")
+            .id("name")
+      .x({
+                "value": "name",
+                "label": "Version"
+            })
+            .order(function(d) {
+        var ind=d.name.indexOf("-");
+        var name=d.name;
+        if(ind>0) {
+//          name = d.name.substring(0,ind);
+        }
+        if(d.name.startsWith("V")) {
+          name = name.substring(1);
+        }
+
+    return 16-["4.6", "4.6.1", "4.8.5", "4.9.2", "4.9.4", "4.10.1","4.13", "4.14", "4.15.1", "4.16","4.17", "4.18.1", "4.19", "4.19.3", "4.20", "5.0"].indexOf(name);
+})
+     .y({
+                "range": yAxisTruncation(data, 10),
+                //"range": [0, data[data.length - 1].count * 1.3],
                 "value": "count",
                 "label": yLabel
             })
