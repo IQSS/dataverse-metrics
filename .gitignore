@@ -3,3 +3,4 @@ cache
 *.pyc
 *.tsv
 contributors.json
+/.project
