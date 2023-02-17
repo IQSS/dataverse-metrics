@@ -35,7 +35,7 @@ def main():
             process_monthly_endpoints(installation, monthly_endpoints, api_response_cache_dir, num_months_to_process, user_agent)
             # "monthly itemized" metrics are downloaded the same way as regular montly metrics:
             process_monthly_endpoints(installation, monthly_itemized_endpoints, api_response_cache_dir, num_months_to_process, user_agent)
-            process_single_endpoints(installation, single_endpoints, api_response_cache_dir)
+            process_single_endpoints(installation, single_endpoints, api_response_cache_dir, user_agent)
         except Exception as e:
             print("processing " + installation + " failed: " + str(e))
 
