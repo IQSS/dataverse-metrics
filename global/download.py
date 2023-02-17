@@ -25,6 +25,7 @@ def main():
     single_endpoints = config['endpoints']['single']
     monthly_itemized_endpoints = config['endpoints']['monthly_itemized']
     github_repos = config.get('github_repos')
+    user_agent = config.get('user_agent')
 
     # trust SSL certificates
     ssl._create_default_https_context = ssl._create_unverified_context
@@ -55,12 +56,13 @@ def process_monthly_endpoint(installation, endpoint, api_response_cache_dir, num
         if not os.path.exists(path):
             os.makedirs(path)
         try: 
-            req = urlrequest.Request(url)
+            req = urlrequest.Request(url, headers={'User-Agent': user_agent})
             req.add_header('Accept', 'application/json')
             response = urlrequest.urlopen(req)
-        except: 
+        except Exception as e: 
             # assume that this endpoint is not supported by this (older) Dataverse instance - skip quietly (?)
-            break
+            print(str(e))
+            return
         json_out = get_remote_json(response)
         o = urlparse(installation)
         hostname = o.hostname
@@ -104,14 +106,17 @@ def process_single_endpoints(installation, single_endpoints, api_response_cache_
 def process_single_endpoint(installation, endpoint, api_response_cache_dir):
     url = installation + '/api/info/metrics/' + endpoint
     try:
-        req = urlrequest.Request(url)
+        req = urlrequest.Request(url, headers={'User-Agent': user_agent})
         req.add_header('Accept', 'application/json')
         response = urlrequest.urlopen(req)
     except Exception as e:
         print(installation + " had an oops: " + str(e))
+        return
     json_out = get_remote_json(response)
     o = urlparse(installation)
     hostname = o.hostname
+    if endpoint == '../version':
+        endpoint = 'version'
     path = api_response_cache_dir + '/' + endpoint
     if not os.path.exists(path):
         os.makedirs(path)
@@ -129,7 +134,8 @@ def process_github_repo(repo, api_response_cache_dir):
         response = urlrequest.urlopen(url)
     except Exception as e:
         # For Python 2 compatibility, handle errors later when calling get_remote_json
-        pass
+        print(str(e))
+        return
     try:
         json_out = get_remote_json(response)
     except Exception as e:

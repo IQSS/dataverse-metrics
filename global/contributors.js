@@ -26,6 +26,7 @@ function getContributorsPerRepo(contributors) {
     return line;
 }
 
+//Note - this duplicates/overwrites the same function in plots.js when they are both included
 // https://codepen.io/KryptoniteDove/post/load-json-file-locally-using-pure-javascript
 function loadJSON(callback, jsonFile) {
 

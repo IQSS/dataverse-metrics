@@ -1,8 +1,10 @@
 {
   "installations": [
+    "http://dataverse.icrisat.org",
     "http://datos.pucp.edu.pe",
     "https://abacus.library.ubc.ca",
     "https://archive.data.jhu.edu",
+    "https://borealisdata.ca",
     "https://dadosabertos.rnp.br",
     "https://dadosdepesquisa.fiocruz.br",
     "https://darus.uni-stuttgart.de",
@@ -44,7 +46,6 @@
     "https://dataverse.orc.gmu.edu",
     "https://dataverse.pushdom.ru",
     "https://dataverse.rsu.lv",
-    "https://dataverse.scholarsportal.info",
     "https://dataverse.sta.uwi.edu",
     "https://dataverse.tdl.org",
     "https://dataverse.theacss.org",
@@ -67,14 +68,15 @@
     "https://research-data.ifsttar.fr",
     "https://research-data.urosario.edu.co"
   ],
-  "api_response_cache_dir": "/var/www/html/dataverse-metrics/cache",
-  "aggregate_output_dir": "/var/www/html/dataverse-metrics",
+  "api_response_cache_dir": "/var/www/html/dataverse-metrics/global/cache",
+  "aggregate_output_dir": "/var/www/html/dataverse-metrics/global",
   "num_months_to_process": 36,
   "month_filter_enabled": true,
   "endpoints": {
     "single": [
       "dataverses/byCategory",
-      "datasets/bySubject"
+      "datasets/bySubject",
+      "../version"
     ],
     "monthly": [
       "dataverses/toMonth",
@@ -103,9 +105,15 @@
       "#006699"
     ],
     "files/toMonth": "#006699",
-    "downloads/toMonth": "#B94617"
+    "downloads/toMonth": "#B94617",
+    "versions": [
+      "#B22200",
+      "#006699"
+    ],
+    "versionsBar" : "#006699"
   },
   "github_repos": [
     "https://github.com/IQSS/dataverse"
-  ]
+  ],
+  "user_agent": "DataverseMetrics"
 }

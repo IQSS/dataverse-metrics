@@ -1,0 +1,49 @@
+{
+  "installationURL": "",
+  "installationName":"Dataverse Repository",
+  "dataverseTerm": "Dataverse",
+  "datasetTerm": "Dataset",
+  "downloadsHeader": "Downloads",
+  "makeDataCountHeader": "Make Data Count",
+  "holdingsHeader": "Holdings",
+  "timeseries.dataverses.definition":"Total Number of published Dataverses as a function of time.",
+  "timeseries.datasets.definition":"Total Number of published Datasets as a function of time.",
+  "timeseries.files.definition":"Total Number of Files in published Datasets as a function of time.",
+  "timeseries.downloads.definition":"Total Number of Files Downloaded as a function of time.",
+  "dataversesbycategory.definition":"The distribution of Dataverses by category.",
+  "dataversesbysubject.definition":"The distribution of Dataverses by subject.",
+  "datasetsbysubject.definition":"The distribution of Datasets by subject.",
+  "uniquedownloads.definition":"Unique downloads per Dataset. This metric represents the number of people who have downloaded one or more files from a given dataset.",
+  "multitimeseries.uniquedownloads.definition":"Unique downloads per Dataset as a function of time. This metric represents the number of people who have downloaded one or more files from a given dataset.",
+  "filesbytype.definition":"The distribution of Files by type.",
+  "filedownloads.definition":"Downloads per File.",
+  "makedatacount.viewstotal.definition":"Total Number of Dataset Views. This correspond with 'Total Dataset Investigations' as define by the Make Data Count standard.",
+  "makedatacount.downloadstotal.definition":"Total Number of Dataset Downloads. This correspond with 'Total Dataset Requests' as define by the Make Data Count standard.",
+  "makedatacount.viewsunique.definition":"Number of Unique Dataset Views. This correspond with 'Unique Dataset Investigations' as define by the Make Data Count standard.",
+  "makedatacount.downloadsunique.definition":"Number of Unique Dataset Downloads. This correspond with 'Unique Dataset Requests' as define by the Make Data Count standard.",
+  "maxBars": 100,
+  "globalConfigured":"false",
+  "colors": {
+    "dataverses/monthly": "#CF3636",
+    "dataverses/byCategory": [
+      "#B22200",
+      "#006699"
+    ],
+    "dataverses/bySubject": [
+      "#B22200",
+      "#006699"
+    ],
+    "datasets/monthly": "#E58433",
+    "datasets/bySubject": [
+      "#B22200",
+      "#006699"
+    ],
+    "files/monthly": "#006699",
+    "downloads/monthly": "#B94617",
+    "uniquedownloads/monthly": "#B94617",
+    "makeDataCount/viewsTotal/monthly": "#6c757d",
+    "makeDataCount/downloadsTotal/monthly": "#006699",
+    "makeDataCount/viewsUnique/monthly": "#224F20",
+    "makeDataCount/downloadsUnique/monthly": "#b22200"
+  }
+}
