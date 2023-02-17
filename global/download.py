@@ -32,9 +32,9 @@ def main():
 
     for installation in installations:
         try:
-            process_monthly_endpoints(installation, monthly_endpoints, api_response_cache_dir, num_months_to_process)
+            process_monthly_endpoints(installation, monthly_endpoints, api_response_cache_dir, num_months_to_process, user_agent)
             # "monthly itemized" metrics are downloaded the same way as regular montly metrics:
-            process_monthly_endpoints(installation, monthly_itemized_endpoints, api_response_cache_dir, num_months_to_process)
+            process_monthly_endpoints(installation, monthly_itemized_endpoints, api_response_cache_dir, num_months_to_process, user_agent)
             process_single_endpoints(installation, single_endpoints, api_response_cache_dir)
         except Exception as e:
             print("processing " + installation + " failed: " + str(e))
@@ -44,12 +44,12 @@ def main():
                 process_github_repo(repo, api_response_cache_dir)
 
 
-def process_monthly_endpoints(installation, monthly_endpoints, api_response_cache_dir, num_months_to_process):
+def process_monthly_endpoints(installation, monthly_endpoints, api_response_cache_dir, num_months_to_process, user_agent):
     for endpoint in monthly_endpoints:
-        process_monthly_endpoint(installation, endpoint, api_response_cache_dir, num_months_to_process)
+        process_monthly_endpoint(installation, endpoint, api_response_cache_dir, num_months_to_process, user_agent)
 
 
-def process_monthly_endpoint(installation, endpoint, api_response_cache_dir, num_months_to_process):
+def process_monthly_endpoint(installation, endpoint, api_response_cache_dir, num_months_to_process, user_agent):
     for month in get_months(num_months_to_process):
         url = installation + '/api/info/metrics/' + endpoint + '/' + month
         path = api_response_cache_dir + '/' + endpoint + '/' + month
@@ -95,15 +95,15 @@ def get_remote_json(response):
         return json.loads(response.read())
 
 
-def process_single_endpoints(installation, single_endpoints, api_response_cache_dir):
+def process_single_endpoints(installation, single_endpoints, api_response_cache_dir, user_agent):
     for endpoint in single_endpoints:
         try:
-           process_single_endpoint(installation, endpoint, api_response_cache_dir)
+           process_single_endpoint(installation, endpoint, api_response_cache_dir, user_agent)
         except Exception as e:
            print(installation + '/api/info/metrics/' + endpoint + ' failed: ' + str(e))
 
 
-def process_single_endpoint(installation, endpoint, api_response_cache_dir):
+def process_single_endpoint(installation, endpoint, api_response_cache_dir, user_agent):
     url = installation + '/api/info/metrics/' + endpoint
     try:
         req = urlrequest.Request(url, headers={'User-Agent': user_agent})
