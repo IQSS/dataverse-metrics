@@ -85,13 +85,19 @@ $(document).ready(function() {
     multitimeseries("UniqueDownloads", config, "pid");
     //Row 7 - by Count and by Size graphs
     filesByType(config);
-    //Row 8
-    makeDataCount("viewsTotal", config);
-    makeDataCount("downloadsTotal", config);
-    //Row 9
-    makeDataCount("viewsUnique", config);
-    makeDataCount("downloadsUnique", config);
-
+    
+    // Use MDC by default, is backwards compatible
+    if (!config.hasOwnProperty("makeDataCount") || config.makeDataCount) {
+      //Row 8
+      makeDataCount("viewsTotal", config);
+      makeDataCount("downloadsTotal", config);
+      //Row 9
+      makeDataCount("viewsUnique", config);
+      makeDataCount("downloadsUnique", config);
+    } else {
+      // No MDC
+      $("#mdcSection").parent().hide();
+    }
   });
 });
 

@@ -44,6 +44,7 @@
     "makeDataCount/viewsTotal/monthly": "#6c757d",
     "makeDataCount/downloadsTotal/monthly": "#006699",
     "makeDataCount/viewsUnique/monthly": "#224F20",
-    "makeDataCount/downloadsUnique/monthly": "#b22200"
+    "makeDataCount/downloadsUnique/monthly": "#b22200", 
+    "makeDataCount": true
   }
 }
