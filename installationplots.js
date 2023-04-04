@@ -2,7 +2,6 @@
 var alias;
 //The Dataverse server address - can be "" if this app is deployed on the same server.
 var dvserver = "";
-var displayName = "";
 
 $(document).ready(function() {
 
@@ -46,7 +45,7 @@ $(document).ready(function() {
       $('#subtitle').html("<h2>Showing Metrics from the whole repository</h2>");
       $('#selectString').html('<div>Click a sub-' + config.dataverseTerm + ' name to see its metrics</div>');
     } else {
-      //$('#subtitle').html("<h2>Showing Metrics from the " + alias + " " + config.dataverseTerm + "</h2>");
+      // Note that the subtitle is updated async via ajax
       $('#selectString').html('<div><a href= "' + window.location.href.split('?')[0] +'">Show Metrics for the whole repository</a></div><div>Click a sub-' + config.dataverseTerm + ' name to see its metrics</div>');
     }
     
@@ -543,10 +542,9 @@ function updateNames(node) {
 }
 
 function updateDisplayName(name, config) {
-  displayName = name;
   if (alias != null) {
     $('#subtitle').hide();
-    $('#subtitle').html("<h2>Showing Metrics from the " + displayName + " " + config.dataverseTerm + "</h2>");
+    $('#subtitle').html("<h2>Showing Metrics from the " + name + " " + config.dataverseTerm + "</h2>");
     $('#subtitle').fadeIn("slow");
   }
 }
