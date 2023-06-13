@@ -24,6 +24,7 @@ $(document).ready(function() {
       dvserver + '/api/info/metrics/tree' + addAlias(),
       function(data) {
         var nodes = data.data;
+        updateDisplayName(nodes.name, config);
         if (typeof nodes.children !== 'undefined') {
           nodes.children.forEach((node) => {
             //Make each element in the tree (below the root) a link to get the metrics for that sub-dataverse
@@ -44,7 +45,7 @@ $(document).ready(function() {
       $('#subtitle').html("<h2>Showing Metrics from the whole repository</h2>");
       $('#selectString').html('<div>Click a sub-' + config.dataverseTerm + ' name to see its metrics</div>');
     } else {
-      $('#subtitle').html("<h2>Showing Metrics from the " + alias + " " + config.dataverseTerm + "</h2>");
+      // Note that the subtitle is updated async via ajax
       $('#selectString').html('<div><a href= "' + window.location.href.split('?')[0] +'">Show Metrics for the whole repository</a></div><div>Click a sub-' + config.dataverseTerm + ' name to see its metrics</div>');
     }
     
@@ -538,10 +539,18 @@ function addAlias() {
 
 //Turn dataverse names into links to the metrics page using that dataverse as the parent
 function updateNames(node) {
-  node.name = "<a href='" + window.location.href.split("?")[0] + "?parentAlias=" + node.alias + "'>" + node.alias + "</a>";
+  node.name = "<a href='" + window.location.href.split("?")[0] + "?parentAlias=" + node.alias + "'>" + node.name + "</a>";
   if (typeof node.children !== 'undefined') {
     node.children.forEach((childnode) => {
       updateNames(childnode);
     });
+  }
+}
+
+function updateDisplayName(name, config) {
+  if (alias != null) {
+    $('#subtitle').hide();
+    $('#subtitle').html("<h2>Showing Metrics from the " + name + " " + config.dataverseTerm + "</h2>");
+    $('#subtitle').fadeIn("slow");
   }
 }
