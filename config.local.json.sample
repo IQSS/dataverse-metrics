@@ -4,6 +4,7 @@
   "dataverseTerm": "Dataverse",
   "datasetTerm": "Dataset",
   "downloadsHeader": "Downloads",
+  "makeDataCount": true,
   "makeDataCountHeader": "Make Data Count",
   "holdingsHeader": "Holdings",
   "timeseries.dataverses.definition":"Total Number of published Dataverses as a function of time.",
@@ -46,4 +47,4 @@
     "makeDataCount/viewsUnique/monthly": "#224F20",
     "makeDataCount/downloadsUnique/monthly": "#b22200"
   }
-}
+ }
