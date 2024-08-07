@@ -92,8 +92,8 @@
     "https://researchdata.nie.edu.sg",
     "https://researchdata.ntu.edu.sg"
   ],
-  "api_response_cache_dir": "/var/www/html/dataverse-metrics/global/cache",
-  "aggregate_output_dir": "/var/www/html/dataverse-metrics/global",
+  "api_response_cache_dir": "/var/www/html/dataverse-metrics/cache",
+  "aggregate_output_dir": "/var/www/html/dataverse-metrics",
   "num_months_to_process": 36,
   "month_filter_enabled": true,
   "endpoints": {
